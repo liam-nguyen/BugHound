@@ -1,8 +1,9 @@
 import React from 'react'
-import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'
+import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom'
 import Layout from './components/Layout'
 import Welcome from './pages/Welcome'
 import NewBug from './pages/NewBug'
+import ViewBug from './pages/ViewBug'
 
 type RouteProps = {
   path: string
@@ -27,6 +28,10 @@ function Routes() {
 
         <MyRoute path="/newbug">
           <NewBug />
+        </MyRoute>
+
+        <MyRoute path="/view">
+          <ViewBug />
         </MyRoute>
 
         <Redirect to="/" />
