@@ -1,0 +1,40 @@
+{
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 2018,
+    "ecmaFeatures": { "jsx": true },
+    "sourceType": "module"
+  },
+  "plugins": ["@typescript-eslint"],
+  "extends": [
+    // "airbnb-typescript",
+    // "airbnb/hooks",
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended"
+    // "plugin:@typescript-eslint/recommended-requiring-type-checking",
+    // "plugin:jsx-a11y/recommended"
+  ],
+  "settings": {
+    "react": { "version": "detect" },
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".ts", ".tsx"],
+        "paths": ["src"]
+      }
+    }
+  },
+  "rules": {
+    "react/prop-types": "off",
+    "no-console": "off",
+    "semi": ["error", "never"],
+    "@typescript-eslint/semi": ["error", "never"],
+    "@typescript-eslint/member-delimiter-style": [
+      "error",
+      { "multiline": { "delimiter": "none", "requireLast": false } }
+    ],
+    "@typescript-eslint/explicit-function-return-type": ["error"]
+  }
+}
