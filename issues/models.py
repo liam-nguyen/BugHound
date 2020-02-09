@@ -36,3 +36,15 @@ class Attachment(models.Model):
     typeID = models.ForeignKey(AttachmentType, on_delete=models.CASCADE)
     location = models.CharField(max_length=500)
 
+# Version
+class Version(models.Model):
+    name = models.CharField(max_length=50)
+
+# Program
+class Program(models.Model):
+    versionID = models.ForeignKey(Version, on_delete=models.CASCADE)
+    name = models.CharField(max_length=50)
+
+# ProgramIssue
+class ProgramIssue(models.Model):
+    programID = 
