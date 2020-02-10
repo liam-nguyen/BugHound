@@ -1,0 +1,13 @@
+@for $i from 2 to 6 {
+  .grid-#{$i} {
+    @include grid($i);
+  }
+}
+
+main {
+  padding: 0 8px;
+}
+
+section + section {
+  margin-top: 30px;
+}
