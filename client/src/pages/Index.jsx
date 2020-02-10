@@ -1,10 +1,10 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 function Welcome() {
   return (
     <>
-      Welcome to Bughound
+      <h2>Welcome to Bughound</h2>
       <ul>
         <li>
           <Link to="/newbug">Enter NEW Bug</Link>
@@ -14,7 +14,7 @@ function Welcome() {
         </li>
       </ul>
     </>
-  )
+  );
 }
 
-export default Welcome
+export default Welcome;
