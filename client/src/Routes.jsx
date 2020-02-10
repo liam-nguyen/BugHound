@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, BrowserRouter, Switch } from 'react-router-dom';
 
 import { Layout } from './components';
-import { Index, NewBug, ViewBug } from './pages';
+import { IndexPage, NewBug, ViewBug } from './pages';
 
 const MyRoute = ({ children, exact, path }) => {
   return (
@@ -17,7 +17,7 @@ function Routes() {
     <BrowserRouter>
       <Switch>
         <MyRoute exact path="/">
-          <Index />
+          <IndexPage />
         </MyRoute>
 
         <MyRoute path="/newbug">

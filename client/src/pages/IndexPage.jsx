@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-function Welcome() {
+function IndexPage() {
   return (
     <>
       <h2>Welcome to Bughound</h2>
@@ -17,4 +17,4 @@ function Welcome() {
   );
 }
 
-export default Welcome;
+export default IndexPage;

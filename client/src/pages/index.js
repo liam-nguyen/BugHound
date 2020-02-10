@@ -1,5 +1,5 @@
-import Index from './Index';
 import NewBug from './NewBug';
 import ViewBug from './ViewBug';
+import IndexPage from './IndexPage';
 
-export { Index, NewBug, ViewBug };
+export { IndexPage, NewBug, ViewBug };
