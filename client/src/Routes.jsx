@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, BrowserRouter, Switch } from 'react-router-dom';
 
 import { Layout } from './components';
-import Index from './pages/Index';
+import { Index, NewBug, ViewBug } from './pages';
 
 const MyRoute = ({ children, exact, path }) => {
   return (
@@ -20,13 +20,13 @@ function Routes() {
           <Index />
         </MyRoute>
 
-        {/* <MyRoute path="/newbug">
+        <MyRoute path="/newbug">
           <NewBug />
         </MyRoute>
 
         <MyRoute path="/view">
           <ViewBug />
-        </MyRoute> */}
+        </MyRoute>
       </Switch>
     </BrowserRouter>
   );
