@@ -1,4 +1,4 @@
-/* eslint-disable import/prefer-default-export */
 import Layout from './Layout';
+import ReportForm from './ReportForm';
 
-export { Layout };
+export { Layout, ReportForm };
