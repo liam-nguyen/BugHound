@@ -1,4 +1,4 @@
-import Index from './Index';
+import Index from './IndexPage';
 import NewBug from './NewBug';
 import ViewBug from './ViewBug';
 
