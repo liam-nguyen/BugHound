@@ -1,7 +1,7 @@
 import React from 'react';
 import Select from './Select';
 
-function ReportTemplete() {
+function ReportTemplate() {
   return (
     <form className="report-form">
       <section>
@@ -122,4 +122,4 @@ function ReportTemplete() {
   );
 }
 
-export default ReportTemplete;
+export default ReportTemplate;
