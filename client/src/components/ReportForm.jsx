@@ -1,4 +1,5 @@
 import React from 'react';
+import Select from './Select';
 
 function ReportTemplete() {
   return (
@@ -7,22 +8,19 @@ function ReportTemplete() {
         <fieldset>
           <legend>Used By Reporter</legend>
           <div className="grid-3">
-            <label>
-              Program
-              <input id="program" type="text" name="program" />
-            </label>
+            <Select label="Program" />
 
-            <label>
-              Report Type
-              <select>
-                <option>Coding error</option>
-                <option>Design issue</option>
-                <option>Suggestion</option>
-                <option>Documentation</option>
-                <option>Hardware</option>
-                <option>Query</option>
-              </select>
-            </label>
+            <Select
+              label="Report Type"
+              options={[
+                { value: '1', label: 'Coding error' },
+                { value: '2', label: 'Design issue' },
+                { value: '3', label: 'Suggestion' },
+                { value: '4', label: 'Documentation' },
+                { value: '5', label: 'Hardware' },
+                { value: '6', label: 'Query' },
+              ]}
+            />
 
             <fieldset>
               <legend>Severity</legend>
