@@ -5,9 +5,15 @@
 }
 
 main {
-  padding: 0 8px;
+  padding: 0 $gap;
 }
 
 section + section {
   margin-top: 30px;
+}
+
+.report-form label,
+span.label {
+  @include disable-user-select();
+  font-size: 18px;
 }
