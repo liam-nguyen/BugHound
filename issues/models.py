@@ -16,7 +16,7 @@ class Priority(models.Model):
 
 # Status
 class Status(models.Model):
-    STATUS = Choices("Open", "Closed or Open", "Closed", "Resolved")
+    STATUS = Choices("Open",  "Closed")
     name = models.CharField(choices=STATUS, default=STATUS.Open, max_length=50, unique=True)
 
     def __str__(self):
@@ -38,9 +38,10 @@ class BugType(models.Model):
 
 # Severity
 class Severity(models.Model):
-    name = models.CharField(max_length=50, unique=True)
+    # name = models.CharField(max_length=50, unique=True)
+    severity = models.IntegerField(unique=True)
     def __str__(self):
-        return self.name
+        return str(self.severity)
 
 # Resolution
 class Resolution(models.Model):
