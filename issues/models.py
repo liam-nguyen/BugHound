@@ -5,6 +5,8 @@ import datetime
 # Create your models here.
 
 
+#TODO Change Date Time fields to have Date only
+
 # Priority
 class Priority(models.Model):
     name = models.CharField(max_length=50, unique=True)
@@ -62,10 +64,11 @@ class Attachment(models.Model):
     typeID = models.ForeignKey(AttachmentType, on_delete=models.CASCADE)
     location = models.CharField(max_length=500)
     def __str__(self):
-        return self.typeID + self.location
+        return f"[Type: {self.typeID} + Location: {self.location}]"
 
 # Version
 class Version(models.Model):
+    # TODO Add version id number?
     name = models.CharField(max_length=50)
     def __str__(self):
         return self.name
@@ -76,7 +79,7 @@ class Program(models.Model):
     name = models.CharField(max_length=50)
 
     def __str__(self):
-        return self.versionID + self.name
+        return f"[VersionID: {self.versionID} Program Name: {self.name}]"
 
 # # ProgramIssue
 # class ProgramIssue(models.Model):
@@ -93,6 +96,7 @@ class Department(models.Model):
 
 # Employee
 class Employee(models.Model):
+    # TODO break into first name last name?
     name = models.CharField(max_length=100, unique=True)
     departmentID = models.ForeignKey(Department, on_delete=models.CASCADE)
 
