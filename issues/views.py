@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, Http404, JsonResponse
 from .models import Issue
 
 def index(request):
@@ -15,4 +15,4 @@ def issue(request, issueID):
         print(issueObj)
     except Issue.DoesNotExist:
         raise Http404("Issue does not exist")
-    return HttpResponse(issueObj)
+    return JsonResponse(issueObj)
