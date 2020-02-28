@@ -1,10 +1,10 @@
 from django.shortcuts import render
 from django.http import HttpResponse, Http404, JsonResponse
-from .models import Issue, FunctionalArea, Program
+from .models import Issue, FunctionalArea, Program, Employee
 from django.template import loader
 from .serializers import IssueSerializer
 from django.core import serializers
-from .forms import AreaForm, ProgramForm
+from .forms import AreaForm, ProgramForm, EmployeeForm 
 
 def index(request):
     return HttpResponse("Welcome to BugHound!")
@@ -45,6 +45,17 @@ def searchPrograms(request):
     context = {'programs' : programs,
                 'form': form}
     return render(request, 'issue_pages/programs.html', context)
+
+
+def searchEmployees(request):
+    employees = Employee.objects.all()
+    if request.method == 'POST':
+        form = EmployeeForm(request.POST)
+    else:
+        form = EmployeeForm()
+    context = {'employees' : employees,
+            'form' : form}
+    return render(request, 'issue_pages/employees.html', context)
 
 def issue(request, issueID):
     # template = loader.get_template('templates/issue_pages/index.html')
