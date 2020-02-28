@@ -74,7 +74,7 @@ class Program(models.Model):
     name = models.CharField(max_length=50)
 
     def __str__(self):
-        return f"[VersionID: {self.versionID} Program Name: {self.name}]"
+        return f"{self.name}"
 
 
 # FunctionalArea
