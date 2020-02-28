@@ -6,5 +6,6 @@ urlpatterns = [
     path('', views.index, name='index'),
     path("<int:issueID>", views.issue, name='issue'),
     path("dbmaintenance", views.dbMaintenance, name='dbmaintenance'),
-    path('area-search', views.searchAreas, name='searchAreas')
+    path('area-search', views.searchAreas, name='searchAreas'),
+    path('programs', views.searchPrograms, name='programs')
 ]
