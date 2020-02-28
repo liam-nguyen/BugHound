@@ -24,11 +24,6 @@ class Status(models.Model):
     def __str__(self):
         return self.name
 
-# FunctionalArea
-class FunctionalArea(models.Model):
-    name = models.CharField(max_length=50, unique=True)
-    def __str__(self):
-        return self.name
 
 # IssueType
 class BugType(models.Model):
@@ -81,6 +76,15 @@ class Program(models.Model):
     def __str__(self):
         return f"[VersionID: {self.versionID} Program Name: {self.name}]"
 
+
+# FunctionalArea
+class FunctionalArea(models.Model):
+    programID = models.ForeignKey(Program, on_delete=models.CASCADE)
+    name = models.CharField(max_length=50, unique=True)
+    def __str__(self):
+        return self.name
+
+
 # # ProgramIssue
 # class ProgramIssue(models.Model):
 #     programID = models.ForeignKey(Program, on_delete=models.CASCADE)
@@ -97,6 +101,7 @@ class Department(models.Model):
 # Employee
 class Employee(models.Model):
     # TODO break into first name last name?
+    # TODO Add permissions!
     levelChoices = (
         (1, '1'),
         (2, '2'),
