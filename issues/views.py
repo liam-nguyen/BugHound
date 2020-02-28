@@ -30,6 +30,10 @@ def searchAreas(request):
                 'form' : form}
     return render(request, 'issue_pages/area-search.html', context)
 
+def searchPrograms(request):
+    programs = Program.objects.all()
+    context = {'programs' : programs}
+    return render(request, 'issue_pages/programs.html', context)
 
 def issue(request, issueID):
     # template = loader.get_template('templates/issue_pages/index.html')
