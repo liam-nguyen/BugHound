@@ -1,9 +1,10 @@
 from django.shortcuts import render
 from django.http import HttpResponse, Http404, JsonResponse
-from .models import Issue, FunctionalArea
+from .models import Issue, FunctionalArea, Program
 from django.template import loader
 from .serializers import IssueSerializer
 from django.core import serializers
+from .forms import AreaForm
 
 def index(request):
     return HttpResponse("Welcome to BugHound!")
@@ -11,12 +12,23 @@ def index(request):
 def dbMaintenance(request):
     return render(request, 'issue_pages/databaseMaintenance.html')
 
-def editAreas(request):
+def searchAreas(request):
+    # TODO edit areas
     areas = FunctionalArea.objects.all()
-    context = {'areas': areas}
-    print(areas)
-    return render(request, 'issue_pages/areas.html', context)
-
+    if request.method == 'POST':
+        form = AreaForm(request.POST)
+        if form.is_valid():
+            print("valid")
+            print(form.cleaned_data)
+            data = form.cleaned_data
+            area = FunctionalArea(programID = data['program'], name=data['name'])
+            area.save()
+            print("Area saved!")
+    else:
+        form = AreaForm()
+    context = {'areas': areas,
+                'form' : form}
+    return render(request, 'issue_pages/area-search.html', context)
 
 
 def issue(request, issueID):
