@@ -4,7 +4,7 @@ from .models import Issue, FunctionalArea, Program
 from django.template import loader
 from .serializers import IssueSerializer
 from django.core import serializers
-from .forms import AreaForm
+from .forms import AreaForm, ProgramForm
 
 def index(request):
     return HttpResponse("Welcome to BugHound!")
@@ -32,7 +32,18 @@ def searchAreas(request):
 
 def searchPrograms(request):
     programs = Program.objects.all()
-    context = {'programs' : programs}
+    if request.method == 'POST':
+        form = ProgramForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            program = Program(versionID = data['version'], release = data['release'],
+                                name = data['name'])
+            program.save()
+    else:
+        form = ProgramForm()
+
+    context = {'programs' : programs,
+                'form': form}
     return render(request, 'issue_pages/programs.html', context)
 
 def issue(request, issueID):
