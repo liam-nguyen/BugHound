@@ -98,6 +98,9 @@ class Department(models.Model):
 class Employee(models.Model):
     # TODO break into first name last name?
     name = models.CharField(max_length=100, unique=True)
+    userName = models.CharField(max_length=25, unique=True)
+    password = models.CharField(max_length=25)
+    level = models.IntegerField(choices= [i for i in range(4)])
     departmentID = models.ForeignKey(Department, on_delete=models.CASCADE)
 
     def __str__(self):
