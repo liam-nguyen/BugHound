@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>BugHound</title>
+  <meta name="description" content="BugHound">
+  <meta name="author" content="SitePoint">
+</head>
+
+<body>
+  <header>
+    <h1 style="display: inline; margin-right:20px;">Employee Search</h1>
+    <nav style="display: inline;">
+      <a href="./area-search.html">Areas</a>
+      <a href="./issue-search.html">Issues</a>
+      <a href="./employee-search.html">Employees</a>
+    </nav>
+  </header>
+  <p>Find Employees by any of the following fields: "..."</p>
+  <br>
+  <div id=keyword-search-bar>Keywords: <input type=text> <input type=submit name=Search></div>
+  <br>
+  <h2>Results</h2>
+  <table border="1">
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Department</th>
+      <th>Position</th>
+      <th>...</th>
+      <th>actions</th>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>John Smith</td>
+      <td>Quality Assurance</td>
+      <td>Manager</td>
+      <td>...</td>
+      <td><a href="./employee-edit.html">Edit</a></td> <!--TODO: link this to the employee belonging to this row-->
+    </tr>
+  </table >
+  <br>
+</body>
+</html>
