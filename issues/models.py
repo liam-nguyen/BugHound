@@ -1,5 +1,6 @@
 from django.db import models
 from model_utils import Choices
+from django.core.validators import MinValueValidator
 import datetime
 
 # Create your models here.
@@ -71,6 +72,7 @@ class Version(models.Model):
 # Program
 class Program(models.Model):
     versionID = models.ForeignKey(Version, on_delete=models.CASCADE)
+    release = models.IntegerField(validators=[MinValueValidator(1)])
     name = models.CharField(max_length=50)
 
     def __str__(self):
