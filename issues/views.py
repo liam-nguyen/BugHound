@@ -51,6 +51,14 @@ def searchEmployees(request):
     employees = Employee.objects.all()
     if request.method == 'POST':
         form = EmployeeForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            employee = Employee(name=data['name'],
+                                userName=data['userName'],
+                                level=data['level'],
+                                password=data['password'],
+                                departmentID=data['departmentID'])
+            employee.save()
     else:
         form = EmployeeForm()
     context = {'employees' : employees,
