@@ -24,3 +24,13 @@ class EmployeeForm(forms.Form):
     widgets = {
         'password': forms.PasswordInput(),
     }
+
+class EmployeeEditForm(forms.Form):
+    levelChoices = (
+        (1, '1'),
+        (2, '2'),
+        (3, '3')
+    )
+    departmentID = forms.ModelChoiceField(queryset=Department.objects.all())
+    name = forms.CharField()
+    level = forms.ChoiceField(choices=levelChoices)
