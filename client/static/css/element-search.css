@@ -1,0 +1,24 @@
+a {
+  color: blue;
+  text-decoration: underline;
+  cursor: pointer;
+  margin: 0 3px 0 3px;
+}
+
+a:active {
+  color: red;
+}
+
+nav a {
+  margin: 0 5px 0 0;
+}
+
+#database-viewport {
+  max-height: 50%;
+  overflow: scroll;
+}
+
+td, th {
+  text-align: center;
+  padding: 2px 5px;
+}

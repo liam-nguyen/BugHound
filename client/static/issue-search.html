@@ -1,42 +1,70 @@
-<!doctype html>
+<!doctype html> <!--later on: make the table load only 50 entries at a time and provide  <-prev 1 2 3 4 5 ... N next-> menu to navigate the chunks-->
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>BugHound</title>
-  <meta name="description" content="BugHound">
-  <meta name="author" content="SitePoint">
-</head>
+  <head>
+    <meta charset="utf-8">
+    <title>BugHound</title>
+    <meta name="description" content="BugHound">
+    <meta name="author" content="SitePoint">
+    <link rel="stylesheet" type="text/css" href="./css/element-search.css">
+  </head>
 
-<body>
-  <header>
+  <body onload="loadPageContent()">
     <h1 style="display: inline; margin-right:20px;">Issue Search</h1>
     <nav style="display: inline;">
+      <a href="./menu.html">Menu</a>
       <a href="./area-search.html">Areas</a>
       <a href="./issue-search.html">Issues</a>
       <a href="./employee-search.html">Employees</a>
+      <a onclick="logout()">Logout</a>
     </nav>
-  </header>
-  <p>Find areas by any of the following fields: "..."</p>
-  <br>
-  <div id=keyword-search-bar>Keywords: <input type=text> <input type=submit name=Search></div>
-  <br>
-  <h2>Results</h2>
-  <table border="1">
-    <tr>
-      <th>ID</th>
-      <th>Description</th>
-      <th>Area</th>
-      <th>...</th>
-      <th>actions</th>
-    </tr>
-    <tr>
-      <td>1</td>
-      <td>A bug in the program</td>
-      <td>Bughound beta</td>
-      <td>...</td>
-      <td><a href="./issue-edit.html">Edit</a></td> <!--TODO: link this to the issue belonging to this row  -->
-    </tr>
-  </table>
-  <br>
-</body>
+    <p>Find issues by any of the following fields: "ID, program, problem summary."</p> <!--TODO: verfiy this is the correct list of searchable fields-->
+    <br>
+    <div id=keyword-search-bar>Keywords: <input type=text> <input onclick="searchIssue('input goes here')" type=submit name=Search></div>
+    <br>
+    <h2>Results</h2>
+    <table border="1">
+      <tr>
+        <th>ID</th>
+        <th>Program</th>
+        <th>Problem Summary</th>
+        <th>actions</th>
+      </tr>
+      <div id="database-viewport>">
+        <tr id="data-table-row-1"> <!--TODO: upon loading the page, populate the issue's information row by row-->
+        <td><span id=data-table-row-1-id-value>1</span></td></td>
+        <td><span id=data-table-row-1-program-value>Bughound Beta</span></td></td>
+        <td><span id=data-table-row-1-problem-summary-value>function() returns null pointer --> segfault</span></td><!--TODO: change this href to pass the identifier for the specific issue as query arg.-->
+        <td><!--TODO: link this to the particular issue belonging to this row in the href-->
+          <a href="./issue-view.html">View</a> |
+          <a href="./issue-edit.html">Edit</a> |
+          <a onclick="deleteIssue('ID # goes here')" id="delete-button--id-key-here">Delete</a>
+        </td>
+      </tr>
+    </div>
+    </table>
+    <br>
+    <br>
+    <p>Don't see the issue? Create a new one <a style="margin: 0;" href="./issue-edit.html">here</a>.</p>
+  </body>
+
+  <script type="text/javascript" src="./js/gui-scripts.js"></script>
+  <script>
+    function searchIssue(keywords) {
+      alert("searching for issue. Press to continue")
+      //TODO: search the database and return elements that satify the given keywords in any of the searchable fields.
+    }
+
+    function loadPageContent() {
+      //TODO: populate the database-viewport with ALL entires in the relevant database table
+    }
+
+    function deleteIssue(id) {
+      //TODO: pop up to confirm the deletion.
+      //communicate to backend to delete the correct entry
+      //reload the table with the just-deleted entry gone.
+      alert("You're about to delete!");
+      window.location.href = "./issue-search.html";
+    }
+  </script>
+
 </html>
