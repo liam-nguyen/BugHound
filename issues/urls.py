@@ -11,5 +11,6 @@ urlpatterns = [
     # Program
     path('programs', views.searchPrograms, name='programs'),
     # Employee
-    path('employees', views.searchEmployees, name='employees')
+    path('employees', views.searchEmployees, name='employees'),
+    path('employees/<int:employeeID>', views.editEmplyee, name='editEmployee')
 ]
