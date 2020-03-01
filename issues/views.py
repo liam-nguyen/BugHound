@@ -4,7 +4,8 @@ from .models import Issue, FunctionalArea, Program, Employee
 from django.template import loader
 from .serializers import IssueSerializer
 from django.core import serializers
-from .forms import AreaForm, ProgramForm, EmployeeForm 
+from .forms import AreaForm, ProgramForm, EmployeeForm, EmployeeEditForm
+from django.forms.models import model_to_dict
 
 def index(request):
     return HttpResponse("Welcome to BugHound!")
@@ -12,6 +13,7 @@ def index(request):
 def dbMaintenance(request):
     return render(request, 'issue_pages/databaseMaintenance.html')
 
+# Areas
 def searchAreas(request):
     # TODO edit areas
     areas = FunctionalArea.objects.all()
@@ -30,6 +32,7 @@ def searchAreas(request):
                 'form' : form}
     return render(request, 'issue_pages/area-search.html', context)
 
+# Programs
 def searchPrograms(request):
     programs = Program.objects.all()
     if request.method == 'POST':
@@ -47,6 +50,7 @@ def searchPrograms(request):
     return render(request, 'issue_pages/programs.html', context)
 
 
+# Employees
 def searchEmployees(request):
     employees = Employee.objects.all()
     if request.method == 'POST':
@@ -65,6 +69,30 @@ def searchEmployees(request):
             'form' : form}
     return render(request, 'issue_pages/employees.html', context)
 
+def editEmplyee(request, employeeID):
+    employee = Employee.objects.get(pk=employeeID)
+    if request.method == 'POST':
+        form = EmployeeEditForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            employee.name = data['name']
+            employee.departmentID = data['departmentID']
+            employee.leve = data['level']
+            employee.save()
+    else:
+        print({
+            'name' : employee.name,
+            'departmentId' : employee.departmentID,
+            'level' : employee.level
+        })
+        form = EmployeeEditForm(model_to_dict(employee))
+    context = {
+        'employee': employee,
+        'form': form
+    }
+    return render(request, 'issue_pages/employee-edit.html', context)
+
+# Issue
 def issue(request, issueID):
     # template = loader.get_template('templates/issue_pages/index.html')
     try:
