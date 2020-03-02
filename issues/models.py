@@ -144,7 +144,7 @@ class Issue(models.Model):
     priorityID = models.ForeignKey(Priority, on_delete=models.CASCADE)
     resolutionID = models.ForeignKey(Resolution, on_delete=models.CASCADE)
     testedByID = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name='employee_testedByID')
-    attachmentID = models.ForeignKey(Attachment, on_delete=models.CASCADE)
+    attachmentID = models.CharField(max_length = 1000)
     
     summary = models.CharField(max_length=500)
     suggestedFix = models.CharField(max_length=500)
