@@ -9,6 +9,7 @@ urlpatterns = [
 
     # Issue
     path('issues/', views.searchIssue, name='issues'),
+    path('addIssue', views.addIssue, name='addIssue'),
     path("<int:issueID>/", views.issue, name='issue'),
 
     # Area
