@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>BugHound</title>
+  <meta name="description" content="BugHound">
+  <meta name="author" content="SitePoint">
+</head>
+
+<body>
+  <h1>Edit Area -- {{ area.name }}</h1>
+  <p>Make any changes to the employee's information and press "Submit" when done.</p>
+
+  <form method="POST">
+    {% csrf_token %}
+    {{ form }}
+    <input type='Submit' value='Edit Area'>
+  </form>
+  <br>
+  <br>
+</body>
+</html>

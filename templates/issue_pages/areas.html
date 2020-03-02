@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>BugHound</title>
+  <meta name="description" content="BugHound">
+  <meta name="author" content="SitePoint">
+</head>
+
+<body>
+  <header>
+    <h1 style="display: inline; margin-right:20px;">Area Search</h1>
+    <nav style="display: inline;">
+      <a href="./area-search.html">Areas</a>
+      <a href="./issue-search.html">Issues</a>
+      <a href="./employee-search.html">Employees</a>
+    </nav>
+  </header>
+  <p>Find issues by any of the following fields: "..."</p>
+  <br>
+  <div id=username_field>Keywords: <input type=text> <input type=submit name=Search></div>
+  <br>
+  <h2>Results</h2>
+  <table border="1">
+    <tr>
+      <th>AreaID</th>
+      <th>ProgramID</th>
+      <th>Program</th>
+      <th>Area</th>
+      <th>Action</th>
+    </tr>
+    {% for area in areas %}
+    <tr>
+      <td>{{ area.id }}</td>
+      <td>{{ area.programID.id }}</td>
+      <td>{{ area.programID.name }}</td>
+      <td>{{ area.name }}</td>
+      <td><a href="./{{ area.id }}">Edit</a></td> <!--TODO: link this to the area belonging to this row-->
+    </tr>
+    {% endfor %}
+  </table >
+  <br>
+  <h2>Add Area</h2>
+  <form method="POST" action="areas">
+    {% csrf_token %}
+    {{ form }}
+    <input type='Submit' value='Add Area'>
+  </form>
+</body>
+</html>
