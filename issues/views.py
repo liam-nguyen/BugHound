@@ -35,7 +35,7 @@ def searchIssue(request):
             if data['area']:
                 query['areaID'] = data['area']
             if data['assigned_to']:
-                query['assignedTo'] = data['assigned_to']
+                query['assignedToID'] = data['assigned_to']
             if data['reported_by']:
                 query['reportedBy'] = data['reported_by']
             if data['status']:
@@ -48,12 +48,12 @@ def searchIssue(request):
             print(issue)
     else:
         form = IssueSearchForm()
+        issue = Issue.objects.all()
     context = {
+        'issues': issue,
         'form' : form
     }
-
-
-    return render(request, 'issue_pages/issue-search.html', context)
+    return render(request, 'issue_pages/issues.html', context)
 
 
 def index(request):
