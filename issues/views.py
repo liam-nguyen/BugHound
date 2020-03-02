@@ -4,10 +4,17 @@ from .models import Issue, FunctionalArea, Program, Employee
 from django.template import loader
 from .serializers import IssueSerializer
 from django.core import serializers
-from .forms import AreaForm, ProgramForm, EmployeeForm, EmployeeEditForm, IssueSearchForm
+from .forms import AreaForm, ProgramForm, EmployeeForm, EmployeeEditForm, IssueSearchForm, IssueEditForm
 from django.forms.models import model_to_dict
 from django.shortcuts import redirect
 
+
+
+def index(request):
+    return HttpResponse("Welcome to BugHound!")
+
+def dbMaintenance(request):
+    return render(request, 'issue_pages/databaseMaintenance.html')
 
 
 # Issue
@@ -20,6 +27,47 @@ def issue(request, issueID):
         raise Http404("Issue does not exist")
     return render(request, 'issue_pages/index.html', context)
 
+def addIssue(request):
+    if request.method == 'POST':
+        form = IssueEditForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            
+            issue = Issue(
+                programID = data['program'],
+                bugtypeID = data['bugType'],
+                severityID = data['severity'],
+                reportedByID = data['reported_by'],
+                functionalAreaID = data['area'],
+                assignedToID = data['assigned_to'],
+                statusID = data['status'],
+                priorityID = data['priority'],
+                resolutionID = data['resolution'],
+                testedByID = data['tested_by_id'],
+                attachmentID = data['attachment'],
+                summary = data['summary'],
+                suggestedFix = data['suggestedFix'],
+                issueDate = data['issueDate'],
+                isAssignedToGroup = data['isAssignedToGroup'],
+                comments = data['comments'],
+                resolveByDate = data['resolveByDate'],
+                testByDate = data['testByDate'],
+                treatedAsDeferred = data['treatedAsDeferred'],
+                reproducible = data['reproducible']
+            )
+            issue.save()
+            print(f"Issue saved. ID = {issue.id}")
+        else:
+            issue = None
+    else:
+        form = IssueEditForm()
+        issue = None
+    context = {
+        'issue' : issue,
+        'form' : form
+    }
+    return render(request, 'issue_pages/addIssue.html', context)
+
 def searchIssue(request):    
     if request.method == 'POST':
         form = IssueSearchForm(request.POST)
@@ -31,19 +79,19 @@ def searchIssue(request):
             if data['bugType']:
                 query['bugtypeID'] = data['bugType']
             if data['severity']:
-                query['severity'] = data['severity']
+                query['severityID'] = data['severity']
             if data['area']:
-                query['areaID'] = data['area']
+                query['functionalAreaID'] = data['area']
             if data['assigned_to']:
                 query['assignedToID'] = data['assigned_to']
             if data['reported_by']:
-                query['reportedBy'] = data['reported_by']
+                query['reportedByID'] = data['reported_by']
             if data['status']:
-                query['status'] = data['status']
+                query['statusID'] = data['status']
             if data['priority']:
-                query['priority'] = data['priority']
+                query['priorityID'] = data['priority']
             if data['resolution']:
-                query['resolution'] = data['resolution']
+                query['resolutionID'] = data['resolution']
             issue = Issue.objects.filter(**query)
             print(issue)
     else:
@@ -55,12 +103,9 @@ def searchIssue(request):
     }
     return render(request, 'issue_pages/issues.html', context)
 
+def editIssue(request, issueID):
+    pass
 
-def index(request):
-    return HttpResponse("Welcome to BugHound!")
-
-def dbMaintenance(request):
-    return render(request, 'issue_pages/databaseMaintenance.html')
 
 # Areas
 def searchAreas(request):
