@@ -4,9 +4,57 @@ from .models import Issue, FunctionalArea, Program, Employee
 from django.template import loader
 from .serializers import IssueSerializer
 from django.core import serializers
-from .forms import AreaForm, ProgramForm, EmployeeForm, EmployeeEditForm
+from .forms import AreaForm, ProgramForm, EmployeeForm, EmployeeEditForm, IssueSearchForm
 from django.forms.models import model_to_dict
 from django.shortcuts import redirect
+
+
+
+# Issue
+def issue(request, issueID):
+    # template = loader.get_template('templates/issue_pages/index.html')
+    try:
+        issue = Issue.objects.get(pk=issueID)
+        context = {'issue' : issue}
+    except Issue.DoesNotExist:
+        raise Http404("Issue does not exist")
+    return render(request, 'issue_pages/index.html', context)
+
+def searchIssue(request):    
+    if request.method == 'POST':
+        form = IssueSearchForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            query = {}
+            if data['program']:
+                query['programID'] = data['program']
+            if data['bugType']:
+                query['bugtypeID'] = data['bugType']
+            if data['severity']:
+                query['severity'] = data['severity']
+            if data['area']:
+                query['areaID'] = data['area']
+            if data['assigned_to']:
+                query['assignedTo'] = data['assigned_to']
+            if data['reported_by']:
+                query['reportedBy'] = data['reported_by']
+            if data['status']:
+                query['status'] = data['status']
+            if data['priority']:
+                query['priority'] = data['priority']
+            if data['resolution']:
+                query['resolution'] = data['resolution']
+            issue = Issue.objects.filter(**query)
+            print(issue)
+    else:
+        form = IssueSearchForm()
+    context = {
+        'form' : form
+    }
+
+
+    return render(request, 'issue_pages/issue-search.html', context)
+
 
 def index(request):
     return HttpResponse("Welcome to BugHound!")
@@ -114,17 +162,6 @@ def editEmployee(request, employeeID):
         'form': form
     }
     return render(request, 'issue_pages/employee-edit.html', context)
-
-# Issue
-def issue(request, issueID):
-    # template = loader.get_template('templates/issue_pages/index.html')
-    try:
-        issue = Issue.objects.get(pk=issueID)
-        context = {'issue' : issue}
-    except Issue.DoesNotExist:
-        raise Http404("Issue does not exist")
-    return render(request, 'issue_pages/index.html', context)
-
 
 # TODO Make admin account for professor
 #   show professor admin CRUD

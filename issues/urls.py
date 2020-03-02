@@ -8,6 +8,7 @@ urlpatterns = [
     path("dbmaintenance/", views.dbMaintenance, name='dbmaintenance'),
 
     # Issue
+    path('searchIssues/', views.searchIssue, name='searchIssues'),
     path("<int:issueID>/", views.issue, name='issue'),
 
     # Area

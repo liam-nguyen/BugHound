@@ -2,15 +2,15 @@ from django import forms
 from .models import Program, Version, Department, BugType, Severity, FunctionalArea, Employee, Status, Priority, Resolution
 
 # Issue Forms
-class IssueForm(forms.Form):
+class IssueSearchForm(forms.Form):
     program = forms.ModelChoiceField(queryset=Program.objects.all(), required=False)
     bugType = forms.ModelChoiceField(queryset=BugType.objects.all(), required=False)
-    severirty = forms.ModelChoiceField(queryset=Severity.objects.all(), required=False)
-    functionalArea = forms.ModelChoiceField(queryset=FunctionalArea.objects.all(), required=False)
-    assignedTo = forms.ModelChoiceField(queryset=Employee.objects.all(), required=False)
-    reportedBY = forms.ModelChoiceField(queryset=Employee.objects.all(), required=False)
+    severity = forms.ModelChoiceField(queryset=Severity.objects.all(), required=False)
+    area = forms.ModelChoiceField(queryset=FunctionalArea.objects.all(), required=False)
+    assigned_to = forms.ModelChoiceField(queryset=Employee.objects.all(), required=False)
+    reported_by = forms.ModelChoiceField(queryset=Employee.objects.all(), required=False)
     status = forms.ModelChoiceField(queryset=Status.objects.all(), required=False)
-    priroty = forms.ModelChoiceField(queryset=Priority.objects.all(), required=False)
+    priority = forms.ModelChoiceField(queryset=Priority.objects.all(), required=False)
     resolution = forms.ModelChoiceField(queryset=Resolution.objects.all(), required=False)
 
 
