@@ -6,6 +6,7 @@ from .serializers import IssueSerializer
 from django.core import serializers
 from .forms import AreaForm, ProgramForm, EmployeeForm, EmployeeEditForm
 from django.forms.models import model_to_dict
+from django.shortcuts import redirect
 
 def index(request):
     return HttpResponse("Welcome to BugHound!")
@@ -15,7 +16,6 @@ def dbMaintenance(request):
 
 # Areas
 def searchAreas(request):
-    # TODO edit areas
     areas = FunctionalArea.objects.all()
     if request.method == 'POST':
         form = AreaForm(request.POST)
@@ -30,7 +30,30 @@ def searchAreas(request):
         form = AreaForm()
     context = {'areas': areas,
                 'form' : form}
-    return render(request, 'issue_pages/area-search.html', context)
+    return render(request, 'issue_pages/areas.html', context)
+
+def editAreas(request, areaID):
+    area = FunctionalArea.objects.get(pk=areaID)
+    if request.method == 'POST':
+        form = AreaForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            area.name = data['name']
+            area.program = data['program']
+            area.save()
+            return redirect(searchAreas)
+    else:
+        form = AreaForm({
+            'program' : area.programID,
+            'name' : area.name
+        })
+    context = {
+        'area' : area,
+        'form' : form
+    }
+    return render(request, 'issue_pages/areas-edit.html', context)
+
+
 
 # Programs
 def searchPrograms(request):
@@ -69,7 +92,7 @@ def searchEmployees(request):
             'form' : form}
     return render(request, 'issue_pages/employees.html', context)
 
-def editEmplyee(request, employeeID):
+def editEmployee(request, employeeID):
     employee = Employee.objects.get(pk=employeeID)
     if request.method == 'POST':
         form = EmployeeEditForm(request.POST)
