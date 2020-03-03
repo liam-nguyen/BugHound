@@ -7,16 +7,26 @@ from django.core import serializers
 from .forms import AreaForm, ProgramForm, EmployeeForm, EmployeeEditForm, IssueSearchForm, IssueEditForm, LoginForm
 from django.forms.models import model_to_dict
 from django.shortcuts import redirect
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
+from django.contrib.admin.views.decorators import staff_member_required
+from .resources import FunctionalAreaResource, EmployeeResource, ProgramResource, IssueResource
 
 
 
 def index(request):
-    print(request)
     form = LoginForm()
     context = {'form' : form}
-    print(context)
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        context['level'] = user.is_superuser
+        context['name'] = user.username
+        print(context)
+        if user is not None:
+            login(request, user)
+            return render(request, 'issue_pages/index.html', context)
     return render(request, 'issue_pages/login.html', context)
 
 def dbMaintenance(request):
@@ -114,6 +124,7 @@ def editIssue(request, issueID):
 
 
 # Areas
+@staff_member_required
 def searchAreas(request):
     areas = FunctionalArea.objects.all()
     if request.method == 'POST':
@@ -131,6 +142,7 @@ def searchAreas(request):
                 'form' : form}
     return render(request, 'issue_pages/areas.html', context)
 
+@staff_member_required
 def editAreas(request, areaID):
     area = FunctionalArea.objects.get(pk=areaID)
     if request.method == 'POST':
@@ -155,6 +167,7 @@ def editAreas(request, areaID):
 
 
 # Programs
+@staff_member_required
 def searchPrograms(request):
     programs = Program.objects.all()
     if request.method == 'POST':
@@ -173,7 +186,9 @@ def searchPrograms(request):
 
 
 # Employees
+@staff_member_required
 def searchEmployees(request):
+    print(request)
     employees = Employee.objects.all()
     if request.method == 'POST':
         form = EmployeeForm(request.POST)
@@ -199,6 +214,7 @@ def searchEmployees(request):
             'form' : form}
     return render(request, 'issue_pages/employees.html', context)
 
+@staff_member_required
 def editEmployee(request, employeeID):
     employee = Employee.objects.get(pk=employeeID)
     if request.method == 'POST':
@@ -228,7 +244,29 @@ def editEmployee(request, employeeID):
     }
     return render(request, 'issue_pages/employee-edit.html', context)
 
-# TODO Make admin account for professor
-#   show professor admin CRUD
 
-# TODO page that returns all issues and routes to issue to update/ add
+def export(request):
+    if request.method == 'POST':
+        file_format = request.POST['file-format']
+
+        data = request.POST['Data']
+        if data == 'Areas':
+            dataset = FunctionalAreaResource()
+            dataset = dataset.export()
+        elif data == 'Programs':
+            dataset = ProgramResource()
+            dataset = dataset.export()
+        if file_format == 'CSV':
+            response = HttpResponse(dataset.csv, content_type='text/csv')
+            response['Content-Disposition'] = 'attachment; filename="exported_data.csv"'
+            return response        
+        elif file_format == 'JSON':
+            response = HttpResponse(dataset.json, content_type='application/json')
+            response['Content-Disposition'] = 'attachment; filename="exported_data.json"'
+            return response
+        elif file_format == 'XML':
+            response = HttpResponse(dataset.xls, content_type='application/xml')
+            response['Content-Disposition'] = 'attachment; filename="exported_data.xml"'
+            return response   
+
+    return render(request, 'issue_pages/export.html')
