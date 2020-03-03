@@ -11,8 +11,8 @@
   <h1>Welcome to BugHound</h1>
   <p>Please log in to continue:</p>
   <br>
-  <div id=username_field>Username: <input type=text></div>
-  <div id=password_field>Password: <input type=text></div>
+  {% csrf_token %}
+  {{ form }}
   <br>
   <input type=submit id=enter_button name="Enter">
   <br>

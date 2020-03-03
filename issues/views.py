@@ -4,14 +4,18 @@ from .models import Issue, FunctionalArea, Program, Employee
 from django.template import loader
 from .serializers import IssueSerializer
 from django.core import serializers
-from .forms import AreaForm, ProgramForm, EmployeeForm, EmployeeEditForm, IssueSearchForm, IssueEditForm
+from .forms import AreaForm, ProgramForm, EmployeeForm, EmployeeEditForm, IssueSearchForm, IssueEditForm, LoginForm
 from django.forms.models import model_to_dict
 from django.shortcuts import redirect
 
 
 
 def index(request):
-    return HttpResponse("Welcome to BugHound!")
+    print(request)
+    form = LoginForm()
+    context = {'form' : form}
+    print(context)
+    return render(request, 'issue_pages/login.html', context)
 
 def dbMaintenance(request):
     return render(request, 'issue_pages/databaseMaintenance.html')
