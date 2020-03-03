@@ -58,27 +58,17 @@ class ProgramForm(forms.Form):
     name = forms.CharField()
 
 # Employee Forms
-class EmployeeForm(forms.Form, UserCreationForm):
-    levelChoices = (
-        (1, '1'),
-        (2, '2'),
-        (3, '3')
-    )
-    departmentID = forms.ModelChoiceField(queryset=Department.objects.all())
-    name = forms.CharField()
-    userName = forms.CharField()
-    password = forms.CharField(widget=forms.PasswordInput)
-    level = forms.ChoiceField(choices=levelChoices)
-    widgets = {
-        'password': forms.PasswordInput(),
-    }
+class EmployeeForm(forms.ModelForm):
+    class Meta:
+        model = Employee
+        fields = '__all__'
 
-class EmployeeEditForm(forms.Form,UserChangeForm):
+class EmployeeEditForm(forms.Form):
     levelChoices = (
         (1, '1'),
         (2, '2'),
         (3, '3')
     )
+    name = forms.CharField(max_length=100)
     departmentID = forms.ModelChoiceField(queryset=Department.objects.all())
-    name = forms.CharField()
-    level = forms.ChoiceField(choices=levelChoices)
+    level = forms.ChoiceField(choices = levelChoices)

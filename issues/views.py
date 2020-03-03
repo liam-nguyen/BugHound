@@ -202,13 +202,19 @@ def searchEmployees(request):
 def editEmployee(request, employeeID):
     employee = Employee.objects.get(pk=employeeID)
     if request.method == 'POST':
+        print(1)
         form = EmployeeEditForm(request.POST)
         if form.is_valid():
             data = form.cleaned_data
             employee.name = data['name']
             employee.departmentID = data['departmentID']
-            employee.leve = data['level']
+            employee.level = data['level']
+
+            user = User.objects.get(username=Employee.objects.get(pk=employeeID).username)
+            if int(data['level']) > 2:
+                user.is_superuser = True
             employee.save()
+            redirect(searchEmployees)
     else:
         print({
             'name' : employee.name,
