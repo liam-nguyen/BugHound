@@ -1,6 +1,7 @@
 from django.db import models
 from model_utils import Choices
 from django.core.validators import MinValueValidator
+from django.contrib.auth.models import User
 import datetime
 
 # Create your models here.
@@ -110,7 +111,7 @@ class Employee(models.Model):
         (3, '3')
     )
     name = models.CharField(max_length=100, unique=True)
-    userName = models.CharField(max_length=25, unique=True, null=True)
+    userName = models.OneToOneField(User, max_length=25, unique=True, null=True, on_delete=models.CASCADE)
     password = models.CharField(max_length=25, null = True)
     level = models.IntegerField(choices= levelChoices, default=1)
     departmentID = models.ForeignKey(Department, on_delete=models.CASCADE)

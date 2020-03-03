@@ -1,6 +1,13 @@
 from django import forms
 import datetime
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from .models import Program, Version, Department, BugType, Severity, FunctionalArea, Employee, Status, Priority, Resolution
+
+class LoginForm(forms.ModelForm):
+    name = forms.CharField()
+    class Meta:
+        model = Employee
+        fields = ['name', 'password']
 
 # Issue Forms
 class IssueSearchForm(forms.Form):
@@ -51,7 +58,7 @@ class ProgramForm(forms.Form):
     name = forms.CharField()
 
 # Employee Forms
-class EmployeeForm(forms.Form):
+class EmployeeForm(forms.Form, UserCreationForm):
     levelChoices = (
         (1, '1'),
         (2, '2'),
@@ -66,7 +73,7 @@ class EmployeeForm(forms.Form):
         'password': forms.PasswordInput(),
     }
 
-class EmployeeEditForm(forms.Form):
+class EmployeeEditForm(forms.Form,UserChangeForm):
     levelChoices = (
         (1, '1'),
         (2, '2'),
