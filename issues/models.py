@@ -7,8 +7,6 @@ import datetime
 # Create your models here.
 
 
-#TODO Change Date Time fields to have Date only
-
 # Priority
 class Priority(models.Model):
     name = models.CharField(max_length=50, unique=True)

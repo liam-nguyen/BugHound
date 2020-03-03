@@ -1,13 +1,12 @@
 from django import forms
 import datetime
+from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from .models import Program, Version, Department, BugType, Severity, FunctionalArea, Employee, Status, Priority, Resolution
 
-class LoginForm(forms.ModelForm):
-    name = forms.CharField()
-    class Meta:
-        model = Employee
-        fields = ['name', 'password']
+class LoginForm(forms.Form):
+    username = forms.CharField(max_length=100)
+    password = forms.CharField(max_length=100)
 
 # Issue Forms
 class IssueSearchForm(forms.Form):
