@@ -11,6 +11,8 @@
       <th>AreaID</th>
       <th>ProgramID</th>
       <th>Program</th>
+      <th>V.</th>
+      <th>R.</th>
       <th>Area</th>
       <th>Action</th>
     </tr>
@@ -19,6 +21,8 @@
       <td>{{ area.id }}</td>
       <td>{{ area.programID.id }}</td>
       <td>{{ area.programID.name }}</td>
+      <td>{{ area.programID.version }}</td>
+      <td>{{ area.programID.release }}</td>
       <td>{{ area.name }}</td>
       <td><a href="./{{ area.id }}">Edit</a></td> <!--TODO: link this to the area belonging to this row-->
     </tr>
