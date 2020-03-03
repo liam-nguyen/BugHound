@@ -11,7 +11,7 @@
   <h1>Edit Employee -- {{ employee.name }}</h1>
   <p>Make any changes to the employee's information and press "Submit" when done.</p>
 
-  <form method="POST" action="{{ employee.id }}">
+  <form method="POST" action='/issues/employees/'>
     {% csrf_token %}
     {{ form }}
     <input type='Submit' value='Edit Employee'>

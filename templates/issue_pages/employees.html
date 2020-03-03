@@ -36,13 +36,13 @@
       <td>{{ employee.name }}</td>
       <td>{{ employee.departmentID.name }}</td>
       <td>{{ employee.level }}</td>
-      <td><a href="./employees/{{ employee.id }}">Edit</a></td> <!--TODO: link this to the employee belonging to this row-->
+      <td><a href="/issues/employees/{{ employee.id }}">Edit</a></td> <!--TODO: link this to the employee belonging to this row-->
     </tr>
   {% endfor %}
   </table >
   <br>
   <h2>Add an Employee</h2>
-  <form method="POST" action="./employees">
+  <form method="POST" action="/issues/employees/">
     {% csrf_token %}
     {{ form }}
     <input type='Submit' value='Add Employee'>
