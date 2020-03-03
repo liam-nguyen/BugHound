@@ -27,7 +27,9 @@ SECRET_KEY = 'z4gz1bmwl2)*9((%zj*w1qjxd-t#^wp(ekf@h(njyb51o7lx%w'
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+LOGIN_REDIRECT_URL = '/issues/'
+LOGIN_URL = '/issues/'
+LOGOUT_REDIRECT_URL = '/issues/'
 
 # Application definition
 
@@ -38,7 +40,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'issues',
+    'import_export'
 ]
+IMPORT_EXPORT_USE_TRANSACTIONS = True
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
