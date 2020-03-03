@@ -1,21 +1,6 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>BugHound</title>
-  <meta name="description" content="BugHound">
-  <meta name="author" content="SitePoint">
-</head>
+{% extends "issue_pages/base.html" %}
 
-<body>
-  <header>
-    <h1 style="display: inline; margin-right:20px;">Issue Search</h1>
-    <nav style="display: inline;">
-      <a href="./areas">Areas</a>
-      <a href="./issues">Issues</a>
-      <a href="./employees">Employees</a>
-    </nav>
-  </header>
+{% block content %}
   <p>Add Issue</p>
   <br>
   <form method="POST" action="./issues/">
@@ -24,5 +9,4 @@
     <input type='Submit' value='Add Issues'>
   </form>
 
-</body>
-</html>
+{% endblock %}
