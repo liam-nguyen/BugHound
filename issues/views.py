@@ -7,6 +7,8 @@ from django.core import serializers
 from .forms import AreaForm, ProgramForm, EmployeeForm, EmployeeEditForm, IssueSearchForm, IssueEditForm, LoginForm
 from django.forms.models import model_to_dict
 from django.shortcuts import redirect
+from django.contrib.auth import authenticate
+from django.contrib.auth.models import User
 
 
 
@@ -177,12 +179,20 @@ def searchEmployees(request):
         form = EmployeeForm(request.POST)
         if form.is_valid():
             data = form.cleaned_data
+
+            newUser = User.objects.create_user(username=data['username'],
+                            password=data['password'])
+            print(newUser)
+            if data['level'] > 2:
+                newUser.is_superuser = True
+            newUser.is_staff = True
             employee = Employee(name=data['name'],
-                                userName=data['userName'],
+                                username=data['username'],
                                 level=data['level'],
                                 password=data['password'],
                                 departmentID=data['departmentID'])
             employee.save()
+            newUser.save()
     else:
         form = EmployeeForm()
     context = {'employees' : employees,
