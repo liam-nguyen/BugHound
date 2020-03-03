@@ -7,9 +7,11 @@ from django.core import serializers
 from .forms import AreaForm, ProgramForm, EmployeeForm, EmployeeEditForm, IssueSearchForm, IssueEditForm, LoginForm
 from django.forms.models import model_to_dict
 from django.shortcuts import redirect
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.admin.views.decorators import staff_member_required
+from django.shortcuts import HttpResponseRedirect
 from .resources import FunctionalAreaResource, EmployeeResource, ProgramResource, IssueResource
 
 
@@ -29,11 +31,13 @@ def index(request):
             return render(request, 'issue_pages/index.html', context)
     return render(request, 'issue_pages/login.html', context)
 
+@login_required
 def dbMaintenance(request):
     return render(request, 'issue_pages/databaseMaintenance.html')
 
 
 # Issue
+@login_required
 def issue(request, issueID):
     # template = loader.get_template('templates/issue_pages/index.html')
     try:
@@ -43,6 +47,7 @@ def issue(request, issueID):
         raise Http404("Issue does not exist")
     return render(request, 'issue_pages/index.html', context)
 
+@login_required
 def addIssue(request):
     if request.method == 'POST':
         form = IssueEditForm(request.POST)
@@ -84,6 +89,7 @@ def addIssue(request):
     }
     return render(request, 'issue_pages/addIssue.html', context)
 
+@login_required
 def searchIssue(request):    
     if request.method == 'POST':
         form = IssueSearchForm(request.POST)
@@ -124,6 +130,7 @@ def editIssue(request, issueID):
 
 
 # Areas
+@login_required
 @staff_member_required
 def searchAreas(request):
     areas = FunctionalArea.objects.all()
@@ -142,6 +149,7 @@ def searchAreas(request):
                 'form' : form}
     return render(request, 'issue_pages/areas.html', context)
 
+@login_required
 @staff_member_required
 def editAreas(request, areaID):
     area = FunctionalArea.objects.get(pk=areaID)
@@ -167,6 +175,7 @@ def editAreas(request, areaID):
 
 
 # Programs
+@login_required
 @staff_member_required
 def searchPrograms(request):
     programs = Program.objects.all()
@@ -174,7 +183,7 @@ def searchPrograms(request):
         form = ProgramForm(request.POST)
         if form.is_valid():
             data = form.cleaned_data
-            program = Program(versionID = data['version'], release = data['release'],
+            program = Program(version = data['version'], release = data['release'],
                                 name = data['name'])
             program.save()
     else:
@@ -185,7 +194,30 @@ def searchPrograms(request):
     return render(request, 'issue_pages/programs.html', context)
 
 
+@login_required
+@staff_member_required
+def editPrograms(request, programID):
+    program = Program.objects.get(pk=programID)
+    if request.method == 'POST':
+        form = ProgramForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            program.name = data['name']
+            program.version = data['version']
+            program.release = data['release']
+            program.save()
+    else:
+        form = ProgramForm(model_to_dict(program))
+    context = {
+        'program' : program,
+        'form' : form
+    }
+    return render(request, 'issue_pages/program-edit.html', context)
+
+
+
 # Employees
+@login_required
 @staff_member_required
 def searchEmployees(request):
     print(request)
@@ -214,6 +246,7 @@ def searchEmployees(request):
             'form' : form}
     return render(request, 'issue_pages/employees.html', context)
 
+@login_required
 @staff_member_required
 def editEmployee(request, employeeID):
     employee = Employee.objects.get(pk=employeeID)
@@ -244,12 +277,13 @@ def editEmployee(request, employeeID):
     }
     return render(request, 'issue_pages/employee-edit.html', context)
 
-
+@login_required
 def export(request):
     if request.method == 'POST':
         file_format = request.POST['file-format']
 
         data = request.POST['Data']
+        # export = serializers.serialze("xml", )
         if data == 'Areas':
             dataset = FunctionalAreaResource()
             dataset = dataset.export()
@@ -270,3 +304,8 @@ def export(request):
             return response   
 
     return render(request, 'issue_pages/export.html')
+
+
+def logout_view(request):
+    logout(request)
+    return redirect(index)

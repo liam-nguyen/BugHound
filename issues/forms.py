@@ -52,7 +52,7 @@ class AreaForm(forms.Form):
 
 # Program Forms
 class ProgramForm(forms.Form):
-    version = forms.ModelChoiceField(queryset=Version.objects.all())
+    version = forms.IntegerField()
     release = forms.IntegerField()
     name = forms.CharField()
 

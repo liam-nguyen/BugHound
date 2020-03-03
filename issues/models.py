@@ -70,7 +70,8 @@ class Version(models.Model):
 
 # Program
 class Program(models.Model):
-    versionID = models.ForeignKey(Version, on_delete=models.CASCADE)
+    # versionID = models.ForeignKey(Version, on_delete=models.CASCADE)
+    version = models.IntegerField(validators=[MinValueValidator(1)])
     release = models.IntegerField(validators=[MinValueValidator(1)])
     name = models.CharField(max_length=50)
 
@@ -112,6 +113,9 @@ class Employee(models.Model):
     password = models.CharField(max_length=25, null = True)
     level = models.IntegerField(choices= levelChoices, default=1)
     departmentID = models.ForeignKey(Department, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
 
 
 # Group
