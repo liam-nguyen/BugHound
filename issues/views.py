@@ -4,6 +4,7 @@ from .models import Issue, FunctionalArea, Program, Employee
 from django.template import loader
 from .serializers import IssueSerializer
 from django.core import serializers
+from django.core.files import File
 from .forms import AreaForm, ProgramForm, EmployeeForm, EmployeeEditForm, IssueSearchForm, IssueEditForm, LoginForm
 from django.forms.models import model_to_dict
 from django.shortcuts import redirect
@@ -258,11 +259,12 @@ def editEmployee(request, employeeID):
             employee.name = data['name']
             employee.departmentID = data['departmentID']
             employee.level = data['level']
-
+            print(data)
             user = User.objects.get(username=Employee.objects.get(pk=employeeID).username)
             if int(data['level']) > 2:
                 user.is_superuser = True
             employee.save()
+            user.save()
             redirect(searchEmployees)
     else:
         print({
@@ -284,28 +286,37 @@ def export(request):
 
         data = request.POST['Data']
         # export = serializers.serialze("xml", )
-        if data == 'Areas':
-            dataset = FunctionalAreaResource()
-            dataset = dataset.export()
-        elif data == 'Programs':
-            dataset = ProgramResource()
-            dataset = dataset.export()
+        xml_mappings = {
+            'Areas' : FunctionalArea,
+            'Programs' : Program,
+            'Employees' : Employee
+        }
+        csv_mappings = {
+            'Areas' : FunctionalAreaResource,
+            'Programs' : ProgramResource,
+            'Employees' : EmployeeResource
+        }
         if file_format == 'CSV':
+            dataset = csv_mappings[data]()
+            dataset = dataset.export()
             response = HttpResponse(dataset.csv, content_type='text/csv')
             response['Content-Disposition'] = 'attachment; filename="exported_data.csv"'
             return response        
-        elif file_format == 'JSON':
-            response = HttpResponse(dataset.json, content_type='application/json')
-            response['Content-Disposition'] = 'attachment; filename="exported_data.json"'
-            return response
+        # elif file_format == 'JSON':
+            # response = HttpResponse(dataset.json, content_type='application/json')
+            # response['Content-Disposition'] = 'attachment; filename="exported_data.json"'
+            # return response
         elif file_format == 'XML':
-            response = HttpResponse(dataset.xls, content_type='application/xml')
-            response['Content-Disposition'] = 'attachment; filename="exported_data.xml"'
-            return response   
+            dataset = xml_mappings[data]
+            data = serializers.serialize('xml', dataset.objects.all())
+            f = open('output.xml', 'w')
+            myFile = File(f)
+            myFile.write(data)
+            myFile.close()
 
     return render(request, 'issue_pages/export.html')
 
 
 def logout_view(request):
     logout(request)
-    return redirect(index)
+    return HttpResponse('Logged Out!')
