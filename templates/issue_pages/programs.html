@@ -15,7 +15,7 @@
     <tr>
       <td>{{ program.id }}</td>
       <td>{{ program.name }}</td>
-      <td>{{ program.versionID.name }}</td>
+      <td>{{ program.version }}</td>
       <td>{{ program.release }}</td>
       <td><a href="./program-edit.html">Edit</a></td> <!--TODO: link this to the area belonging to this row-->
     </tr>
@@ -23,7 +23,7 @@
   </table >
   <br>
   <h2>Add Program</h2>
-  <form method="POST" action="programs">
+  <form method="POST" action="/issues/programs/">
     {% csrf_token %}
     {{ form }}
     <input type='Submit' value='Add Program'>

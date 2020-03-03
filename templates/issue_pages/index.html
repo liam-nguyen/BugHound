@@ -1,6 +1,5 @@
-{% extends "issue_pages/base.html" %}
 
-{% block content %}
+
   <p>Hello {{ name }} Welcome to BugHound!</p>
   <a href="/issues/addIssue/">Add a new Issue</a><br>
   <a href="/issues/issues/">Search for an Issue</a><br>
@@ -9,5 +8,3 @@
   {% else %}
   <h3>You do not have access to the database</h3>
   {% endif %}
-
-  {% endblock %}
