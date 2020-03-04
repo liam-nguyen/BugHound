@@ -16,7 +16,7 @@ function goBack() {
 }
 
 
-//the input, type, is either "area", "issue", or "employee"
+//the parameter, type, is either "area", "issue", or "employee"
 function deleteElement(elementType) {
   //TODO: pop up to confirm the deletion.
   //communicate to backend to delete the correct entry
