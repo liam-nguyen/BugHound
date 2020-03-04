@@ -1,13 +1,12 @@
 from django import forms
 import datetime
+from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from .models import Program, Version, Department, BugType, Severity, FunctionalArea, Employee, Status, Priority, Resolution
 
-class LoginForm(forms.ModelForm):
-    name = forms.CharField()
-    class Meta:
-        model = Employee
-        fields = ['name', 'password']
+class LoginForm(forms.Form):
+    username = forms.CharField(max_length=100)
+    password = forms.CharField(max_length=100)
 
 # Issue Forms
 class IssueSearchForm(forms.Form):
@@ -53,32 +52,22 @@ class AreaForm(forms.Form):
 
 # Program Forms
 class ProgramForm(forms.Form):
-    version = forms.ModelChoiceField(queryset=Version.objects.all())
+    version = forms.IntegerField()
     release = forms.IntegerField()
     name = forms.CharField()
 
 # Employee Forms
-class EmployeeForm(forms.Form, UserCreationForm):
-    levelChoices = (
-        (1, '1'),
-        (2, '2'),
-        (3, '3')
-    )
-    departmentID = forms.ModelChoiceField(queryset=Department.objects.all())
-    name = forms.CharField()
-    userName = forms.CharField()
-    password = forms.CharField(widget=forms.PasswordInput)
-    level = forms.ChoiceField(choices=levelChoices)
-    widgets = {
-        'password': forms.PasswordInput(),
-    }
+class EmployeeForm(forms.ModelForm):
+    class Meta:
+        model = Employee
+        fields = '__all__'
 
-class EmployeeEditForm(forms.Form,UserChangeForm):
+class EmployeeEditForm(forms.Form):
     levelChoices = (
         (1, '1'),
         (2, '2'),
         (3, '3')
     )
+    name = forms.CharField(max_length=100)
     departmentID = forms.ModelChoiceField(queryset=Department.objects.all())
-    name = forms.CharField()
-    level = forms.ChoiceField(choices=levelChoices)
+    level = forms.ChoiceField(choices = levelChoices)

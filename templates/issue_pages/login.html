@@ -11,10 +11,12 @@
   <h1>Welcome to BugHound</h1>
   <p>Please log in to continue:</p>
   <br>
+  <form method="POST">
   {% csrf_token %}
   {{ form }}
   <br>
   <input type=submit id=enter_button name="Enter">
+  </form>
   <br>
   <br>
   <p>Team: Marco Curci, Liam Nguyen, and Dillon Brown</p>

@@ -1,13 +1,11 @@
 from django.db import models
 from model_utils import Choices
 from django.core.validators import MinValueValidator
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, AbstractUser, AbstractBaseUser, BaseUserManager
 import datetime
 
 # Create your models here.
 
-
-#TODO Change Date Time fields to have Date only
 
 # Priority
 class Priority(models.Model):
@@ -72,12 +70,13 @@ class Version(models.Model):
 
 # Program
 class Program(models.Model):
-    versionID = models.ForeignKey(Version, on_delete=models.CASCADE)
+    # versionID = models.ForeignKey(Version, on_delete=models.CASCADE)
+    version = models.IntegerField(validators=[MinValueValidator(1)])
     release = models.IntegerField(validators=[MinValueValidator(1)])
     name = models.CharField(max_length=50)
 
     def __str__(self):
-        return f"{self.name}"
+        return f"{self.name} V:{self.version} R:{self.release}"
 
 
 # FunctionalArea
@@ -101,23 +100,23 @@ class Department(models.Model):
     def __str__(self):
         return self.name
 
+
 # Employee
 class Employee(models.Model):
-    # TODO break into first name last name?
-    # TODO Add permissions!
     levelChoices = (
         (1, '1'),
         (2, '2'),
         (3, '3')
     )
-    name = models.CharField(max_length=100, unique=True)
-    userName = models.OneToOneField(User, max_length=25, unique=True, null=True, on_delete=models.CASCADE)
+    name = models.CharField(max_length=100, unique=True, null=True)
+    username = models.CharField(max_length=25, unique=True, null=True)
     password = models.CharField(max_length=25, null = True)
     level = models.IntegerField(choices= levelChoices, default=1)
     departmentID = models.ForeignKey(Department, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
+
 
 # Group
 class Group(models.Model):

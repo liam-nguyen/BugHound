@@ -1,15 +1,15 @@
 {% extends "issue_pages/base.html" %}
 
 {% block content %}
-  <h1>Edit Area -- {{ area.name }}</h1>
+  <h1>Edit Program -- {{ program.name }}</h1>
   <p>Make any changes to the employee's information and press "Submit" when done.</p>
 
   <form method="POST">
     {% csrf_token %}
     {{ form }}
-    <input type='Submit' value='Edit Area'>
+    <input type='Submit' value='Edit Program'>
   </form>
-  <a href="/issues/areas/">Back to Areas</a>
+  <a href="/issues/programs/">Back to Programs</a>
   <br>
   <br>
 
