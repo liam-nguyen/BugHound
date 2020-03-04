@@ -1,0 +1,40 @@
+{% extends "issue_pages/base.html" %}
+
+{% block content %}
+  <p>Find issues by any of the following fields: "..."</p>
+  <br>
+  <div id=username_field>Keywords: <input type=text> <input type=submit name=Search></div>
+  <br>
+  <h2>Results</h2>
+  <table border="1">
+    <tr>
+      <th>AreaID</th>
+      <th>ProgramID</th>
+      <th>Program</th>
+      <th>V.</th>
+      <th>R.</th>
+      <th>Area</th>
+      <th>Action</th>
+    </tr>
+    {% for area in areas %}
+    <tr>
+      <td>{{ area.id }}</td>
+      <td>{{ area.programID.id }}</td>
+      <td>{{ area.programID.name }}</td>
+      <td>{{ area.programID.version }}</td>
+      <td>{{ area.programID.release }}</td>
+      <td>{{ area.name }}</td>
+      <td><a href="./{{ area.id }}">Edit</a></td> <!--TODO: link this to the area belonging to this row-->
+    </tr>
+    {% endfor %}
+  </table >
+  <br>
+  <h2>Add Area</h2>
+  <form method="POST" action="/issues/areas/">
+    {% csrf_token %}
+    {{ form }}
+    <input type='Submit' value='Add Area'>
+  </form>
+
+  
+{% endblock %}

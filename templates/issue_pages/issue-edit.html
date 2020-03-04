@@ -1,0 +1,13 @@
+{% extends "issue_pages/base.html" %}
+
+{% block content %}
+  <h1>Edit Issue -- </h1>
+  <p>Make any changes to the issue's information and press "Submit" when done.</p>
+  <br><!--TODO: add script to pre-polpulate fields with the existing data on file for the issue.-->
+  <form method="POST">
+    {% csrf_token %}
+    {{ form }}
+    <input type='Submit' value='Edit Issue'>
+  </form>
+  
+{% endblock %}
