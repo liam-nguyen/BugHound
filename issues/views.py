@@ -127,7 +127,13 @@ def searchIssue(request):
     return render(request, 'issue_pages/issues.html', context)
 
 def editIssue(request, issueID):
-    pass
+    issue = Issue.objects.get(pk=issueID)
+    IssueForm = IssueForm(model_to_dict(issue))
+    context = {
+        'form' : form
+    }
+    return render(request, 'issue_pages/issue-edit', context)
+
 
 
 # Areas
