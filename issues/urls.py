@@ -15,7 +15,8 @@ urlpatterns = [
     # Issue
     path('issues/', views.searchIssue, name='issues'),
     path('addIssue/', views.addIssue, name='addIssue'),
-    path("<int:issueID>/", views.issue, name='issue'),
+    # path("<int:issueID>/", views.issue, name='issue'),
+    path('issues/<int:issueID>', views.editIssue, name='editIssue'),
 
     # Area
     path('areas/', views.searchAreas, name='searchAreas'),
