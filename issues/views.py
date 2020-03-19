@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, Http404, JsonResponse
 from .models import Issue, FunctionalArea, Program, Employee
 from django.template import loader
-from .serializers import IssueSerializer
+# from .serializers import IssueSerializer
 from django.core import serializers
 from django.core.files import File
 from .forms import AreaForm, ProgramForm, EmployeeForm, EmployeeEditForm, IssueSearchForm, IssueEditForm, LoginForm
