@@ -1,10 +1,13 @@
+{% extends 'base.html' %}
 
-  <p>Hello {{ name }} Welcome to BugHound!</p>
+{% block content %}
   <a href="/issues/addIssue/">Add a new Issue</a><br>
   <a href="/issues/issues/">Search for an Issue</a><br>
   {% if level %}
-  <a href="/issues/dbmaintenance/">Database Maintenance</a><br>
+    <a href="/issues/dbmaintenance/">Database Maintenance</a><br>
   {% else %}
-  <h3>You do not have access to the database</h3>
-  <a href="/issues/logout/">Click here to logout</a>
+    <h3>You do not have access to the database</h3>
+    <a href="/issues/logout/">Click here to logout</a>
   {% endif %}
+{% endblock content %}
+  

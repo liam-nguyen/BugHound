@@ -1,11 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse, Http404, JsonResponse
-from .models import Issue, FunctionalArea, Program, Employee
 from django.template import loader
-# from .serializers import IssueSerializer
 from django.core import serializers
 from django.core.files import File
-from .forms import AreaForm, ProgramForm, EmployeeForm, EmployeeEditForm, IssueSearchForm, IssueEditForm, LoginForm
 from django.forms.models import model_to_dict
 from django.shortcuts import redirect
 from django.contrib.auth import authenticate, login, logout
@@ -13,24 +10,29 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import HttpResponseRedirect
+
 from .resources import FunctionalAreaResource, EmployeeResource, ProgramResource, IssueResource
+from .models import Issue, FunctionalArea, Program, Employee
+from .forms import AreaForm, ProgramForm, EmployeeForm, EmployeeEditForm, IssueSearchForm, IssueEditForm, LoginForm
+# from .serializers import IssueSerializer
 
 
 
 def index(request):
-    form = LoginForm()
-    context = {'form' : form}
-    if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(request, username=username, password=password)
-        context['level'] = user.is_superuser
-        context['name'] = user.username
-        print(context)
-        if user is not None:
-            login(request, user)
-            return render(request, 'issue_pages/index.html', context)
-    return render(request, 'issue_pages/login.html', context)
+    # form = LoginForm()
+    # context = {'form' : form}
+    # if request.method == 'POST':
+    #     username = request.POST['username']
+    #     password = request.POST['password']
+    #     user = authenticate(request, username=username, password=password)
+    #     context['level'] = user.is_superuser
+    #     context['name'] = user.username
+    #     print(context)
+    #     if user is not None:
+    #         login(request, user)
+    #         return render(request, 'issue_pages/index.html', context)
+    # return render(request, 'issue_pages/login.html', context)
+    return render(request, 'issue_pages/index.html')
 
 @login_required
 def dbMaintenance(request):

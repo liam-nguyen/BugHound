@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'issues',
-    'import_export'
+    'import_export',
+    'crispy_forms',
 ]
 IMPORT_EXPORT_USE_TRANSACTIONS = True
 
@@ -127,3 +128,6 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     STATIC_DIR
 ]
+
+# External Packages Settings
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
