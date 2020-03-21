@@ -10,6 +10,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import HttpResponseRedirect
+from django.views.generic.list import ListView
 
 from .resources import FunctionalAreaResource, EmployeeResource, ProgramResource, IssueResource
 from .models import Issue, FunctionalArea, Program, Employee
@@ -35,16 +36,16 @@ from .forms import AreaForm, ProgramForm, EmployeeForm, EmployeeEditForm, IssueS
 
 
 def index(request):
+    print(request.user)
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid(): 
             context = {'user': request.user}
-            print(request.user)
-            return render(request, 'issue_pages/index.html', context)
+            return render(request, 'issues/pages/index.html', context)
     else:
         form = LoginForm()
         context = {'form': form}
-        return render(request, 'issue_pages/login.html', context)
+        return render(request, 'issues/pages/login.html', context)
 
 @login_required
 def dbMaintenance(request):
@@ -151,24 +152,30 @@ def editIssue(request, issueID):
 
 
 # Areas
-@login_required
-@staff_member_required
-def searchAreas(request):
-    areas = FunctionalArea.objects.all()
-    if request.method == 'POST':
-        form = AreaForm(request.POST)
-        if form.is_valid():
-            print("valid")
-            print(form.cleaned_data)
-            data = form.cleaned_data
-            area = FunctionalArea(programID = data['program'], name=data['name'])
-            area.save()
-            print("Area saved!")
-    else:
-        form = AreaForm()
-    context = {'areas': areas,
-                'form' : form}
-    return render(request, 'issue_pages/areas.html', context)
+# @login_required
+# @staff_member_required
+# def searchAreas(request):
+#     areas = FunctionalArea.objects.all()
+#     if request.method == 'POST':
+#         form = AreaForm(request.POST)
+#         if form.is_valid():
+#             print("valid")
+#             print(form.cleaned_data)
+#             data = form.cleaned_data
+#             area = FunctionalArea(programID = data['program'], name=data['name'])
+#             area.save()
+#             print("Area saved!")
+#     else:
+#         form = AreaForm()
+#     context = {'areas': areas,
+#                 'form' : form}
+#     return render(request, 'issues/pages/areas.html', context)
+
+class AreaListView(ListView):
+    template_name = 'issues/pages/areas.html'
+    model = FunctionalArea
+    context_object_name = 'areas'
+    ordering = ['name']
 
 @login_required
 @staff_member_required

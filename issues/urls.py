@@ -1,6 +1,7 @@
 from django.urls import path
 
 from . import views
+from .views import AreaListView
 
 urlpatterns = [
     path('', views.index, name='index'),
@@ -19,7 +20,8 @@ urlpatterns = [
     path('issues/<int:issueID>', views.editIssue, name='editIssue'),
 
     # Area
-    path('areas/', views.searchAreas, name='searchAreas'),
+    # path('areas/', views.searchAreas, name='searchAreas'),
+    path('areas/', AreaListView.as_view(), name='AreaListView'),
     path('areas/<int:areaID>/', views.editAreas, name='editAreas'),
 
     # Program

@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from django.forms import ModelForm
 
 import datetime
 from .models import Program, Department, BugType, Severity, FunctionalArea, Employee, Status, Priority, Resolution
@@ -27,9 +28,10 @@ class IssueEditForm(forms.Form):
         model = Issue
 
 # Area Forms
-class AreaForm(forms.Form):
-    program = forms.ModelChoiceField(queryset=Program.objects.all())
-    name = forms.CharField()
+# class AreaForm(forms.Form):
+#     program = forms.ModelChoiceField(queryset=Program.objects.all())
+#     name = forms.CharField()
+
 
 # Program Forms
 class ProgramForm(forms.Form):
