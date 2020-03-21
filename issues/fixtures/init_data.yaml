@@ -36,6 +36,7 @@
   pk: 3
   fields:
     name: Fatal
+
 #Priority
 - model: issues.Priority
   pk: 1
@@ -61,6 +62,7 @@
   pk: 6
   fields:
     name: Optional
+
 #Resolution
 - model: issues.Resolution
   pk: 1
@@ -98,6 +100,7 @@
   pk: 9
   fields:
     name: Duplicate
+
 #Status
 - model: issues.Status
   pk: 1

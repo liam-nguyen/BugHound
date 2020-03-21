@@ -14,10 +14,7 @@
     <header>
       <h1 style="display: inline; margin-right:20px;">BugHound</h1>
       <nav style="display: inline;">
-        <a href={% url "AreaListView" %}>Areas</a>
-        <a href="/issues/issues/">Issues</a>
-        <a href="/issues/employees/">Employees</a>
-        <a href="/issues/programs/">Programs</a>
+        <a href="{% url 'IssueListView' %}">Issues</a>
         <a href="/issues/dbmaintenance/">Database</a>
         <a href="/issues/logout/">Logout</a>
       </nav>

@@ -149,24 +149,44 @@ class Issue(models.Model):
     severity = models.ForeignKey(Severity, on_delete=models.CASCADE)
     reportedBy = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name='employee_reportedByID')
     functionalArea = models.ForeignKey(FunctionalArea, on_delete=models.CASCADE)
-    assignedTo = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name='employee_assignedToID')
-    status = models.ForeignKey(Status, on_delete=models.CASCADE)
+    assignedTo = models.ForeignKey(
+        Employee, 
+        on_delete=models.CASCADE, related_name='employee_assignedToID',
+        null=True,
+        blank=True)
+    status = models.ForeignKey(Status, on_delete=models.CASCADE, default="OPEN")
     priority = models.ForeignKey(Priority, on_delete=models.CASCADE)
     resolution = models.ForeignKey(Resolution, on_delete=models.CASCADE)
-    testedBy = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name='employee_testedByID')
-    attachment = models.CharField(max_length = 1000)
+    testedBy = models.ForeignKey(
+        Employee, 
+        on_delete=models.CASCADE, related_name='employee_testedByID',
+        null=True,
+        blank=True)
+    attachment = models.CharField(
+        max_length = 1000,
+        null=True, 
+        blank=True)
     
-    summary = models.CharField(max_length=500)
-    suggestedFix = models.CharField(max_length=500)
+    summary = models.CharField(
+        max_length=500, 
+        null=True, 
+        blank=True)
+    suggestedFix = models.CharField(
+        max_length=500, 
+        null=True, 
+        blank=True)
     issueDate = models.DateTimeField(default=timezone.now)
-    isAssignedToGroup = models.BooleanField()
-    comments = models.CharField(max_length=500)
-    resolveByDate = models.DateTimeField()
-    testByDate = models.DateTimeField()
-    treatedAsDeferred = models.BooleanField()
-    reproducible = models.BooleanField()
+    isAssignedToGroup = models.BooleanField(null=True)
+    comments = models.CharField(
+        max_length=500, 
+        null=True, 
+        blank=True)
+    resolveByDate = models.DateTimeField(null=True, blank=True)
+    testByDate = models.DateTimeField(null=True, blank=True)
+    treatedAsDeferred = models.BooleanField(default=False)
+    reproducible = models.BooleanField(null=True)
 
     def __str__(self):
-        return f"[programID: {self.programID}, summary: {self.summary}]"
+        return f"[BugID: {self.id}]"
 
 

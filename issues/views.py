@@ -13,13 +13,13 @@ from django.shortcuts import HttpResponseRedirect
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.contrib import messages
-from django.views.generic.edit import UpdateView, DeleteView
+from django.views.generic.edit import UpdateView, DeleteView, CreateView
 from django.urls import reverse_lazy
 
 from .resources import FunctionalAreaResource, EmployeeResource, ProgramResource, IssueResource
 from .models import Issue, FunctionalArea, Program, Employee
-from .forms import ProgramForm, EmployeeForm, EmployeeEditForm, IssueSearchForm, IssueEditForm, LoginForm
-from .forms import AreaForm
+from .forms import ProgramForm, EmployeeForm, EmployeeEditForm, LoginForm
+from .forms import AreaForm, IssueForm
 # from .serializers import IssueSerializer
 
 
@@ -57,102 +57,134 @@ def dbMaintenance(request):
     return render(request, 'issue_pages/databaseMaintenance.html')
 
 
-# Issue
-@login_required
-def issue(request, issueID):
-    # template = loader.get_template('templates/issue_pages/index.html')
-    try:
-        issue = Issue.objects.get(pk=issueID)
-        context = {'issue' : issue}
-    except Issue.DoesNotExist:
-        raise Http404("Issue does not exist")
-    return render(request, 'issue_pages/index.html', context)
+########## Issues #############
+# @login_required
+# def issue(request, issueID):
+#     # template = loader.get_template('templates/issue_pages/index.html')
+#     try:
+#         issue = Issue.objects.get(pk=issueID)
+#         context = {'issue' : issue}
+#     except Issue.DoesNotExist:
+#         raise Http404("Issue does not exist")
+#     return render(request, 'issue_pages/index.html', context)
 
-@login_required
-def addIssue(request):
-    if request.method == 'POST':
-        form = IssueEditForm(request.POST)
-        if form.is_valid():
-            data = form.cleaned_data
-            issue = Issue(
-                programID = data['program'],
-                bugtypeID = data['bugType'],
-                severityID = data['severity'],
-                reportedByID = data['reported_by'],
-                functionalAreaID = data['area'],
-                assignedToID = data['assigned_to'],
-                statusID = data['status'],
-                priorityID = data['priority'],
-                resolutionID = data['resolution'],
-                testedByID = data['tested_by_id'],
-                attachmentID = data['attachment'],
-                summary = data['summary'],
-                suggestedFix = data['suggestedFix'],
-                issueDate = data['issueDate'],
-                isAssignedToGroup = data['isAssignedToGroup'],
-                comments = data['comments'],
-                resolveByDate = data['resolveByDate'],
-                testByDate = data['testByDate'],
-                treatedAsDeferred = data['treatedAsDeferred'],
-                reproducible = data['reproducible']
-            )
-            issue.save()
-            print(f"Issue saved. ID = {issue.id}")
-        else:
-            issue = None
-    else:
-        form = IssueEditForm()
-        issue = None
-    context = {
-        'issue' : issue,
-        'form' : form
-    }
-    print("AddIssue - Form", form)
-    return render(request, 'issue_pages/addIssue.html', context)
+# @login_required
+# def addIssue(request):
+#     if request.method == 'POST':
+#         form = IssueEditForm(request.POST)
+#         if form.is_valid():
+#             data = form.cleaned_data
+#             issue = Issue(
+#                 programID = data['program'],
+#                 bugtypeID = data['bugType'],
+#                 severityID = data['severity'],
+#                 reportedByID = data['reported_by'],
+#                 functionalAreaID = data['area'],
+#                 assignedToID = data['assigned_to'],
+#                 statusID = data['status'],
+#                 priorityID = data['priority'],
+#                 resolutionID = data['resolution'],
+#                 testedByID = data['tested_by_id'],
+#                 attachmentID = data['attachment'],
+#                 summary = data['summary'],
+#                 suggestedFix = data['suggestedFix'],
+#                 issueDate = data['issueDate'],
+#                 isAssignedToGroup = data['isAssignedToGroup'],
+#                 comments = data['comments'],
+#                 resolveByDate = data['resolveByDate'],
+#                 testByDate = data['testByDate'],
+#                 treatedAsDeferred = data['treatedAsDeferred'],
+#                 reproducible = data['reproducible']
+#             )
+#             issue.save()
+#             print(f"Issue saved. ID = {issue.id}")
+#         else:
+#             issue = None
+#     else:
+#         form = IssueEditForm()
+#         issue = None
+#     context = {
+#         'issue' : issue,
+#         'form' : form
+#     }
+#     print("AddIssue - Form", form)
+#     return render(request, 'issue_pages/addIssue.html', context)
 
-@login_required
-def searchIssue(request):    
-    if request.method == 'POST':
-        form = IssueSearchForm(request.POST)
-        if form.is_valid():
-            data = form.cleaned_data
-            query = {}
-            if data['program']:
-                query['programID'] = data['program']
-            if data['bugType']:
-                query['bugtypeID'] = data['bugType']
-            if data['severity']:
-                query['severityID'] = data['severity']
-            if data['area']:
-                query['functionalAreaID'] = data['area']
-            if data['assigned_to']:
-                query['assignedToID'] = data['assigned_to']
-            if data['reported_by']:
-                query['reportedByID'] = data['reported_by']
-            if data['status']:
-                query['statusID'] = data['status']
-            if data['priority']:
-                query['priorityID'] = data['priority']
-            if data['resolution']:
-                query['resolutionID'] = data['resolution']
-            issue = Issue.objects.filter(**query)
-            print(issue)
-    else:
-        form = IssueSearchForm()
-        issue = Issue.objects.all()
-    context = {
-        'issues': issue,
-        'form' : form
-    }
-    return render(request, 'issue_pages/issues.html', context)
+# @login_required
+# def searchIssue(request):    
+#     if request.method == 'POST':
+#         form = IssueSearchForm(request.POST)
+#         if form.is_valid():
+#             data = form.cleaned_data
+#             query = {}
+#             if data['program']:
+#                 query['programID'] = data['program']
+#             if data['bugType']:
+#                 query['bugtypeID'] = data['bugType']
+#             if data['severity']:
+#                 query['severityID'] = data['severity']
+#             if data['area']:
+#                 query['functionalAreaID'] = data['area']
+#             if data['assigned_to']:
+#                 query['assignedToID'] = data['assigned_to']
+#             if data['reported_by']:
+#                 query['reportedByID'] = data['reported_by']
+#             if data['status']:
+#                 query['statusID'] = data['status']
+#             if data['priority']:
+#                 query['priorityID'] = data['priority']
+#             if data['resolution']:
+#                 query['resolutionID'] = data['resolution']
+#             issue = Issue.objects.filter(**query)
+#             print(issue)
+#     else:
+#         form = IssueSearchForm()
+#         issue = Issue.objects.all()
+#     context = {
+#         'issues': issue,
+#         'form' : form
+#     }
+#     return render(request, 'issue_pages/issues.html', context)
 
-def editIssue(request, issueID):
-    issue = Issue.objects.get(pk=issueID)
-    IssueForm = IssueForm(model_to_dict(issue))
-    context = {
-        'form' : form
-    }
-    return render(request, 'issue_pages/issue-edit', context)
+# def editIssue(request, issueID):
+#     issue = Issue.objects.get(pk=issueID)
+#     IssueForm = IssueForm(model_to_dict(issue))
+#     context = {
+#         'form' : form
+#     }
+#     return render(request, 'issue_pages/issue-edit', context)
+
+class IssueListView(ListView):
+    template_name = 'issues/pages/issues/issues.html'
+    model = Issue
+    paginate_by = 5
+
+class IssueDetailView(DetailView):
+    template_name = 'issues/pages/issues/issues_detail.html'
+    model = Issue
+
+    def get_context_data(self, **kwargs):
+        context = super(IssueDetailView, self).get_context_data(**kwargs)
+        fields = [field.name for field in Issue._meta.get_fields()]
+        context['fields'] = fields
+        return context
+   
+class IssueCreateView(CreateView):
+    model = Issue
+    fields = '__all__'
+    template_name = 'issues/pages/issues/issues_create.html'
+    success_url = reverse_lazy('IssueListView')
+
+class IssueUpdateView(UpdateView):
+    model = Issue
+    template_name = 'issues/pages/issues/issues_update.html'
+    success_url = reverse_lazy('IssueListView')
+    fields = '__all__'
+
+class IssueDeleteView(DeleteView):
+    model = Issue
+    template_name = 'issues/pages/issues/issues_delete.html'
+    success_url = reverse_lazy('IssueListView')
 
 ########## Areas #############
 def area_create(request):
