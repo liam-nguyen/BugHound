@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 
 import datetime
-from .models import Program, Version, Department, BugType, Severity, FunctionalArea, Employee, Status, Priority, Resolution
+from .models import Program, Department, BugType, Severity, FunctionalArea, Employee, Status, Priority, Resolution
 from .models import Issue
 
 class LoginForm(forms.Form):
