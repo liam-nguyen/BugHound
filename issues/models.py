@@ -1,11 +1,9 @@
 from django.db import models
-from model_utils import Choices
 from django.core.validators import MinValueValidator
 from django.contrib.auth.models import User, AbstractUser, AbstractBaseUser, BaseUserManager
+
 import datetime
-
-# Create your models here.
-
+from model_utils import Choices
 
 # Priority
 class Priority(models.Model):
@@ -14,8 +12,6 @@ class Priority(models.Model):
     def __str__(self):
         return self.name
 
-
-
 # Status
 class Status(models.Model):
     STATUS = Choices("Open",  "Closed")
@@ -23,7 +19,6 @@ class Status(models.Model):
 
     def __str__(self):
         return self.name
-
 
 # IssueType
 class BugType(models.Model):

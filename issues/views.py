@@ -18,21 +18,33 @@ from .forms import AreaForm, ProgramForm, EmployeeForm, EmployeeEditForm, IssueS
 
 
 
+# def index(request):
+#     form = LoginForm()
+#     context = {'form' : form}
+#     if request.method == 'POST':
+#         username = request.POST['username']
+#         password = request.POST['password']
+#         user = authenticate(request, username=username, password=password)
+#         context['level'] = user.is_superuser
+#         context['name'] = user.username
+#         if user is not None:
+#             login(request, user)
+#             return render(request, 'issue_pages/index.html', context)
+#     return render(request, 'issue_pages/login.html', context)
+#     # return render(request, 'issue_pages/index.html')
+
+
 def index(request):
-    # form = LoginForm()
-    # context = {'form' : form}
-    # if request.method == 'POST':
-    #     username = request.POST['username']
-    #     password = request.POST['password']
-    #     user = authenticate(request, username=username, password=password)
-    #     context['level'] = user.is_superuser
-    #     context['name'] = user.username
-    #     print(context)
-    #     if user is not None:
-    #         login(request, user)
-    #         return render(request, 'issue_pages/index.html', context)
-    # return render(request, 'issue_pages/login.html', context)
-    return render(request, 'issue_pages/index.html')
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid(): 
+            context = {'user': request.user}
+            print(request.user)
+            return render(request, 'issue_pages/index.html', context)
+    else:
+        form = LoginForm()
+        context = {'form': form}
+        return render(request, 'issue_pages/login.html', context)
 
 @login_required
 def dbMaintenance(request):
@@ -56,7 +68,6 @@ def addIssue(request):
         form = IssueEditForm(request.POST)
         if form.is_valid():
             data = form.cleaned_data
-            
             issue = Issue(
                 programID = data['program'],
                 bugtypeID = data['bugType'],
@@ -90,6 +101,7 @@ def addIssue(request):
         'issue' : issue,
         'form' : form
     }
+    print("AddIssue - Form", form)
     return render(request, 'issue_pages/addIssue.html', context)
 
 @login_required

@@ -1,7 +1,8 @@
 from django import forms
-import datetime
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+
+import datetime
 from .models import Program, Version, Department, BugType, Severity, FunctionalArea, Employee, Status, Priority, Resolution
 from .models import Issue
 
@@ -24,8 +25,6 @@ class IssueSearchForm(forms.Form):
 class IssueEditForm(forms.Form):
     class Meta:
         model = Issue
-
-
 
 # Area Forms
 class AreaForm(forms.Form):
