@@ -31,7 +31,10 @@ class IssueEditForm(forms.Form):
 # class AreaForm(forms.Form):
 #     program = forms.ModelChoiceField(queryset=Program.objects.all())
 #     name = forms.CharField()
-
+class AreaForm(ModelForm):
+    class Meta:
+        model = FunctionalArea
+        fields = ['name']
 
 # Program Forms
 class ProgramForm(forms.Form):

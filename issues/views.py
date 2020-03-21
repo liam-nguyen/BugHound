@@ -11,10 +11,15 @@ from django.contrib.auth.models import User
 from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import HttpResponseRedirect
 from django.views.generic.list import ListView
+from django.views.generic.detail import DetailView
+from django.contrib import messages
+from django.views.generic.edit import UpdateView, DeleteView
+from django.urls import reverse_lazy
 
 from .resources import FunctionalAreaResource, EmployeeResource, ProgramResource, IssueResource
 from .models import Issue, FunctionalArea, Program, Employee
-from .forms import AreaForm, ProgramForm, EmployeeForm, EmployeeEditForm, IssueSearchForm, IssueEditForm, LoginForm
+from .forms import ProgramForm, EmployeeForm, EmployeeEditForm, IssueSearchForm, IssueEditForm, LoginForm
+from .forms import AreaForm
 # from .serializers import IssueSerializer
 
 
@@ -149,9 +154,36 @@ def editIssue(request, issueID):
     }
     return render(request, 'issue_pages/issue-edit', context)
 
+########## Areas #############
+def area_create(request):
+    if request.method == "POST":
+        form = AreaForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('AreaListView')
+    else:
+        form = AreaForm()
+    context = {'form': form}
+    return render(request, 'issues/pages/areas/areas_create.html', context)
 
+class AreaListView(ListView):
+    template_name = 'issues/pages/areas/areas.html'
+    model = FunctionalArea
+    context_object_name = 'areas'
+    ordering = ['name']
+    paginate_by = 5
 
-# Areas
+class AreaUpdateView(UpdateView):
+    template_name = 'issues/pages/areas/areas_update.html'
+    model = FunctionalArea
+    fields = ['name']
+    success_url = reverse_lazy('AreaListView')
+
+class AreaDeleteView(DeleteView):
+    template_name = 'issues/pages/areas/areas_delete.html'
+    model = FunctionalArea
+    success_url = reverse_lazy('AreaListView')
+
 # @login_required
 # @staff_member_required
 # def searchAreas(request):
@@ -171,34 +203,22 @@ def editIssue(request, issueID):
 #                 'form' : form}
 #     return render(request, 'issues/pages/areas.html', context)
 
-class AreaListView(ListView):
-    template_name = 'issues/pages/areas.html'
-    model = FunctionalArea
-    context_object_name = 'areas'
-    ordering = ['name']
-
-@login_required
-@staff_member_required
-def editAreas(request, areaID):
-    area = FunctionalArea.objects.get(pk=areaID)
-    if request.method == 'POST':
-        form = AreaForm(request.POST)
-        if form.is_valid():
-            data = form.cleaned_data
-            area.name = data['name']
-            area.program = data['program']
-            area.save()
-            return redirect(searchAreas)
-    else:
-        form = AreaForm({
-            'program' : area.programID,
-            'name' : area.name
-        })
-    context = {
-        'area' : area,
-        'form' : form
-    }
-    return render(request, 'issue_pages/areas-edit.html', context)
+# @login_required
+# @staff_member_required
+# def editAreas(request, area_id):
+#     area = FunctionalArea.objects.get(pk=area_id)
+#     if request.method == 'POST':
+#         form = AreaForm(request.POST)
+#         if form.is_valid():
+#             data = form.cleaned_data
+#             area.name = data['name']
+#             area.program = data['program']
+#             area.save()
+#             return redirect("AreaListView")
+#     else:
+#         form = AreaForm()
+#     context = {'form' : form}
+#     return render(request, AreaListView.as_view(), context)
 
 
 

@@ -1,7 +1,7 @@
 from django.urls import path
 
 from . import views
-from .views import AreaListView
+from .views import AreaListView, area_create, AreaUpdateView, AreaDeleteView
 
 urlpatterns = [
     path('', views.index, name='index'),
@@ -21,8 +21,10 @@ urlpatterns = [
 
     # Area
     # path('areas/', views.searchAreas, name='searchAreas'),
+    path('areas/create', area_create, name='area_create'),
+    path('areas/update/<int:pk>/', AreaUpdateView.as_view(), name='AreaUpdateView'),
+    path('areas/delete/<int:pk>/', AreaDeleteView.as_view(), name='AreaDeleteView'),
     path('areas/', AreaListView.as_view(), name='AreaListView'),
-    path('areas/<int:areaID>/', views.editAreas, name='editAreas'),
 
     # Program
     path('programs/', views.searchPrograms, name='programs'),
