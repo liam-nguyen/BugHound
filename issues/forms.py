@@ -8,8 +8,8 @@ from .models import Program, Department, BugType, Severity, FunctionalArea, Empl
 from .models import Issue
 
 class LoginForm(forms.Form):
-    username = forms.CharField(max_length=100)
-    password = forms.CharField(max_length=100)
+    username = forms.CharField(max_length=100, required=True)
+    password = forms.CharField(max_length=100, required=True)
 
 # Issue Forms
 # class IssueSearchForm(forms.Form):
@@ -47,10 +47,22 @@ class ProgramForm(forms.Form):
     name = forms.CharField()
 
 # Employee Forms
-class EmployeeForm(forms.ModelForm):
+class EmployeeForm(ModelForm):
+    username = forms.CharField(max_length=200)
+    password = forms.CharField(max_length=32, widget=forms.PasswordInput)
+    confirm_password = forms.CharField(widget=forms.PasswordInput())
+    
     class Meta:
         model = Employee
-        fields = '__all__'
+        fields = ['level', 'department', 'first_name', 'last_name']
+
+    def clean(self):
+        cleaned_data = super(EmployeeForm, self).clean()
+        password = cleaned_data.get("password")
+        confirm_password = cleaned_data.get("confirm_password")
+
+        if password != confirm_password:
+            raise forms.ValidationError("password and confirm_password does not match")
 
 class EmployeeEditForm(forms.Form):
     levelChoices = (
@@ -61,3 +73,4 @@ class EmployeeEditForm(forms.Form):
     name = forms.CharField(max_length=100)
     departmentID = forms.ModelChoiceField(queryset=Department.objects.all())
     level = forms.ChoiceField(choices = levelChoices)
+

@@ -120,12 +120,13 @@ class Employee(models.Model):
     levelChoices = [
         (1, '1'),
         (2, '2'),
-        (3, '3'),
     ]
 
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, unique=True)
+    first_name = models.CharField(max_length=200)
+    last_name = models.CharField(max_length=200)
     level = models.IntegerField(choices= levelChoices, default=1)
-    departmentID = models.ForeignKey(Department, on_delete=models.CASCADE)
+    department = models.ForeignKey(Department, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
         return self.user.username

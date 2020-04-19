@@ -41,16 +41,58 @@ from .forms import AreaForm, IssueForm
 
 
 def index(request):
-    print(request.user)
+    if request.user.is_authenticated:
+        return redirect(reverse_lazy('IssueListView'))
+    else: 
+        return redirect(reverse_lazy('login_view'))
+
+
+def login_view(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
-        if form.is_valid(): 
-            context = {'user': request.user}
-            return render(request, 'issues/pages/index.html', context)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user = authenticate(username=username, password=password)
+            if user is not None and user.is_active:
+                login(request, user)
+                return redirect(reverse_lazy('IssueListView'))
+            messages.error(request, "Invalid username or password")
     else:
         form = LoginForm()
-        context = {'form': form}
-        return render(request, 'issues/pages/login.html', context)
+    context = {'form': form}
+    return render(request, 'issues/pages/login.html', context)
+
+def logout_view(request):
+    logout(request)
+    return render(request, 'issues/pages/logout.html')
+
+def register_view(request):
+    form = EmployeeForm()
+    context = {'form': form}
+
+    if request.method == 'POST':
+        form = EmployeeForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            try:
+                newUser = User.objects.create_user(username=data['username'],
+                                                   password=data['password'])
+                if data['level'] > 1:
+                    newUser.is_staff = True
+                newUser.save()
+
+                employee = form.save(commit=False)
+                employee.user = newUser
+                employee.save()
+                messages.success(
+                    request, "Registered, please log in.")
+                return redirect(reverse_lazy('login_view'))
+            except Exception as e:
+                messages.error(request, e)
+                return render(request, 'issues/pages/register.html', context)
+        return render(request, 'issues/pages/register.html', context)
+    return render(request, 'issues/pages/register.html', context)
 
 @login_required
 def dbMaintenance(request):
@@ -252,8 +294,6 @@ class AreaDeleteView(DeleteView):
 #     context = {'form' : form}
 #     return render(request, AreaListView.as_view(), context)
 
-
-
 # Programs
 @login_required
 @staff_member_required
@@ -297,34 +337,34 @@ def editPrograms(request, programID):
 
 
 # Employees
-@login_required
-@staff_member_required
-def searchEmployees(request):
-    print(request)
-    employees = Employee.objects.all()
-    if request.method == 'POST':
-        form = EmployeeForm(request.POST)
-        if form.is_valid():
-            data = form.cleaned_data
+# @login_required
+# @staff_member_required
+# def searchEmployees(request):
+#     print(request)
+#     employees = Employee.objects.all()
+#     if request.method == 'POST':
+#         form = EmployeeForm(request.POST)
+#         if form.is_valid():
+#             data = form.cleaned_data
 
-            newUser = User.objects.create_user(username=data['username'],
-                            password=data['password'])
-            print(newUser)
-            if data['level'] > 2:
-                newUser.is_superuser = True
-            newUser.is_staff = True
-            employee = Employee(name=data['name'],
-                                username=data['username'],
-                                level=data['level'],
-                                password=data['password'],
-                                departmentID=data['departmentID'])
-            employee.save()
-            newUser.save()
-    else:
-        form = EmployeeForm()
-    context = {'employees' : employees,
-            'form' : form}
-    return render(request, 'issue_pages/employees.html', context)
+#             newUser = User.objects.create_user(username=data['username'],
+#                             password=data['password'])
+#             print(newUser)
+#             if data['level'] > 2:
+#                 newUser.is_superuser = True
+#             newUser.is_staff = True
+#             employee = Employee(name=data['name'],
+#                                 username=data['username'],
+#                                 level=data['level'],
+#                                 password=data['password'],
+#                                 departmentID=data['departmentID'])
+#             employee.save()
+#             newUser.save()
+#     else:
+#         form = EmployeeForm()
+#     context = {'employees' : employees,
+#             'form' : form}
+#     return render(request, 'issue_pages/employees.html', context)
 
 @login_required
 @staff_member_required
@@ -395,7 +435,6 @@ def export(request):
 
     return render(request, 'issue_pages/export.html')
 
-
-def logout_view(request):
-    logout(request)
-    return HttpResponse('Logged Out!')
+# def logout_view(request):
+#     logout(request)
+#     return HttpResponse('Logged Out!')
