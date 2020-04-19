@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, Http404, JsonResponse
 from .models import Issue, FunctionalArea, Program, Employee
 from django.template import loader
-from .serializers import IssueSerializer
+# from .serializers import IssueSerializer
 from django.core import serializers
 from django.core.files import File
 from .forms import AreaForm, ProgramForm, EmployeeForm, EmployeeEditForm, IssueSearchForm, IssueEditForm, LoginForm
@@ -54,7 +54,7 @@ def addIssue(request):
         form = IssueEditForm(request.POST)
         if form.is_valid():
             data = form.cleaned_data
-            
+
             issue = Issue(
                 programID = data['program'],
                 bugtypeID = data['bugType'],
@@ -91,7 +91,7 @@ def addIssue(request):
     return render(request, 'issue_pages/addIssue.html', context)
 
 @login_required
-def searchIssue(request):    
+def searchIssue(request):
     if request.method == 'POST':
         form = IssueSearchForm(request.POST)
         if form.is_valid():
@@ -301,7 +301,7 @@ def export(request):
             dataset = dataset.export()
             response = HttpResponse(dataset.csv, content_type='text/csv')
             response['Content-Disposition'] = 'attachment; filename="exported_data.csv"'
-            return response        
+            return response
         # elif file_format == 'JSON':
             # response = HttpResponse(dataset.json, content_type='application/json')
             # response['Content-Disposition'] = 'attachment; filename="exported_data.json"'
