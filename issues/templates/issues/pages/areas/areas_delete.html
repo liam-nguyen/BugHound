@@ -1,0 +1,21 @@
+{% extends 'issues/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<h4>Delete Area</h4>
+{% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li>
+            {{ message }}
+        </li>
+        {% endfor %}
+    </ul>
+{% endif %}
+<div>
+    <form method="POST"> {% csrf_token %}
+        <p>Are you sure you want to delete "{{ object }}"?</p>
+        <button type="submit" class="btn btn btn-info">Confirm</button>
+    </form>
+</div>
+{% endblock content %}

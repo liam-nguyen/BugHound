@@ -1,0 +1,20 @@
+{% extends "issues/base.html" %}
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+  {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li>
+            {{ message }}
+        </li>
+        {% endfor %}
+    </ul>
+  {% endif %}
+  <h2>Add an Employee</h2>
+  <form method="POST">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <input type='Submit' value='Add Employee'>
+{% endblock %}

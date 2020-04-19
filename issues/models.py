@@ -1,11 +1,10 @@
 from django.db import models
-from model_utils import Choices
 from django.core.validators import MinValueValidator
 from django.contrib.auth.models import User, AbstractUser, AbstractBaseUser, BaseUserManager
+from django.utils import timezone
+
 import datetime
-
-# Create your models here.
-
+from model_utils import Choices
 
 # Priority
 class Priority(models.Model):
@@ -14,43 +13,58 @@ class Priority(models.Model):
     def __str__(self):
         return self.name
 
-
-
 # Status
 class Status(models.Model):
-    STATUS = Choices("Open",  "Closed")
-    name = models.CharField(choices=STATUS, default=STATUS.Open, max_length=50, unique=True)
+    name = models.CharField(
+        max_length=200, 
+        unique=True, 
+        null=False, 
+        blank=False)
 
     def __str__(self):
         return self.name
-
 
 # IssueType
 class BugType(models.Model):
-    STATUS = Choices("Coding Error", "Design Issue", "Suggestion", "Documentation", 
-                    "Hardware", "Query")
-    name = models.CharField(choices=STATUS,  max_length=50, unique=True)
+    name = models.CharField(
+        max_length=200,
+        unique=True,
+        null=False,
+        blank=False)
+        
     def __str__(self):
-        return self.name
+        return f'{self.id} - {self.name}'
 
 # Severity
 class Severity(models.Model):
-    # name = models.CharField(max_length=50, unique=True)
-    severity = models.IntegerField(unique=True)
+    name = models.CharField(
+        max_length=200,
+        unique=True,
+        null=False,
+        blank=False)
+
     def __str__(self):
-        return str(self.severity)
+        return str(self.name)
 
 # Resolution
 class Resolution(models.Model):
-    STATUS = Choices("Pending", "Fixed", "Irreproducible", "Deferred", "As designed", 
-                    "Withdrawn by reporter", "Need more info", "Disagree with suggestion", "Duplicate")
-    name = models.CharField(choices=STATUS, default=STATUS.Pending ,max_length=50, unique=True)
+    name = models.CharField(
+        max_length=200,
+        unique=True,
+        null=False,
+        blank=False)
+    
     def __str__(self):
         return self.name
 
 # AttachmentType
 class AttachmentType(models.Model):
-    name = models.CharField(max_length=50, unique=True)
+    name = models.CharField(
+        max_length=200,
+        unique=True,
+        null=False,
+        blank=False)
+
     def __str__(self):
         return self.name
 
@@ -58,105 +72,122 @@ class AttachmentType(models.Model):
 class Attachment(models.Model):
     typeID = models.ForeignKey(AttachmentType, on_delete=models.CASCADE)
     location = models.CharField(max_length=500)
+    
     def __str__(self):
         return f"[Type: {self.typeID} + Location: {self.location}]"
 
-# Version
-class Version(models.Model):
-    # TODO Add version id number?
-    name = models.CharField(max_length=50)
+# FunctionalArea
+class FunctionalArea(models.Model):
+    name = models.CharField(
+        max_length=200,
+        unique=True,
+        null=False,
+        blank=False)
+
     def __str__(self):
         return self.name
 
 # Program
 class Program(models.Model):
-    # versionID = models.ForeignKey(Version, on_delete=models.CASCADE)
     version = models.IntegerField(validators=[MinValueValidator(1)])
     release = models.IntegerField(validators=[MinValueValidator(1)])
-    name = models.CharField(max_length=50)
+    name = models.CharField(
+        max_length=200,
+        unique=True,
+        null=False,
+        blank=False)
+    area = models.ManyToManyField(FunctionalArea)
 
     def __str__(self):
         return f"{self.name} V:{self.version} R:{self.release}"
 
-
-# FunctionalArea
-class FunctionalArea(models.Model):
-    programID = models.ForeignKey(Program, on_delete=models.CASCADE)
-    name = models.CharField(max_length=50, unique=True)
-    def __str__(self):
-        return self.name
-
-
-# # ProgramIssue
-# class ProgramIssue(models.Model):
-#     programID = models.ForeignKey(Program, on_delete=models.CASCADE)
-#     issueID = models.ForeignKey(IssueType, on_delete=models.CASCADE)
+    class Meta:
+        unique_together = [['name', 'release', 'version'], ['name', 'version']]
     
-
 # Department
 class Department(models.Model):
-    name = models.CharField(max_length=100, unique=True)
+    name = models.CharField(
+        max_length=200,
+        unique=True,
+        null=False,
+        blank=False)
 
     def __str__(self):
         return self.name
-
 
 # Employee
 class Employee(models.Model):
-    levelChoices = (
+    levelChoices = [
         (1, '1'),
         (2, '2'),
-        (3, '3')
-    )
-    name = models.CharField(max_length=100, unique=True, null=True)
-    username = models.CharField(max_length=25, unique=True, null=True)
-    password = models.CharField(max_length=25, null = True)
+    ]
+
+    user = models.OneToOneField(User, on_delete=models.CASCADE, unique=True)
+    first_name = models.CharField(max_length=200)
+    last_name = models.CharField(max_length=200)
     level = models.IntegerField(choices= levelChoices, default=1)
-    departmentID = models.ForeignKey(Department, on_delete=models.CASCADE)
+    department = models.ForeignKey(Department, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
-        return self.name
-
+        return self.user.username
 
 # Group
 class Group(models.Model):
-    name = models.CharField(max_length=50, unique=True)
+    name = models.CharField(
+        max_length=200,
+        unique=True,
+        null=False,
+        blank=False)
+    members = models.ManyToManyField(Employee)
+
     def __str__(self):
         return self.name
 
-# GroupEmployee
-class GroupEmployee(models.Model):
-    groupID = models.ForeignKey(Group, on_delete=models.CASCADE)
-    employeeID = models.ForeignKey(Employee, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.groupID + ' ' +self.employeeID
-
 # Issue
 class Issue(models.Model):
-    programID = models.ForeignKey(Program, on_delete=models.CASCADE)
-    bugtypeID = models.ForeignKey(BugType, on_delete=models.CASCADE)
-    severityID = models.ForeignKey(Severity, on_delete=models.CASCADE)
-    reportedByID = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name='employee_reportedByID')
-    functionalAreaID = models.ForeignKey(FunctionalArea, on_delete=models.CASCADE)
-    assignedToID = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name='employee_assignedToID')
-    statusID = models.ForeignKey(Status, on_delete=models.CASCADE)
-    priorityID = models.ForeignKey(Priority, on_delete=models.CASCADE)
-    resolutionID = models.ForeignKey(Resolution, on_delete=models.CASCADE)
-    testedByID = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name='employee_testedByID')
-    attachmentID = models.CharField(max_length = 1000)
+    program = models.ForeignKey(Program, on_delete=models.CASCADE)
+    bugtype = models.ForeignKey(BugType, on_delete=models.CASCADE)
+    severity = models.ForeignKey(Severity, on_delete=models.CASCADE)
+    reportedBy = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name='employee_reportedByID')
+    functionalArea = models.ForeignKey(FunctionalArea, on_delete=models.CASCADE)
+    assignedTo = models.ForeignKey(
+        Employee, 
+        on_delete=models.CASCADE, related_name='employee_assignedToID',
+        null=True,
+        blank=True)
+    status = models.ForeignKey(Status, on_delete=models.CASCADE, default="OPEN")
+    priority = models.ForeignKey(Priority, on_delete=models.CASCADE)
+    resolution = models.ForeignKey(Resolution, on_delete=models.CASCADE)
+    testedBy = models.ForeignKey(
+        Employee, 
+        on_delete=models.CASCADE, related_name='employee_testedByID',
+        null=True,
+        blank=True)
+    attachment = models.CharField(
+        max_length = 1000,
+        null=True, 
+        blank=True)
     
-    summary = models.CharField(max_length=500)
-    suggestedFix = models.CharField(max_length=500)
-    issueDate = models.DateTimeField()
-    isAssignedToGroup = models.BooleanField()
-    comments = models.CharField(max_length=500)
-    resolveByDate = models.DateTimeField()
-    testByDate = models.DateTimeField()
-    treatedAsDeferred = models.BooleanField()
-    reproducible = models.BooleanField()
+    summary = models.CharField(
+        max_length=500, 
+        null=True, 
+        blank=True)
+    suggestedFix = models.CharField(
+        max_length=500, 
+        null=True, 
+        blank=True)
+    issueDate = models.DateTimeField(default=timezone.now)
+    isAssignedToGroup = models.BooleanField(null=True)
+    comments = models.CharField(
+        max_length=500, 
+        null=True, 
+        blank=True)
+    resolveByDate = models.DateTimeField(null=True, blank=True)
+    testByDate = models.DateTimeField(null=True, blank=True)
+    treatedAsDeferred = models.BooleanField(default=False)
+    reproducible = models.BooleanField(null=True)
 
     def __str__(self):
-        return f"[programID: {self.programID}, summary: {self.summary}]"
+        return f"[BugID: {self.id}]"
 
 

@@ -1,0 +1,22 @@
+{% extends 'issue_pages/base.html' %}
+
+{% block content %}
+<h3>Export resources</h3>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <p>Please select format of file.</p>
+    <select name='Data'>
+        <option selected>Data</option>
+        <option>Areas</option>
+        <option>Programs</option>
+        <option>Employees</option>
+    </select>
+    <select name="file-format">
+        <option selected>Format</option>
+        <option>CSV</option>
+        <option>XML</option>
+      </select>
+    <button class="btn btn-primary" type="submit">Download</button>
+  </form>
+  <a href="/issues/">Home Page</a>
+  {% endblock %} 

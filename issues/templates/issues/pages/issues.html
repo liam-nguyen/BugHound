@@ -1,0 +1,36 @@
+{% extends "issue_pages/base.html" %}
+
+{% block content %}
+  <p>Find Issues by any of the following fields: "..."</p>
+  <p>Leave fields alone to return all issues</p>
+  <br>
+  <form method="POST" action=".">
+    {% csrf_token %}
+    {{ form }}
+    <input type='Submit' value='Search Issues'>
+    {% if issues %}
+    <table border="1">
+      <tr>
+        <th>Issue ID</th>
+        <th>Program</th>
+        <th>Status</th>
+        <th>Summary</th>
+        <th>Action</th>
+      </tr>
+      {% for issue in issues %}
+      <tr>
+        <td>{{ issue.id }}</td>
+        <td>{{ issue.programID.name }}</td>
+        <td>{{ issue.statusID.name }}</td>
+        <td>{{ issue.summary }}</td>
+        <td><a href="./{{ issue.id }}">Edit</a></td> <!--TODO: link this to the area belonging to this row-->
+      </tr>
+      {% endfor %}
+    {% else %}
+    <h2>Search showed no results</h2>
+      {% endif %}
+    </table >
+  </form>
+  <a href="/issues/addIssue/">Click here to add any Issues</a>
+
+{% endblock %}
