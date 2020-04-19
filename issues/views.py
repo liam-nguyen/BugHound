@@ -43,7 +43,7 @@ from .forms import AreaForm, IssueForm
 def index(request):
     if request.user.is_authenticated:
         return redirect(reverse_lazy('IssueListView'))
-    else: 
+    else:
         return redirect(reverse_lazy('login_view'))
 
 
@@ -153,7 +153,7 @@ def dbMaintenance(request):
 #     return render(request, 'issue_pages/addIssue.html', context)
 
 # @login_required
-# def searchIssue(request):    
+# def searchIssue(request):
 #     if request.method == 'POST':
 #         form = IssueSearchForm(request.POST)
 #         if form.is_valid():
@@ -210,7 +210,7 @@ class IssueDetailView(DetailView):
         fields = [field.name for field in Issue._meta.get_fields()]
         context['fields'] = fields
         return context
-   
+
 class IssueCreateView(CreateView):
     model = Issue
     fields = '__all__'
@@ -420,7 +420,7 @@ def export(request):
             dataset = dataset.export()
             response = HttpResponse(dataset.csv, content_type='text/csv')
             response['Content-Disposition'] = 'attachment; filename="exported_data.csv"'
-            return response        
+            return response
         # elif file_format == 'JSON':
             # response = HttpResponse(dataset.json, content_type='application/json')
             # response['Content-Disposition'] = 'attachment; filename="exported_data.json"'

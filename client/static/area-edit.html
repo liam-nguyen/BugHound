@@ -9,25 +9,24 @@
   </head>
 
   <body onload="loadPageContent()">
-    <h1>Edit Employee -- John Smith</h1>
-    <p>Make any changes to the employee's information and press "Submit" when done.</p>
-    <br><!--TODO: add script to pre-polpulate fields with the existing data on file for the employee.-->
+    <h1>Edit Area -- BugHound Beta</h1>
+    <p>Make any changes to the area's information and press "Submit" when done.</p>
+    <br><!--TODO: add script to pre-polpulate fields with the existing data on file for the area.-->
     <div id=id-field>ID: 1</div>
-    <div id=name-field>First name: <input id=first-name-field-input type=text> Last name: <input id=last-name-field-input type=text></div>
-    <div id=position-field>Position: <input id=position-field-input type=text></div>
-    <div id=user-level-field>User level: <input id=user-level-field-input type=text></div>
-    <br><!--TODO: formulate the edits argument to pass to submitEmployeeEdits.-->
-    <input onclick="submitEmployeeEdits('edit info goes here')" type=submit id=enter-button style="margin-right: 15px;"><a onclick="goBack()">Cancel</a>
+    <div id=name-field>Area name: <input id=area-name-field-input type=text></div>
+    <div id=description-field>Description: <input size=60 id=description-field-input type=text></div>
+    <br><!--TODO: formulate the edits argument to pass to submitAreaEdits.-->
+    <input onclick="submitAreaEdits('edit info goes here')" type=submit id=enter-button style="margin-right: 15px;"><a onclick="goBack()">Cancel</a>
   </body>
 
   <script type="text/javascript" src="./js/gui-scripts.js"></script>
   <script>
     function loadPageContent() {
-      //TODO: change header to the employee's name, or "new employee" if adding a new employee.
+      //TODO: change header to the area's name, or "new area" if adding a new area.
       //populate fields in the form with the current field
     }
 
-    function submitEmployeeEdits(editInfo) {
+    function submitAreaEdits(editInfo) {
       //TODO: implement the function to submit the changes. note that this may be called to create a NEW element as well.
       //type check the values in the fields if needed.
       //confirm that the user is at the appropriate user level to make certain changes (such as improving the user level)

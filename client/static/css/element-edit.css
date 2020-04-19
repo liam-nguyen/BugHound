@@ -1,0 +1,13 @@
+a {
+  color: blue;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+a:active {
+  color: red;
+}
+
+nav a {
+  margin: 0 5px 0 0;
+}

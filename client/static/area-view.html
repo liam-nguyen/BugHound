@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>BugHound</title>
+    <meta name="description" content="BugHound">
+    <meta name="author" content="SitePoint">
+    <link rel="stylesheet" type="text/css" href="./css/element-edit.css">
+  </head>
+
+  <body>
+    <h1 style="display: inline; margin-right:20px;">Edit Area -- <span id='area-title'>BugHound Beta</span></h1>
+    <nav style="display: inline;">
+      <a href="./menu.html">Menu</a>
+      <a href="./program-search.html">Programs</a>
+      <a href="./area-search.html">Areas</a>
+      <a href="./issue-search.html">Issues</a>
+      <a href="./employees-search.html">Employees</a>
+      <a href="./login.html">Logout</a>
+    </nav>
+    <p>Below is the area's information on file. <br>Need to make a change? Go back to the area search page and press "edit".</p>
+    <br><!--TODO: add script to populate the fields with the existing data on file for the area.-->
+    <div id=id-field>ID: <span id=id-field-value>1</span></div>
+    <div id=area-name-field>Area name: <span id=area-name-field-value>Bughound Beta</span></div>
+    <div id=description-field>Description: <span id=position-field-value>Software that tracks reports on bugs found in programs.</span></div>
+    <br><!--TODO: script to ask for confirmation and go back to area search page when done.-->
+    <a onclick="goBack()">Back</a>
+  </body>
+
+  <script type="text/javascript" src="./js/gui-scripts.js"></script>
+
+</html>

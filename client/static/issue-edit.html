@@ -1,24 +1,55 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>BugHound</title>
-  <meta name="description" content="BugHound">
-  <meta name="author" content="SitePoint">
-</head>
+  <head>
+    <meta charset="utf-8">
+    <title>BugHound</title>
+    <meta name="description" content="BugHound">
+    <meta name="author" content="SitePoint">
+    <link rel="stylesheet" type="text/css" href="./css/element-edit.css">
+  </head>
 
-<body>
-  <h1>Edit Issue -- "Issue Description"</h1>
-  <p>Make any changes to the issue's information and press "Submit" when done.</p>
-  <br><!--TODO: add script to pre-polpulate fields with the existing data on file for the issue.-->
-  <div id=id_field>ID: <input type=text></div>
-  <div id=name_field>Name: <input type=text></div>
-  <div id=description_field>Description: <input type=text></div>
-  <br>
-  <br><!--TODO: script to ask for confirmation and go back to employee search page when done.-->
-  <input type=submit id=enter_button style="margin-right: 15px;"><a href="./issue-search.html">Cancel</a>
-  <br>
-  <br>
-  <p>Team: Marco Curci, Liam Nguyen, and Dillon Brown</p>
-</body>
+  <body onload="loadPageContent()">
+    <h1>Edit Issue -- <span id=issue-title>Bughound Beta: function() returns null pointer --> segfault</span></h1>
+    <p>Make any changes to the issue's information and press "Submit" when done.</p>
+    <br><!--TODO: add script to pre-polpulate fields with the existing data on file for the issue.-->
+    <div id=program-field>program: <input id=program-field-input type=text></div>
+    <div id=report-type-field>report-type: <input id=report-type-field-input type=text></div>
+    <div id=severity-field>severity: <input id=severity-field-input type=text></div>
+    <div id=problem-summary-field>problem-summary: <input id=problem-summary-field-input type=text></div>
+    <div id=is-reproducible-field>is-reproducible: <input id=is-reproducible-field-input type=text></div>
+    <div id=problem-field>problem: <input id=problem-field-input type=text></div>
+    <div id=reporter-field>reporter: <input id=reporter-field-input type=text></div>
+    <div id=date-field>date: <input id=date-field-input type=text></div>
+    <div id=functional-area-field>functional-area: <input id=functional-area-field-input type=text></div>
+    <div id=assignee-field>assignee: <input id=assignee-field-input type=text></div>
+    <div id=comments-field>comments: <input id=comments-field-input type=text></div>
+    <div id=status-field>status: <input id=status-field-input type=text></div>
+    <div id=priority-field>priority: <input id=priority-field-input type=text></div>
+    <div id=resolution-field>resolution: <input id=resolution-field-input type=text></div>
+    <div id=resolution-version-field>resolution-version: <input id=resolution-version-field-input type=text></div>
+    <div id=resolver-field>resolver: <input id=resolver-field-input type=text></div>
+    <div id=resolution-date-field>resolution-date: <input id=resolution-date-field-input type=text></div>
+    <div id=tester-field>tester: <input id=tester-field-input type=text></div>
+    <div id=date-tested-field>program: <input id=date-tested-field-input type=text></div>
+    <div id=treat-as-field>treat-as: <input id=treat-as-field-input type=text></div>
+    <br><!--TODO: formulate the edits argument to pass to submitIssueEdits.-->
+    <input onclick="submitIssueEdits('edit info goes here')" type=submit id=enter-button style="margin-right: 15px;"><a onclick="goBack()">Cancel</a>
+  </body>
+
+  <script type="text/javascript" src="./js/gui-scripts.js"></script>
+  <script>
+    function loadPageContent() {
+      //TODO: change header to the issue's name, or "new issue" if adding a new issue.
+      //populate fields in the form with the current field
+    }
+
+    function submitIssueEdits(editInfo) {
+      //TODO: implement the function to submit the changes. note that this may be called to create a NEW element as well.
+      //type check the values in the fields if needed.
+      //confirm that the user is at the appropriate user level to make certain changes (such as improving the user level)
+      //submit changes to the data base
+      alert("Changes saved successfully.");
+      goBack()
+    }
+  </script>
 </html>

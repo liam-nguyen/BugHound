@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>BugHound</title>
+    <meta name="description" content="BugHound">
+    <meta name="author" content="SitePoint">
+    <link rel="stylesheet" type="text/css" href="./css/element-edit.css">
+  </head>
+
+  <body onload="loadPageContent()">
+    <h1>Edit Program -- John Smith</h1>
+    <p>Make any changes to the program's information and press "Submit" when done.</p>
+    <br><!--TODO: add script to pre-polpulate fields with the existing data on file for the program.-->
+    <form method="POST">
+      {% csrf_token %}
+      {{ form }}
+      <input onclick="submitProgramEdits('edit info goes here')" type=submit id=enter-button style="margin-right: 15px;"><a onclick="goBack()">Cancel</a>
+    </form>
+  </body>
+
+  <script type="text/javascript" src="./js/gui-scripts.js"></script>
+  <script>
+    function loadPageContent() {
+      //TODO: change header to the program's name, or "new program" if adding a new program.
+      //populate fields in the form with the current field
+    }
+
+    function submitProgramEdits(editInfo) {
+      //TODO: implement the function to submit the changes. note that this may be called to create a NEW element as well.
+      //type check the values in the fields if needed.
+      //confirm that the user is at the appropriate user level to make certain changes (such as improving the user level)
+      //submit changes to the data base
+      alert("Changes saved successfully.");
+      goBack()
+    }
+  </script>
+</html>
