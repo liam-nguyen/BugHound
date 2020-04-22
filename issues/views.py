@@ -8,13 +8,14 @@ from django.shortcuts import redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib import messages
 from django.shortcuts import HttpResponseRedirect
+from django.urls import reverse_lazy
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
-from django.contrib import messages
 from django.views.generic.edit import UpdateView, DeleteView, CreateView
-from django.urls import reverse_lazy
 
 from .resources import FunctionalAreaResource, EmployeeResource, ProgramResource, IssueResource
 from .models import Issue, FunctionalArea, Program, Employee
@@ -41,6 +42,7 @@ from .forms import AreaForm, IssueForm
 
 
 def index(request):
+    print(request.user)
     if request.user.is_authenticated:
         return redirect(reverse_lazy('IssueListView'))
     else:
@@ -196,12 +198,12 @@ def dbMaintenance(request):
 #     }
 #     return render(request, 'issue_pages/issue-edit', context)
 
-class IssueListView(ListView):
+class IssueListView(LoginRequiredMixin, ListView):
     template_name = 'issues/pages/issues/issues.html'
     model = Issue
     paginate_by = 5
 
-class IssueDetailView(DetailView):
+class IssueDetailView(LoginRequiredMixin, DetailView):
     template_name = 'issues/pages/issues/issues_detail.html'
     model = Issue
 
@@ -211,24 +213,28 @@ class IssueDetailView(DetailView):
         context['fields'] = fields
         return context
 
-class IssueCreateView(CreateView):
+
+class IssueCreateView(LoginRequiredMixin, CreateView):
     model = Issue
     fields = '__all__'
     template_name = 'issues/pages/issues/issues_create.html'
     success_url = reverse_lazy('IssueListView')
 
-class IssueUpdateView(UpdateView):
+
+class IssueUpdateView(LoginRequiredMixin, UpdateView):
     model = Issue
     template_name = 'issues/pages/issues/issues_update.html'
     success_url = reverse_lazy('IssueListView')
     fields = '__all__'
 
-class IssueDeleteView(DeleteView):
+
+class IssueDeleteView(LoginRequiredMixin, DeleteView):
     model = Issue
     template_name = 'issues/pages/issues/issues_delete.html'
     success_url = reverse_lazy('IssueListView')
 
 ########## Areas #############
+@login_required
 def area_create(request):
     if request.method == "POST":
         form = AreaForm(request.POST)
@@ -240,20 +246,23 @@ def area_create(request):
     context = {'form': form}
     return render(request, 'issues/pages/areas/areas_create.html', context)
 
-class AreaListView(ListView):
+
+class AreaListView(LoginRequiredMixin, ListView):
     template_name = 'issues/pages/areas/areas.html'
     model = FunctionalArea
     context_object_name = 'areas'
     ordering = ['name']
     paginate_by = 5
 
-class AreaUpdateView(UpdateView):
+
+class AreaUpdateView(LoginRequiredMixin, UpdateView):
     template_name = 'issues/pages/areas/areas_update.html'
     model = FunctionalArea
     fields = ['name']
     success_url = reverse_lazy('AreaListView')
 
-class AreaDeleteView(DeleteView):
+
+class AreaDeleteView(LoginRequiredMixin, DeleteView):
     template_name = 'issues/pages/areas/areas_delete.html'
     model = FunctionalArea
     success_url = reverse_lazy('AreaListView')

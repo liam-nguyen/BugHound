@@ -27,9 +27,9 @@ SECRET_KEY = 'z4gz1bmwl2)*9((%zj*w1qjxd-t#^wp(ekf@h(njyb51o7lx%w'
 DEBUG = True
 
 ALLOWED_HOSTS = []
-LOGIN_REDIRECT_URL = '/issues/'
-LOGIN_URL = '/issues/'
-LOGOUT_REDIRECT_URL = '/issues/'
+LOGIN_REDIRECT_URL = ''
+LOGIN_URL = '/login/'
+LOGOUT_REDIRECT_URL = ''
 
 # Application definition
 
