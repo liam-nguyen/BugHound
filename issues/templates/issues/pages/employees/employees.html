@@ -1,0 +1,24 @@
+{% extends "issues/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+  <h2>Employees</h2>
+  <table class="table table-striped">
+    <tr>
+      <th>ID</th>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Department</th>
+      <th>Access Level</th>
+    </tr>
+    {% for employee in employees %}
+    <tr>
+      <td><a href="{% url 'EmployeeUpdateView' employee.id%}" >{{ employee.id }}</a></td>
+      <td>{{ employee.first_name }}</td>
+      <td>{{ employee.last_name }}</td>
+      <td>{{ employee.department }}</td>
+      <td>{{ employee.level }}</td>
+    </tr>
+  {% endfor %}
+  </table >
+{% endblock %}

@@ -1,0 +1,13 @@
+#Severity
+- model: issues.Severity
+  pk: 1
+  fields:
+    name: Minor
+- model: issues.Severity
+  pk: 2
+  fields:
+    name: Serious
+- model: issues.Severity
+  pk: 3
+  fields:
+    name: Fatal

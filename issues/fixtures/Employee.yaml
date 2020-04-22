@@ -1,0 +1,98 @@
+# Users & Employees
+- model: auth.User
+  pk: 1
+  fields:
+    username: timmy!
+    password: timmy
+- model: issues.Employee
+  pk: 1
+  fields:
+    user: 1
+    first_name: Timmy
+    last_name: Unknown
+    level: 3
+    department: 1
+
+- model: auth.User
+  pk: 2
+  fields:
+    username: jorge
+    password: jorge
+- model: issues.Employee
+  pk: 2
+  fields:
+    user: 2
+    first_name: Jorge
+    last_name: Unknown
+    level: 2
+    department: 2
+
+- model: auth.User
+  pk: 3
+  fields:
+    username: smith
+    password: smith
+- model: issues.Employee
+  pk: 3
+  fields:
+    user: 3
+    first_name: Hannah
+    last_name: Unknown
+    level: 2
+    department: 3
+
+- model: auth.User
+  pk: 4
+  fields:
+    username: johanng
+    password: johanng
+- model: issues.Employee
+  pk: 4
+  fields:
+    user: 4
+    first_name: Johann
+    last_name: Gomblepuddy
+    level: 1
+    department: 4
+
+- model: auth.User
+  pk: 5
+  fields:
+    username: leroisoleil
+    password: leroisoleil
+- model: issues.Employee
+  pk: 5
+  fields:
+    user: 5
+    first_name: Louis
+    last_name: XIV
+    level: 2
+    department: 1
+
+- model: auth.User
+  pk: 6
+  fields:
+    username: jonesbrenda
+    password: jonesbrenda
+- model: issues.Employee
+  pk: 6
+  fields:
+    user: 6
+    first_name: Brenda
+    last_name: Unknown
+    level: 1
+    department: 2
+
+- model: auth.User
+  pk: 7
+  fields:
+    username: smithp
+    password: smithp
+- model: issues.Employee
+  pk: 7
+  fields:
+    user: 7
+    first_name: Prakish
+    last_name: Unknown
+    level: 2
+    department: 3

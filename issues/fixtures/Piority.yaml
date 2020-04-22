@@ -1,0 +1,25 @@
+#Priority
+- model: issues.Priority
+  pk: 1
+  fields:
+    name: Immediately
+- model: issues.Priority
+  pk: 2
+  fields:
+    name: As soon as possible
+- model: issues.Priority
+  pk: 3
+  fields:
+    name: Before Next Milestone
+- model: issues.Priority
+  pk: 4
+  fields:
+    name: Before Release
+- model: issues.Priority
+  pk: 5
+  fields:
+    name: If Possible
+- model: issues.Priority
+  pk: 6
+  fields:
+    name: Optional

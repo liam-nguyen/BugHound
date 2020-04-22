@@ -93,16 +93,15 @@ class Program(models.Model):
     release = models.IntegerField(validators=[MinValueValidator(1)])
     name = models.CharField(
         max_length=200,
-        unique=True,
         null=False,
         blank=False)
-    area = models.ManyToManyField(FunctionalArea)
+    areas = models.ManyToManyField(FunctionalArea)
 
     def __str__(self):
         return f"{self.name} V:{self.version} R:{self.release}"
 
     class Meta:
-        unique_together = [['name', 'release', 'version'], ['name', 'version']]
+        unique_together = [['name', 'release', 'version']]
     
 # Department
 class Department(models.Model):
@@ -117,16 +116,16 @@ class Department(models.Model):
 
 # Employee
 class Employee(models.Model):
-    levelChoices = [
+    levelChoices = (
         (1, '1'),
         (2, '2'),
         (3, '3'),
-    ]
+    )
 
     user = models.OneToOneField(User, on_delete=models.CASCADE, unique=True)
     first_name = models.CharField(max_length=200)
     last_name = models.CharField(max_length=200)
-    level = models.IntegerField(choices= levelChoices, default=1)
+    level = models.IntegerField(choices=levelChoices, default=1)
     department = models.ForeignKey(Department, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):

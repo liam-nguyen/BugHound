@@ -1,0 +1,95 @@
+# Programs
+- model: issues.Program
+  pk: 1
+  fields:
+    name: Skyrim
+    version: 1
+    release: 1
+    areas:
+      - 1
+      - 2
+      - 3
+      - 4
+- model: issues.Program
+  pk: 2
+  fields:
+    name: BugHound
+    version: 1
+    release: 1
+    areas:
+      - 5
+      - 6
+      - 7
+      - 8
+      - 9
+      - 10
+      - 11
+      - 12
+      - 13
+      - 14
+- model: issues.Program
+  pk: 3
+  fields:
+    name: Visual Ada95
+    version: 1
+    release: 1
+    areas:
+      - 15
+      - 16
+      - 17
+      - 18
+- model: issues.Program
+  pk: 4
+  fields:
+    name: Visual Ada95
+    version: 1
+    release: 2
+    areas:
+      - 15
+      - 16
+      - 17
+      - 18
+- model: issues.Program
+  pk: 5
+  fields:
+    name: Visual Ada95
+    version: 2
+    release: 1
+    areas:
+      - 15
+      - 16
+      - 17
+      - 18
+- model: issues.Program
+  pk: 6
+  fields:
+    name: Pascal Coder
+    version: 1
+    release: 1
+    areas:
+      - 15
+      - 16
+      - 17
+      - 18
+      - 19
+- model: issues.Program
+  pk: 7
+  fields:
+    name: Word Writer 2011
+    version: 1
+    release: 1
+    areas:
+      - 20
+      - 21
+      - 22
+      - 23
+- model: issues.Program
+  pk: 8
+  fields:
+    name: MapStar 7
+    version: 1
+    release: 1
+    areas:
+      - 1
+      - 24
+      - 25

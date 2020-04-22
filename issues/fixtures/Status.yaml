@@ -1,0 +1,13 @@
+#Status
+- model: issues.Status
+  pk: 1
+  fields:
+    name: Open
+- model: issues.Status
+  pk: 2
+  fields:
+    name: Closed
+- model: issues.Status
+  pk: 3
+  fields:
+    name: Resolved

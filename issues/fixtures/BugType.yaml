@@ -1,0 +1,25 @@
+# BugType
+- model: issues.BugType
+  pk: 1
+  fields:
+    name: Design Issue
+- model: issues.BugType
+  pk: 2
+  fields:
+    name: Suggestion
+- model: issues.BugType
+  pk: 3
+  fields:
+    name: Documentation
+- model: issues.BugType
+  pk: 4
+  fields:
+    name: Hardware
+- model: issues.BugType
+  pk: 5
+  fields:
+    name: Query
+- model: issues.BugType
+  pk: 6
+  fields:
+    name: Coding Error

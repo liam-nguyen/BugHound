@@ -71,13 +71,13 @@ class EmployeeForm(ModelForm):
         if password != confirm_password:
             raise forms.ValidationError("password and confirm_password does not match")
 
-class EmployeeEditForm(forms.Form):
-    levelChoices = (
-        (1, '1'),
-        (2, '2'),
-        (3, '3')
-    )
-    name = forms.CharField(max_length=100)
-    departmentID = forms.ModelChoiceField(queryset=Department.objects.all())
-    level = forms.ChoiceField(choices = levelChoices)
+# class EmployeeEditForm(forms.Form):
+#     levelChoices = (
+#         (1, '1'),
+#         (2, '2'),
+#         (3, '3')
+#     )
+#     name = forms.CharField(max_length=100)
+#     departmentID = forms.ModelChoiceField(queryset=Department.objects.all())
+#     level = forms.ChoiceField(choices = levelChoices)
 

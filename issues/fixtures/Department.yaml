@@ -1,0 +1,16 @@
+- model: issues.Department
+  pk: 1
+  fields:
+    name: Software Engineer
+- model: issues.Department
+  pk: 2
+  fields:
+    name: Testing
+- model: issues.Department
+  pk: 3
+  fields:
+    name: Support Engineer
+- model: issues.Department
+  pk: 4
+  fields:
+    name: Dev Ops

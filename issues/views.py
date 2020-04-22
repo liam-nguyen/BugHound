@@ -18,8 +18,8 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import UpdateView, DeleteView, CreateView
 
 from .resources import FunctionalAreaResource, EmployeeResource, ProgramResource, IssueResource
-from .models import Issue, FunctionalArea, Program, Employee
-from .forms import ProgramForm, EmployeeForm, EmployeeEditForm, LoginForm
+from .models import Issue, FunctionalArea, Program, Employee, Department
+from .forms import ProgramForm, EmployeeForm, LoginForm
 from .forms import AreaForm, IssueForm, IssueSearchForm
 # from .serializers import IssueSerializer
 
@@ -75,13 +75,13 @@ def register_view(request):
         form = EmployeeForm(request.POST)
         if form.is_valid():
             data = form.cleaned_data
+            print(data)
             try:
                 newUser = User.objects.create_user(username=data['username'],
                                                    password=data['password'])
-                if data['level'] > 1:
+                if data['level'] == 3:
                     newUser.is_staff = True
                 newUser.save()
-
                 employee = form.save(commit=False)
                 employee.user = newUser
                 employee.save()
@@ -403,67 +403,76 @@ class ProgramDeleteView(LoginRequiredMixin, DeleteView):
 
 
 
-# Employees
+### Employees ###
 # @login_required
 # @staff_member_required
-# def searchEmployees(request):
-#     print(request)
-#     employees = Employee.objects.all()
+def employee_view(request):
+    employees = Employee.objects.all()
+    if request.method == 'POST':
+        form = EmployeeForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+
+            newUser = User.objects.create_user(username=data['username'],
+                            password=data['password'])
+            if data['level'] > 2:
+                newUser.is_superuser = True
+            newUser.is_staff = True
+            employee = Employee(name=data['name'],
+                                username=data['username'],
+                                level=data['level'],
+                                password=data['password'],
+                                departmentID=data['departmentID'])
+            employee.save()
+            newUser.save()
+    else:
+        form = EmployeeForm()
+    print(dir(employees[0]))
+    context = {
+        'employees' : employees,
+        'form' : form
+        }
+    return render(request, 'issues/pages/employees/employees.html', context)
+
+
+class EmployeeUpdateView(LoginRequiredMixin, UpdateView):
+    model = Employee
+    template_name = 'issues/pages/employees/employees_update.html'
+    success_url = reverse_lazy('employee_view')
+    fields = '__all__'
+
+# @login_required
+# @staff_member_required
+# def employee_update_view(request, pk):
+#     employee = Employee.objects.get(pk=pk)
 #     if request.method == 'POST':
 #         form = EmployeeForm(request.POST)
 #         if form.is_valid():
 #             data = form.cleaned_data
-
-#             newUser = User.objects.create_user(username=data['username'],
-#                             password=data['password'])
-#             print(newUser)
-#             if data['level'] > 2:
-#                 newUser.is_superuser = True
-#             newUser.is_staff = True
-#             employee = Employee(name=data['name'],
-#                                 username=data['username'],
-#                                 level=data['level'],
-#                                 password=data['password'],
-#                                 departmentID=data['departmentID'])
-#             employee.save()
-#             newUser.save()
-#     else:
-#         form = EmployeeForm()
-#     context = {'employees' : employees,
-#             'form' : form}
-#     return render(request, 'issue_pages/employees.html', context)
-
-# @login_required
-# @staff_member_required
-# def editEmployee(request, employeeID):
-#     employee = Employee.objects.get(pk=employeeID)
-#     if request.method == 'POST':
-#         print(1)
-#         form = EmployeeEditForm(request.POST)
-#         if form.is_valid():
-#             data = form.cleaned_data
-#             employee.name = data['name']
-#             employee.departmentID = data['departmentID']
-#             employee.level = data['level']
-#             print(data)
-#             user = User.objects.get(username=Employee.objects.get(pk=employeeID).username)
-#             if int(data['level']) > 2:
-#                 user.is_superuser = True
-#             employee.save()
-#             user.save()
-#             redirect(searchEmployees)
-#     else:
-#         print({
-#             'name' : employee.name,
-#             'departmentId' : employee.departmentID,
-#             'level' : employee.level
-#         })
-#         form = EmployeeEditForm(model_to_dict(employee))
+#             employee.first_name = data['first_name']
+#             employee.last_name = data['last_name']
+#             department = Department.objects.get(name__exact=data['department'])
+#             print(employee)
+#             # employee.level = data['level']
+#             # user = User.objects.get(
+#             #     username=Employee.objects.get(pk=pk).username)
+#             # if int(data['level']) > 2:
+#             #     user.is_superuser = True
+#             # employee.save()
+#             # user.save()
+#     # print({
+#     #         'name' : employee.name,
+#     #         'departmentId' : employee.departmentID,
+#     #         'level' : employee.level
+#     #     })
+#     form = EmployeeForm(model_to_dict(employee))
+    
 #     context = {
 #         'employee': employee,
 #         'form': form
 #     }
-#     return render(request, 'issue_pages/employee-edit.html', context)
+#     print(context)          
+#     return render(request, 'issues/pages/employees/employees_update.html', context)
 
 ########## Programs #############
 @login_required

@@ -1,0 +1,37 @@
+#Resolution
+- model: issues.Resolution
+  pk: 1
+  fields:
+    name: Pending
+- model: issues.Resolution
+  pk: 2
+  fields:
+    name: Fixed
+- model: issues.Resolution
+  pk: 3
+  fields:
+    name: Irreproducible
+- model: issues.Resolution
+  pk: 4
+  fields:
+    name: Deferred
+- model: issues.Resolution
+  pk: 5
+  fields:
+    name: As designed
+- model: issues.Resolution
+  pk: 6
+  fields:
+    name: Withdrawn by reporter
+- model: issues.Resolution
+  pk: 7
+  fields:
+    name: Need more info
+- model: issues.Resolution
+  pk: 8
+  fields:
+    name: Disagree with suggestion
+- model: issues.Resolution
+  pk: 9
+  fields:
+    name: Duplicate

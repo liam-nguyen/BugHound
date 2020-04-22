@@ -1,0 +1,101 @@
+# Area
+- model: issues.FunctionalArea
+  pk: 1
+  fields:
+    name: Menu
+- model: issues.FunctionalArea
+  pk: 2
+  fields:
+    name: Launcher
+- model: issues.FunctionalArea
+  pk: 3
+  fields:
+    name: Riften
+- model: issues.FunctionalArea
+  pk: 4
+  fields:
+    name: Falkreath
+- model: issues.FunctionalArea
+  pk: 5
+  fields:
+    name: Logon
+- model: issues.FunctionalArea
+  pk: 6
+  fields:
+    name: Start
+- model: issues.FunctionalArea
+  pk: 7
+  fields:
+    name: DB Maintenance
+- model: issues.FunctionalArea
+  pk: 8
+  fields:
+    name: Search
+- model: issues.FunctionalArea
+  pk: 9
+  fields:
+    name: Insert New
+- model: issues.FunctionalArea
+  pk: 10
+  fields:
+    name: Search Result
+- model: issues.FunctionalArea
+  pk: 11
+  fields:
+    name: Add Edit Areas
+- model: issues.FunctionalArea
+  pk: 12
+  fields:
+    name: Add Employees
+- model: issues.FunctionalArea
+  pk: 13
+  fields:
+    name: Add Programs
+- model: issues.FunctionalArea
+  pk: 14
+  fields:
+    name: View Bugs
+- model: issues.FunctionalArea
+  pk: 15
+  fields:
+    name: Lexer
+- model: issues.FunctionalArea
+  pk: 16
+  fields:
+    name: Parser
+- model: issues.FunctionalArea
+  pk: 17
+  fields:
+    name: Code Generator
+- model: issues.FunctionalArea
+  pk: 18
+  fields:
+    name: Linker
+- model: issues.FunctionalArea
+  pk: 19
+  fields:
+    name: IDE
+- model: issues.FunctionalArea
+  pk: 20
+  fields:
+    name: Editor
+- model: issues.FunctionalArea
+  pk: 21
+  fields:
+    name: Spell Checker
+- model: issues.FunctionalArea
+  pk: 22
+  fields:
+    name: Dynodraw
+- model: issues.FunctionalArea
+  pk: 23
+  fields:
+    name: Formulator
+- model: issues.FunctionalArea
+  pk: 24
+  fields:
+    name: Router
+- model: issues.FunctionalArea
+  pk: 25
+  fields:
+    name: Datbase

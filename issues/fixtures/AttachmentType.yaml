@@ -1,0 +1,17 @@
+# Attachment
+- model: issues.AttachmentType
+  pk: 1
+  fields:
+    name: printouts
+- model: issues.AttachmentType
+  pk: 2
+  fields:
+    name: memory dumps
+- model: issues.AttachmentType
+  pk: 3
+  fields:
+    name: memos
+- model: issues.AttachmentType
+  pk: 4
+  fields:
+    name: macros

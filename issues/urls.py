@@ -4,7 +4,7 @@ from . import views
 from .views import AreaListView, area_create, AreaUpdateView, AreaDeleteView
 from .views import ProgramListView, program_create, ProgramUpdateView, ProgramDeleteView
 from .views import IssueListView, IssueDetailView, IssueCreateView, IssueUpdateView, IssueDeleteView
-from .views import login_view, logout_view, index, register_view, database_view, export, issue_search_view
+from .views import login_view, logout_view, index, register_view, database_view, export, issue_search_view, employee_view, EmployeeUpdateView
 
 urlpatterns = [
     path('', index, name='index'),
@@ -47,7 +47,9 @@ urlpatterns = [
      
      # Export 
      path('export/', export, name="export"),
-#     # Employee
-# #     path('employees/', views.searchEmployees, name='employees'),
-#     path('employees/<int:employeeID>/', views.editEmployee, name='editEmployee')
+    
+     # Employee
+     path('employees/', employee_view, name='employee_view'),
+     path('employees/update/<int:pk>/',
+         EmployeeUpdateView.as_view(), name='EmployeeUpdateView')
 ]
