@@ -1,0 +1,36 @@
+{% extends "issues/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+  <p>Leave fields alone to return all issues</p>
+  <br>
+  <form method="POST">
+    {% csrf_token %}
+    {{ form }}
+    <input type='Submit' value='Search Issues'>
+  </form>
+
+  {% if issues %}
+    <h2 class="mt-4"> Results </h2>
+      <table class="table table-striped">
+        <tr>
+          <th>ID</th>
+          <th>Program</th>
+          <th>Summary</th>
+          <th>Status</th>
+        </tr>
+        {% for issue in issues %}
+        <tr>
+          <td><a href="{% url 'IssueDetailView' issue.id %}">{{ issue.id }}</a></td>
+          <td>{{ issue.program }}</td>
+          <td>{{ issue.summary }}</td>
+          <td>{{ issue.status }}</td>
+        </tr>
+        {% endfor %}
+      </table >
+
+    {% else %}
+    <h2>Search showed no results</h2>
+      {% endif %}
+    </table >
+{% endblock %}

@@ -20,7 +20,7 @@ from django.views.generic.edit import UpdateView, DeleteView, CreateView
 from .resources import FunctionalAreaResource, EmployeeResource, ProgramResource, IssueResource
 from .models import Issue, FunctionalArea, Program, Employee
 from .forms import ProgramForm, EmployeeForm, EmployeeEditForm, LoginForm
-from .forms import AreaForm, IssueForm
+from .forms import AreaForm, IssueForm, IssueSearchForm
 # from .serializers import IssueSerializer
 
 
@@ -152,41 +152,57 @@ def dbMaintenance(request):
 #     print("AddIssue - Form", form)
 #     return render(request, 'issue_pages/addIssue.html', context)
 
-# @login_required
-# def searchIssue(request):
-#     if request.method == 'POST':
-#         form = IssueSearchForm(request.POST)
-#         if form.is_valid():
-#             data = form.cleaned_data
-#             query = {}
-#             if data['program']:
-#                 query['programID'] = data['program']
-#             if data['bugType']:
-#                 query['bugtypeID'] = data['bugType']
-#             if data['severity']:
-#                 query['severityID'] = data['severity']
-#             if data['area']:
-#                 query['functionalAreaID'] = data['area']
-#             if data['assigned_to']:
-#                 query['assignedToID'] = data['assigned_to']
-#             if data['reported_by']:
-#                 query['reportedByID'] = data['reported_by']
-#             if data['status']:
-#                 query['statusID'] = data['status']
-#             if data['priority']:
-#                 query['priorityID'] = data['priority']
-#             if data['resolution']:
-#                 query['resolutionID'] = data['resolution']
-#             issue = Issue.objects.filter(**query)
-#             print(issue)
-#     else:
-#         form = IssueSearchForm()
-#         issue = Issue.objects.all()
-#     context = {
-#         'issues': issue,
-#         'form' : form
-#     }
-#     return render(request, 'issue_pages/issues.html', context)
+@login_required
+def issue_search_view(request):
+    issues = Issue.objects.all()
+    form = IssueSearchForm()
+
+    if request.method == 'POST':
+        form = IssueSearchForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            query = {}
+            if data['program']:
+                query['program_id'] = data['program']
+            if data['bugType']:
+                query['bugtype_id'] = data['bugType']
+            if data['severity']:
+                query['severity_id'] = data['severity']
+            if data['area']:
+                query['functionalArea_id'] = data['area']
+            if data['assigned_to']:
+                query['assignedTo_id'] = data['assigned_to']
+            if data['reported_by']:
+                query['reportedBy_id'] = data['reported_by']
+            if data['status']:
+                query['status_id'] = data['status']
+            if data['priority']:
+                query['priority_id'] = data['priority']
+            if data['resolution']:
+                query['resolution_id'] = data['resolution']
+            issues = Issue.objects.filter(**query)
+            print(list(issues))
+
+    processed_issues = list(map(getAllFields, issues))
+    context = {
+        'issues': issues,
+        'form' : form
+    }
+    # return render(request, 'issue_pages/issues.html', context)
+    return render(request, 'issues/pages/issues/issues_search.html', context)
+
+def getAllFields(issue):
+    fields = {
+        'status' : 'name', 
+        'program' : 'name', 
+    }
+
+    issue_dict = dict()
+    for field in fields:
+        issue_dict['id'] = issue.id
+        issue_dict[field] = getattr(getattr(issue, field), fields[field])
+    return issue_dict
+
 
 # def editIssue(request, issueID):
 #     issue = Issue.objects.get(pk=issueID)
@@ -230,6 +246,16 @@ class IssueDeleteView(LoginRequiredMixin, DeleteView):
     model = Issue
     template_name = 'issues/pages/issues/issues_delete.html'
     success_url = reverse_lazy('IssueListView')
+
+
+# def issue_search_view(request):
+#     if request.method == 'POST': 
+#         pass
+
+#     context = {}
+#     return render(request, 'issues/pages/issues/issues_search.html', context)
+    
+
 
 ########## Areas #############
 @login_required

@@ -4,7 +4,7 @@ from . import views
 from .views import AreaListView, area_create, AreaUpdateView, AreaDeleteView
 from .views import ProgramListView, program_create, ProgramUpdateView, ProgramDeleteView
 from .views import IssueListView, IssueDetailView, IssueCreateView, IssueUpdateView, IssueDeleteView
-from .views import login_view, logout_view, index, register_view, database_view, export
+from .views import login_view, logout_view, index, register_view, database_view, export, issue_search_view
 
 urlpatterns = [
     path('', index, name='index'),
@@ -23,6 +23,7 @@ urlpatterns = [
          IssueUpdateView.as_view(), name='IssueUpdateView'),
     path('issues/delete/<int:pk>',
          IssueDeleteView.as_view(), name='IssueDeleteView'),
+    path('issues/search', issue_search_view, name="issue_search_view"),
 
     # Area
     # path('areas/', views.searchAreas, name='searchAreas'),
