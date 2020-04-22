@@ -120,6 +120,7 @@ class Employee(models.Model):
     levelChoices = [
         (1, '1'),
         (2, '2'),
+        (3, '3'),
     ]
 
     user = models.OneToOneField(User, on_delete=models.CASCADE, unique=True)

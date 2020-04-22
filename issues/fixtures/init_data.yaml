@@ -23,6 +23,7 @@
   pk: 6
   fields:
     name: Coding Error
+
 #Severity
 - model: issues.Severity
   pk: 1
