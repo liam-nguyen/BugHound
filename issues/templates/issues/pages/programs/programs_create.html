@@ -2,7 +2,7 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-<h4>Add new Area</h4>
+<h4>Add new Program</h4>
 {% if messages %}
     <ul class="messages">
         {% for message in messages %}
@@ -15,7 +15,7 @@
 <div>
     <form method="POST"> {% csrf_token %}
         {{ form|crispy }}
-        <button type="submit" class="btn btn btn-info">Create Area</button>
+        <button type="submit" class="btn btn btn-info">Add Program</button>
     </form>
 </div>
 {% endblock content %}

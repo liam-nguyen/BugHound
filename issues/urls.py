@@ -2,8 +2,9 @@ from django.urls import path
 
 from . import views
 from .views import AreaListView, area_create, AreaUpdateView, AreaDeleteView
+from .views import ProgramListView, program_create, ProgramUpdateView, ProgramDeleteView
 from .views import IssueListView, IssueDetailView, IssueCreateView, IssueUpdateView, IssueDeleteView
-from .views import login_view, logout_view, index, register_view
+from .views import login_view, logout_view, index, register_view, database_view, export
 
 urlpatterns = [
     path('', index, name='index'),
@@ -31,10 +32,21 @@ urlpatterns = [
     path('areas/', AreaListView.as_view(), name='AreaListView'),
 
     # Program
-    path('programs/', views.searchPrograms, name='programs'),
-    path('programs/<int:programID>', views.editPrograms, name='editPrograms'),
+    # path('programs/', views.searchPrograms, name='programs'),
+    # path('programs/<int:programID>', views.editPrograms, name='editPrograms'),
+    path('programs/create', program_create, name='program_create'),
+    path('programs/update/<int:pk>/',
+         ProgramUpdateView.as_view(), name='ProgramUpdateView'),
+    path('programs/delete/<int:pk>/',
+         ProgramDeleteView.as_view(), name='ProgramDeleteView'),
+    path('programs/', ProgramListView.as_view(), name='ProgramListView'),
 
-    # Employee
-#     path('employees/', views.searchEmployees, name='employees'),
-    path('employees/<int:employeeID>/', views.editEmployee, name='editEmployee')
+     # Database
+     path('database/', database_view, name='database_view'),
+     
+     # Export 
+     path('export/', export, name="export"),
+#     # Employee
+# #     path('employees/', views.searchEmployees, name='employees'),
+#     path('employees/<int:employeeID>/', views.editEmployee, name='editEmployee')
 ]

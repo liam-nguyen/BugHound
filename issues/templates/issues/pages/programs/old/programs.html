@@ -1,4 +1,4 @@
-{% extends "issue_pages/base.html" %}
+{% extends "issues/base.html" %}
 
 {% block content %}
   <p>Find issues by any of the following fields: "..."</p>
@@ -23,7 +23,7 @@
   </table >
   <br>
   <h2>Add Program</h2>
-  <form method="POST" action="/issues/programs/">
+  <form method="POST" action="/programs/">
     {% csrf_token %}
     {{ form }}
     <input type='Submit' value='Add Program'>

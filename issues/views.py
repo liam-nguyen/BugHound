@@ -42,12 +42,10 @@ from .forms import AreaForm, IssueForm
 
 
 def index(request):
-    print(request.user)
     if request.user.is_authenticated:
         return redirect(reverse_lazy('IssueListView'))
     else:
         return redirect(reverse_lazy('login_view'))
-
 
 def login_view(request):
     if request.method == 'POST':
@@ -303,45 +301,79 @@ class AreaDeleteView(LoginRequiredMixin, DeleteView):
 #     context = {'form' : form}
 #     return render(request, AreaListView.as_view(), context)
 
-# Programs
+########## Programs #############
 @login_required
-@staff_member_required
-def searchPrograms(request):
-    programs = Program.objects.all()
-    if request.method == 'POST':
+def program_create(request):
+    if request.method == "POST":
         form = ProgramForm(request.POST)
         if form.is_valid():
-            data = form.cleaned_data
-            program = Program(version = data['version'], release = data['release'],
-                                name = data['name'])
-            program.save()
+            form.save()
+            return redirect('ProgramListView')
     else:
         form = ProgramForm()
+    context = {'form': form}
+    return render(request, 'issues/pages/programs/programs_create.html', context)
 
-    context = {'programs' : programs,
-                'form': form}
-    return render(request, 'issue_pages/programs.html', context)
+class ProgramListView(LoginRequiredMixin, ListView):
+    template_name = 'issues/pages/programs/programs.html'
+    model = Program
+    context_object_name = 'programs'
+    ordering = ['name']
+    paginate_by = 5
 
 
-@login_required
-@staff_member_required
-def editPrograms(request, programID):
-    program = Program.objects.get(pk=programID)
-    if request.method == 'POST':
-        form = ProgramForm(request.POST)
-        if form.is_valid():
-            data = form.cleaned_data
-            program.name = data['name']
-            program.version = data['version']
-            program.release = data['release']
-            program.save()
-    else:
-        form = ProgramForm(model_to_dict(program))
-    context = {
-        'program' : program,
-        'form' : form
-    }
-    return render(request, 'issue_pages/program-edit.html', context)
+class ProgramUpdateView(LoginRequiredMixin, UpdateView):
+    template_name = 'issues/pages/programs/programs_update.html'
+    model = Program
+    fields = ['name']
+    success_url = reverse_lazy('ProgramListView')
+
+
+class ProgramDeleteView(LoginRequiredMixin, DeleteView):
+    template_name = 'issues/pages/programs/programs_delete.html'
+    model = Program
+    success_url = reverse_lazy('ProgramListView')
+
+
+# # Programs
+# @login_required
+# # @staff_member_required
+# def searchPrograms(request):
+#     programs = Program.objects.all()
+#     if request.method == 'POST':
+#         form = ProgramForm(request.POST)
+#         if form.is_valid():
+#             data = form.cleaned_data
+#             program = Program(version = data['version'], release = data['release'],
+#                                 name = data['name'])
+#             program.save()
+#     else:
+#         form = ProgramForm()
+
+#     context = {'programs' : programs,
+#                 'form': form}
+#     # return render(request, 'issue_pages/programs.html', context)
+#     return render(request, 'issues/pages/programs/programs.html', context)
+
+# @login_required
+# # @staff_member_required
+# def editPrograms(request, programID):
+#     program = Program.objects.get(pk=programID)
+#     if request.method == 'POST':
+#         form = ProgramForm(request.POST)
+#         if form.is_valid():
+#             data = form.cleaned_data
+#             program.name = data['name']
+#             program.version = data['version']
+#             program.release = data['release']
+#             program.save()
+#     else:
+#         form = ProgramForm(model_to_dict(program))
+#     context = {
+#         'program' : program,
+#         'form' : form
+#     }
+#     return render(request, 'issue_pages/program-edit.html', context)
 
 
 
@@ -375,37 +407,41 @@ def editPrograms(request, programID):
 #             'form' : form}
 #     return render(request, 'issue_pages/employees.html', context)
 
-@login_required
-@staff_member_required
-def editEmployee(request, employeeID):
-    employee = Employee.objects.get(pk=employeeID)
-    if request.method == 'POST':
-        print(1)
-        form = EmployeeEditForm(request.POST)
-        if form.is_valid():
-            data = form.cleaned_data
-            employee.name = data['name']
-            employee.departmentID = data['departmentID']
-            employee.level = data['level']
-            print(data)
-            user = User.objects.get(username=Employee.objects.get(pk=employeeID).username)
-            if int(data['level']) > 2:
-                user.is_superuser = True
-            employee.save()
-            user.save()
-            redirect(searchEmployees)
-    else:
-        print({
-            'name' : employee.name,
-            'departmentId' : employee.departmentID,
-            'level' : employee.level
-        })
-        form = EmployeeEditForm(model_to_dict(employee))
-    context = {
-        'employee': employee,
-        'form': form
-    }
-    return render(request, 'issue_pages/employee-edit.html', context)
+# @login_required
+# @staff_member_required
+# def editEmployee(request, employeeID):
+#     employee = Employee.objects.get(pk=employeeID)
+#     if request.method == 'POST':
+#         print(1)
+#         form = EmployeeEditForm(request.POST)
+#         if form.is_valid():
+#             data = form.cleaned_data
+#             employee.name = data['name']
+#             employee.departmentID = data['departmentID']
+#             employee.level = data['level']
+#             print(data)
+#             user = User.objects.get(username=Employee.objects.get(pk=employeeID).username)
+#             if int(data['level']) > 2:
+#                 user.is_superuser = True
+#             employee.save()
+#             user.save()
+#             redirect(searchEmployees)
+#     else:
+#         print({
+#             'name' : employee.name,
+#             'departmentId' : employee.departmentID,
+#             'level' : employee.level
+#         })
+#         form = EmployeeEditForm(model_to_dict(employee))
+#     context = {
+#         'employee': employee,
+#         'form': form
+#     }
+#     return render(request, 'issue_pages/employee-edit.html', context)
+
+########## Programs #############
+def database_view(request):
+    return render(request, 'issues/pages/database.html')
 
 @login_required
 def export(request):
@@ -413,7 +449,6 @@ def export(request):
         file_format = request.POST['file-format']
 
         data = request.POST['Data']
-        # export = serializers.serialze("xml", )
         xml_mappings = {
             'Areas' : FunctionalArea,
             'Programs' : Program,
@@ -442,7 +477,7 @@ def export(request):
             myFile.write(data)
             myFile.close()
 
-    return render(request, 'issue_pages/export.html')
+    return render(request, 'issues/pages/export.html')
 
 # def logout_view(request):
 #     logout(request)

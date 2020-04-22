@@ -41,10 +41,15 @@ class AreaForm(ModelForm):
         fields = ['name']
 
 # Program Forms
-class ProgramForm(forms.Form):
-    version = forms.IntegerField()
-    release = forms.IntegerField()
-    name = forms.CharField()
+# class ProgramForm(forms.Form):
+#     version = forms.IntegerField()
+#     release = forms.IntegerField()
+#     name = forms.CharField(max_length=200)
+
+class ProgramForm(ModelForm):
+    class Meta: 
+        model = Program
+        fields = ['name', 'version', 'release', 'area']
 
 # Employee Forms
 class EmployeeForm(ModelForm):

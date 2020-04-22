@@ -15,7 +15,7 @@
       <h1 style="display: inline; margin-right:20px;">BugHound</h1>
       <nav style="display: inline;">
         <a href="{% url 'IssueListView' %}">Issues</a>
-        <a href="{% url 'admin:index' %}">Database</a>
+        <a href="{% url 'database_view' %}">Database</a>
         <a href="{% url 'logout_view' %}">Log Out</a>
         {% if request.user.username %}
           <a href="">Username: {{request.user.username}}</a>

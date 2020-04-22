@@ -5,7 +5,7 @@
 {% block content %}
   <div class="row justify-content-between my-4">
     <div class="col-4">
-      <h3>Functional Area</h3>
+      <h3>Program</h3>
     </div>
     <div class="col-4">
       {% comment %} <form class="form-inline my-2 my-lg-0">
@@ -13,22 +13,28 @@
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>  {% endcomment %}
       <div class="float-right">
-        <a class="btn btn-primary" href="{% url "area_create" %}">Add area</a>
+        <a class="btn btn-primary" href="{% url "program_create" %}">Add Program</a>
       </div>
     </div>
   </div>
   
   <table class="table table-striped">
     <tr>
+      <th>Name</th>
+      <th>Version</th>
+      <th>Release</th>
       <th>Area</th>
       <th></th>
       <th></th>
     </tr>
-    {% for area in areas %}
+    {% for program in programs %}
     <tr>
-      <td>{{ area.name }}</td>
-      <td><a href="{% url 'AreaUpdateView' area.id %}" class="btn btn-warning">Edit</a></td> 
-      <td><a href="{% url 'AreaDeleteView' area.id %}" class="btn btn-danger">Delete</a></td> 
+      <td>{{ program.name }}</td>
+      <td>{{ program.version}}</td>
+      <td>{{ program.release}}</td>
+      <td>{{ program.area}}</td>
+      <td><a href="{% url 'ProgramUpdateView' program.id %}" class="btn btn-warning">Edit</a></td> 
+      <td><a href="{% url 'ProgramDeleteView' program.id %}" class="btn btn-danger">Delete</a></td> 
     </tr>
     {% endfor %}
   </table >

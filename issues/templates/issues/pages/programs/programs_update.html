@@ -2,7 +2,7 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-<h4>Add new Area</h4>
+<h4>Update Program</h4>
 {% if messages %}
     <ul class="messages">
         {% for message in messages %}
@@ -14,8 +14,8 @@
 {% endif %}
 <div>
     <form method="POST"> {% csrf_token %}
-        <p>Are you sure you want to delete "{{ object }}"?</p>
-        <button type="submit" class="btn btn btn-info">Confirm</button>
+        {{ form|crispy }}
+        <button type="submit" class="btn btn btn-info">Update Program</button>
     </form>
 </div>
 {% endblock content %}
