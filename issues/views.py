@@ -440,6 +440,7 @@ class ProgramDeleteView(LoginRequiredMixin, DeleteView):
 #     return render(request, 'issue_pages/employee-edit.html', context)
 
 ########## Programs #############
+@login_required
 def database_view(request):
     return render(request, 'issues/pages/database.html')
 

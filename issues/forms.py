@@ -38,7 +38,8 @@ class IssueForm(ModelForm):
 class AreaForm(ModelForm):
     class Meta:
         model = FunctionalArea
-        fields = ['name']
+        # fields = ['name']
+        fields = '__all__'
 
 # Program Forms
 # class ProgramForm(forms.Form):
@@ -49,7 +50,8 @@ class AreaForm(ModelForm):
 class ProgramForm(ModelForm):
     class Meta: 
         model = Program
-        fields = ['name', 'version', 'release', 'area']
+        # fields = ['name', 'version', 'release', 'area']
+        fields = '__all__'
 
 # Employee Forms
 class EmployeeForm(ModelForm):
