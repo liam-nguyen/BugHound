@@ -23,18 +23,13 @@
       <th>Name</th>
       <th>Version</th>
       <th>Release</th>
-      <th>Area</th>
-      <th></th>
-      <th></th>
     </tr>
     {% for program in programs %}
     <tr>
-      <td>{{ program.name }}</td>
+      <td><a href="{% url 'ProgramUpdateView' program.id %}">{{ program.name }}</a></td>
       <td>{{ program.version}}</td>
       <td>{{ program.release}}</td>
-      <td>{{ program.area}}</td>
-      <td><a href="{% url 'ProgramUpdateView' program.id %}" class="btn btn-warning">Edit</a></td> 
-      <td><a href="{% url 'ProgramDeleteView' program.id %}" class="btn btn-danger">Delete</a></td> 
+      
     </tr>
     {% endfor %}
   </table >

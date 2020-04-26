@@ -25,7 +25,7 @@ Bughound is a web-based bug recording and tracking software product
 - Create a virtualenv:
 
 ```{.python}
-conda create -name [environment name] python=3.8
+conda create --name [environment name] --file requirements_conda.yml
 ```
 
 - To start virtualenv:

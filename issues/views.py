@@ -361,11 +361,10 @@ class ProgramListView(LoginRequiredMixin, ListView):
     ordering = ['name']
     paginate_by = 5
 
-
 class ProgramUpdateView(LoginRequiredMixin, UpdateView):
     template_name = 'issues/pages/programs/programs_update.html'
     model = Program
-    fields = ['name']
+    fields = '__all__'
     success_url = reverse_lazy('ProgramListView')
 
 
