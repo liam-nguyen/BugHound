@@ -77,6 +77,10 @@ def logout_view(request):
     logout(request)
     return render(request, 'issues/pages/logout.html')
 
+# def logout_view(request):
+#     logout(request)
+#     return HttpResponse('Logged Out!')
+
 def register_view(request):
     form = EmployeeForm()
     context = {'form': form}
@@ -489,6 +493,7 @@ class EmployeeUpdateView(LoginRequiredMixin, UpdateView):
 # def database_view(request):
 #     return render(request, 'issues/pages/database.html')
 
+########## Export #############
 @login_required
 def export(request):
     if request.method == 'POST':
@@ -548,10 +553,6 @@ def export(request):
         return response
     
     return render(request, 'issues/pages/export.html')
-
-# def logout_view(request):
-#     logout(request)
-#     return HttpResponse('Logged Out!')
 
 def XMLExport(resource_name):
     mapping = {
