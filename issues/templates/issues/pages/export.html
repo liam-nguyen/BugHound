@@ -5,15 +5,17 @@
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     <p>Please select format of file.</p>
-    <select name='Data'>
-        <option selected>Data</option>
-        <option>Areas</option>
-        <option>Programs</option>
-        <option>Employees</option>
+    <select name='resource-name'>
+        <option selected>Issue</option>
+        <option>Area</option>
+        <option>Program</option>
+        <option>Employee</option>
     </select>
     <select name="file-format">
-        <option selected>Format</option>
-        <option>CSV</option>
+        <option selected>CSV</option>
+        <option>JSON</option>
+        <option>YAML</option>
+        <option>HTML</option>
         <option>XML</option>
       </select>
     <button class="btn btn-primary" type="submit">Download</button>

@@ -3,8 +3,9 @@ from django.urls import path
 from . import views
 from .views import AreaListView, area_create, AreaUpdateView, AreaDeleteView
 from .views import ProgramListView, program_create, ProgramUpdateView, ProgramDeleteView
-from .views import IssueListView, IssueDetailView, IssueCreateView, IssueUpdateView, IssueDeleteView
-from .views import login_view, logout_view, index, register_view, database_view, export, issue_search_view, employee_view, EmployeeUpdateView
+from .views import issue_search_view, IssueListView, IssueDetailView, IssueCreateView, IssueUpdateView, IssueDeleteView
+from .views import login_view, logout_view, index, register_view, export, employee_view
+from .views import EmployeeUpdateView
 
 urlpatterns = [
     path('', index, name='index'),
@@ -43,7 +44,7 @@ urlpatterns = [
     path('programs/', ProgramListView.as_view(), name='ProgramListView'),
 
      # Database
-     path('database/', database_view, name='database_view'),
+     # path('database/', database_view, name='database_view'),
      
      # Export 
      path('export/', export, name="export"),

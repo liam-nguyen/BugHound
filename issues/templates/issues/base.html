@@ -12,15 +12,47 @@
   </head>
   <body>
     <header>
-      <h1 style="display: inline; margin-right:20px;">BugHound</h1>
-      <nav style="display: inline;">
-        <a href="{% url 'IssueListView' %}">Issues</a>
-        <a href="{% url 'database_view' %}">Database</a>
-        <a href="{% url 'logout_view' %}">Log Out</a>
-        {% if request.user.username %}
-          <a href="{% url 'EmployeeUpdateView' user.id %}">username: {{user.username}}</a>
-        {% endif %}
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <a class="navbar-brand">BugHound</a>
+          </div>
+          <ul class="nav navbar-nav mr-auto">
+            <li class="nav-item mr-4">
+              <a class="navbar-nav" href="{% url 'IssueListView' %}">Issues</a>
+            </li>
+            <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                Database
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu">
+                  <li class="dropdown-item"><a href="{% url 'AreaListView' %}">Areas</a></li>
+                  <li class="dropdown-item"><a href="{% url 'ProgramListView' %}">Programs</a></li>
+                  <li class="dropdown-item"><a href="{% url 'employee_view' %}">Employees</a></li>
+                  <li class="dropdown-item"><a href="{% url 'export' %}">Export</a</li>
+              </ul>
+            </li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            {% if not request.user.username %}
+              <li class="nav-item mr-4">
+                <a class="navbar-nav" href="{% url 'login_view' %}">Log In</a>
+              </li>
+            {% endif %}
+            
+            {% if request.user.username %}
+              <li class="nav-item mr-4">
+                <a class="navbar-nav" href="{% url 'logout_view' %}">Log Out</a>
+              </li>
+              <li class="nav-item mr-4">
+                <a class="navbar-nav" href="{% url 'EmployeeUpdateView' user.id %}">Username: {{user.username}}</a>
+              </li>
+            {% endif %}
+          </ul>
+        </div>
       </nav>
+      
     </header>
     <div class="container m-5">
       {% block content %}

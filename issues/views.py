@@ -104,9 +104,9 @@ def register_view(request):
         return render(request, 'issues/pages/register.html', context)
     return render(request, 'issues/pages/register.html', context)
 
-@login_required
-def dbMaintenance(request):
-    return render(request, 'issue_pages/databaseMaintenance.html')
+# @login_required
+# def dbMaintenance(request):
+#     return render(request, 'issue_pages/databaseMaintenance.html')
 
 
 ########## Issues #############
@@ -485,46 +485,81 @@ class EmployeeUpdateView(LoginRequiredMixin, UpdateView):
 #     return render(request, 'issues/pages/employees/employees_update.html', context)
 
 ########## Programs #############
-@login_required
-def database_view(request):
-    return render(request, 'issues/pages/database.html')
+# @login_required
+# def database_view(request):
+#     return render(request, 'issues/pages/database.html')
 
 @login_required
 def export(request):
     if request.method == 'POST':
         file_format = request.POST['file-format']
+        resource_name = request.POST['resource-name']
+        # xml_mappings = {
+        #     'Areas' : FunctionalArea,
+        #     'Programs' : Program,
+        #     'Employees' : Employee
+        # }
+        # csv_mappings = {
+        #     'Areas' : FunctionalAreaResource,
+        #     'Programs' : ProgramResource,
+        #     'Employees' : EmployeeResource
+        # }
 
-        data = request.POST['Data']
-        xml_mappings = {
-            'Areas' : FunctionalArea,
-            'Programs' : Program,
-            'Employees' : Employee
-        }
-        csv_mappings = {
-            'Areas' : FunctionalAreaResource,
-            'Programs' : ProgramResource,
-            'Employees' : EmployeeResource
-        }
-        if file_format == 'CSV':
-            dataset = csv_mappings[data]()
-            dataset = dataset.export()
-            response = HttpResponse(dataset.csv, content_type='text/csv')
-            response['Content-Disposition'] = 'attachment; filename="exported_data.csv"'
-            return response
-        # elif file_format == 'JSON':
-            # response = HttpResponse(dataset.json, content_type='application/json')
-            # response['Content-Disposition'] = 'attachment; filename="exported_data.json"'
-            # return response
-        elif file_format == 'XML':
-            dataset = xml_mappings[data]
-            data = serializers.serialize('xml', dataset.objects.all())
-            f = open('output.xml', 'w')
-            myFile = File(f)
-            myFile.write(data)
-            myFile.close()
+        # if file_format == 'CSV':
+        #     dataset = csv_mappings[data]()
+        #     dataset = dataset.export()
+        #     response = HttpResponse(dataset.csv, content_type='text/csv')
+        #     response['Content-Disposition'] = 'attachment; filename="exported_data.csv"'
+        #     return response
+        # # elif file_format == 'JSON':
+        #     # response = HttpResponse(dataset.json, content_type='application/json')
+        #     # response['Content-Disposition'] = 'attachment; filename="exported_data.json"'
+        #     # return response
+        # elif file_format == 'XML':
+        #     dataset = xml_mappings[data]
+        #     data = serializers.serialize('xml', dataset.objects.all())
+        #     f = open('output.xml', 'w')
+        #     myFile = File(f)
+        #     myFile.write(data)
+        #     myFile.close()
+        if (file_format != 'XML'):
+            resource_mapping = {
+                'Issue': IssueResource,
+                'Area': FunctionalAreaResource,
+                'Program': ProgramResource,
+                'Employee': EmployeeResource
+            }
+            
+            file_format_mapping = {
+                'CSV': 'get_csv',
+                'JSON': 'get_json',
+                'YAML': 'get_yaml',
+                'HTML': 'get_html'}
+            resource = resource_mapping[resource_name]()
+            dataset = resource.export()
+            data = getattr(dataset, file_format_mapping[file_format])()
+        else:
+            data = XMLExport(resource_name)
 
+        response = HttpResponse(
+            data, content_type='application/x-download')
+        file_name = resource_name.lower() + "." + file_format.lower()
+        response['Content-Disposition'] = f"attachment; filename={file_name}"
+        return response
+    
     return render(request, 'issues/pages/export.html')
 
 # def logout_view(request):
 #     logout(request)
 #     return HttpResponse('Logged Out!')
+
+def XMLExport(resource_name):
+    mapping = {
+        'Issue': Issue,
+        'Area': FunctionalArea,
+        'Program': Program,
+        'Employee': Employee
+    }
+
+    model = mapping[resource_name]
+    return serializers.serialize('xml', model.objects.all())
