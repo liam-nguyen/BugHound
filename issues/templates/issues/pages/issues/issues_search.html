@@ -2,8 +2,6 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-  <p>Leave fields alone to return all issues</p>
-  <br>
   <form method="POST">
     {% csrf_token %}
     {{ form }}

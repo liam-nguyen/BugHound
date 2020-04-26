@@ -18,7 +18,7 @@
         <a href="{% url 'database_view' %}">Database</a>
         <a href="{% url 'logout_view' %}">Log Out</a>
         {% if request.user.username %}
-          <a href="">Username: {{request.user.username}}</a>
+          <a href="{% url 'EmployeeUpdateView' user.id %}">username: {{user.username}}</a>
         {% endif %}
       </nav>
     </header>

@@ -60,7 +60,17 @@ def login_view(request):
             messages.error(request, "Invalid username or password")
     else:
         form = LoginForm()
-    context = {'form': form}
+    
+    current_user = request.user.username
+    try:
+        current_user = User.objects.get(username=request.user)
+    except User.DoesNotExist as e:
+        current_user = request.user.username
+
+    context = {
+        'form': form, 
+        'user': current_user
+    }
     return render(request, 'issues/pages/login.html', context)
 
 def logout_view(request):
