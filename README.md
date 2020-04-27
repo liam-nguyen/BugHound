@@ -39,7 +39,7 @@ conda activate [environment name]
   - Run
 
 ```{.python}
-python manage.py startserver
+python manage.py runserver
 ```
 
 - To exit from virtualenv
