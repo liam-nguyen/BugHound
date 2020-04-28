@@ -163,8 +163,8 @@ class Issue(models.Model):
         on_delete=models.CASCADE, related_name='employee_testedByID',
         null=True,
         blank=True)
-    attachment = models.CharField(
-        max_length = 1000,
+    attachment = models.FileField(
+        upload_to = 'media/',
         null=True, 
         blank=True)
     
