@@ -129,6 +129,12 @@ STATICFILES_DIRS = [
     STATIC_DIR
 ]
 
+# Media root for storing images
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# Media root for serving images
+MEDIA_URL = '/media/'
+
 # External Packages Settings
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
