@@ -27,15 +27,12 @@ urlpatterns = [
     path('issues/search', issue_search_view, name="issue_search_view"),
 
     # Area
-    # path('areas/', views.searchAreas, name='searchAreas'),
     path('areas/create', area_create, name='area_create'),
     path('areas/update/<int:pk>/', AreaUpdateView.as_view(), name='AreaUpdateView'),
     path('areas/delete/<int:pk>/', AreaDeleteView.as_view(), name='AreaDeleteView'),
     path('areas/', AreaListView.as_view(), name='AreaListView'),
 
     # Program
-    # path('programs/', views.searchPrograms, name='programs'),
-    # path('programs/<int:programID>', views.editPrograms, name='editPrograms'),
     path('programs/create', program_create, name='program_create'),
     path('programs/update/<int:pk>/',
          ProgramUpdateView.as_view(), name='ProgramUpdateView'),
@@ -43,9 +40,6 @@ urlpatterns = [
          ProgramDeleteView.as_view(), name='ProgramDeleteView'),
     path('programs/', ProgramListView.as_view(), name='ProgramListView'),
 
-     # Database
-     # path('database/', database_view, name='database_view'),
-     
      # Export 
      path('export/', export, name="export"),
     

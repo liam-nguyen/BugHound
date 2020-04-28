@@ -195,7 +195,6 @@ def issue_search_view(request):
             if data['resolution']:
                 query['resolution_id'] = data['resolution']
             issues = Issue.objects.filter(**query)
-            print(list(issues))
 
     processed_issues = list(map(getAllFields, issues))
     context = {
@@ -247,7 +246,6 @@ class IssueCreateView(LoginRequiredMixin, CreateView):
     fields = '__all__'
     template_name = 'issues/pages/issues/issues_create.html'
     success_url = reverse_lazy('IssueListView')
-
 
 class IssueUpdateView(LoginRequiredMixin, UpdateView):
     model = Issue
@@ -417,8 +415,8 @@ class ProgramDeleteView(LoginRequiredMixin, DeleteView):
 
 
 ### Employees ###
-# @login_required
-# @staff_member_required
+@login_required
+@staff_member_required
 def employee_view(request):
     employees = Employee.objects.all()
     if request.method == 'POST':
@@ -440,7 +438,6 @@ def employee_view(request):
             newUser.save()
     else:
         form = EmployeeForm()
-    print(dir(employees[0]))
     context = {
         'employees' : employees,
         'form' : form
