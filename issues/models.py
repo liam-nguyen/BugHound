@@ -164,7 +164,7 @@ class Issue(models.Model):
         null=True,
         blank=True)
     attachment = models.FileField(
-        upload_to = 'media/',
+        upload_to = 'issue_images/',
         null=True, 
         blank=True)
     
