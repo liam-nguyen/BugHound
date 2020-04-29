@@ -25,6 +25,12 @@ Bughound is a web-based bug recording and tracking software product
 - Create a virtualenv:
 
 ```{.python}
+# This add conda-forge as a source for dependency
+
+conda config --add channels conda-forge
+conda config --set channel_priority flexible
+
+# This creates an environment from a yaml file
 conda create --name [environment name] --file requirements_conda.yml
 ```
 
@@ -32,6 +38,12 @@ conda create --name [environment name] --file requirements_conda.yml
 
 ```{.python}
 conda activate [environment name]
+```
+
+- Run this shell script to get initial database
+
+```
+./RUN_ME_FIRST.sh
 ```
 
 - To start server
