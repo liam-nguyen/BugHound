@@ -37,8 +37,8 @@
         {{ form.resolution|as_crispy_field }}
       </div>
     </div>
-    
-    <button type="submit" class="btn btn-primary">Search Issues</button>
+    <a href="{% url 'IssueListView' %}" class="btn btn-outline-info mt-5">Back</a>
+    <button type="submit" class="btn btn-outline-info mt-5">Search Issues</button>
   </form>
 
   {% if issues %}
