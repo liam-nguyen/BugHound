@@ -127,6 +127,10 @@ class IssueListView(AtLeastLevel1RequiredMixin, ListView):
     template_name = 'issues/pages/issues/issues.html'
     model = Issue
     paginate_by = 10
+    ordering= ['id']
+
+    def get_queryset(self):
+        return super().get_queryset().filter(status__name__contains="Open")
 
 class IssueDetailView(AtLeastLevel1RequiredMixin, DetailView):
     template_name = 'issues/pages/issues/issues_detail.html'
