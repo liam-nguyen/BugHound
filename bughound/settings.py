@@ -137,7 +137,3 @@ MEDIA_URL = '/media/'
 
 # External Packages Settings
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
-
-DJANGO_SUPERUSER_PASSWORD='root'
-DJANGO_SUPERUSER_='root'
-DJANGO_SUPERUSER_EMAIL ='root'
