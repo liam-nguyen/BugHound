@@ -29,8 +29,8 @@ then
     $PYTHON_REF manage.py migrate
 
     $PYTHON_REF manage.py loaddata issues/fixtures/*.yaml
-    
-    printf "**********************************\n\n\n Please use:\n\n Username: root\nPassword: root\n\nTo Register for Employees\n**********************************"
+
+    printf "**********************************\n\n\nPlease use:\n\nUsername: \n\nMarco: marco\nLiam: liam\nDillion: dillion \n\nPassword: same as your username.\n\nIf you have problem, use root for both...\n\nTo Register for Employees\n**********************************"
 
     $PYTHON_REF manage.py runserver
 fi

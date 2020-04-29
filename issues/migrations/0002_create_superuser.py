@@ -65,6 +65,28 @@ people = [
         'last_name': '',
         'level': 2
     },
+    {
+        'username': 'liam',
+        'password': 'liam',
+        'first_name': 'Liam',
+        'last_name': 'Nguyen',
+        'level': 3
+    },
+    {
+        'username': 'marco',
+        'password': 'marco',
+        'first_name': 'Marco',
+        'last_name': 'Curci',
+        'level': 2
+    },
+    {
+        'username': 'dillion',
+        'password': 'dillion',
+        'first_name': 'Dillion',
+        'last_name': 'Brown',
+        'level': 3
+    },
+
 ]
 
 
