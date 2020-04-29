@@ -24,24 +24,24 @@
       <th>Bug ID</th>
       <th>Program</th>
       <th>Problem</th>
+      <th>Suggestion</th>
       <th>Status</th>
+      <th>Reported By</th>
       <th>File</th>
-      <th></th>
-      <th></th>
     </tr>
     {% for obj in object_list %}
     <tr>
       <td><a href="{% url 'IssueDetailView' obj.id %}">{{ obj.id }}</a></td>
       <td>{{ obj.program }}</td>
       <td>{{ obj.problem }}</td>
+      <td>{{ obj.suggestedFix }}</td>
       <td>{{ obj.status }}</td>
+      <td>{{ obj.reportedBy }}</td>
       <td>
         {% if obj.attachment %}
         <a target="_blank" href="{{ obj.attachment.url }}">{{ obj.filename }}</a>
         {% endif %}
       </td>
-      <td><a href="{% url 'IssueUpdateView' obj.id %}" class="btn btn-warning">Edit</a></td> 
-      <td><a href="{% url 'IssueDeleteView' obj.id %}" class="btn btn-danger">Delete</a></td> 
     </tr>
     {% endfor %}
   </table >

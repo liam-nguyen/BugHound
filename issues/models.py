@@ -159,7 +159,6 @@ class Issue(models.Model):
         blank=True)
     # treatedAsDeferred = models.BooleanField(default=False)
     reproducible = models.BooleanField(null=True)
-    
     reportedBy = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name='employee_reportedByID')
     assignedTo = models.ForeignKey(
         Employee, 
