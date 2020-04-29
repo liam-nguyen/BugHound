@@ -6,10 +6,10 @@
   <div class="row justify-content-between my-4">
     <div class="col-4">
       <h3>Issue List</h3>
-      <form action="/">
+      <!-- <form action="/">
         <input type="checkbox" name="exclude_closed" value="exclude_closed"> Exclude Closed
         <button type="submit" class="btn btn-primary btn-sm">Submit</button>
-      </form>
+      </form> -->
     </div>
     <div class="col-4">
       <div class="float-right">
@@ -23,7 +23,7 @@
     <tr>
       <th>Bug ID</th>
       <th>Program</th>
-      <th>Summary</th>
+      <th>Problem</th>
       <th>Status</th>
       <th>File</th>
       <th></th>
@@ -33,7 +33,7 @@
     <tr>
       <td><a href="{% url 'IssueDetailView' obj.id %}">{{ obj.id }}</a></td>
       <td>{{ obj.program }}</td>
-      <td>{{ obj.summary }}</td>
+      <td>{{ obj.problem }}</td>
       <td>{{ obj.status }}</td>
       <td>
         {% if obj.attachment %}

@@ -130,49 +130,51 @@ class Group(models.Model):
 class Issue(models.Model):
     program = models.ForeignKey(Program, on_delete=models.CASCADE)
     bugtype = models.ForeignKey(BugType, on_delete=models.CASCADE)
+    functionalArea = models.ForeignKey(
+        FunctionalArea, on_delete=models.CASCADE, default=0)
     severity = models.ForeignKey(Severity, on_delete=models.CASCADE)
-    # functionalArea = models.ForeignKey(
-    #     FunctionalArea, on_delete=models.CASCADE)
-    reportedBy = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name='employee_reportedByID')
-    assignedTo = models.ForeignKey(
-        Employee, 
-        on_delete=models.CASCADE, related_name='employee_assignedToID',
-        null=True,
-        blank=True)
-    status = models.ForeignKey(Status, on_delete=models.CASCADE, default="OPEN")
+    status = models.ForeignKey(
+        Status, on_delete=models.CASCADE, default="OPEN")
     priority = models.ForeignKey(Priority, on_delete=models.CASCADE)
-    resolution = models.ForeignKey(Resolution, on_delete=models.CASCADE)
-    testedBy = models.ForeignKey(
-        Employee, 
-        on_delete=models.CASCADE, related_name='employee_testedByID',
-        null=True,
-        blank=True)
+    resolution = models.ForeignKey(Resolution, on_delete=models.CASCADE, default="PENDING")
     attachment = models.FileField(
-        upload_to = 'issue_images/',
-        null=True, 
+        upload_to='issue_images/',
+        null=True,
         blank=True)
     summary = models.CharField(
-        max_length=500, 
-        null=True, 
+        max_length=500,
+        null=True,
         blank=True)
     problem = models.CharField(
         max_length=500,
         null=True,
         blank=True)
     suggestedFix = models.CharField(
-        max_length=500, 
-        null=True, 
+        max_length=500,
+        null=True,
+        blank=True)
+    comments = models.CharField(
+        max_length=500,
+        null=True,
+        blank=True)
+    # treatedAsDeferred = models.BooleanField(default=False)
+    reproducible = models.BooleanField(null=True)
+    
+    reportedBy = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name='employee_reportedByID')
+    assignedTo = models.ForeignKey(
+        Employee, 
+        on_delete=models.CASCADE, related_name='employee_assignedToID',
+        null=True,
+        blank=True)
+    testedBy = models.ForeignKey(
+        Employee, 
+        on_delete=models.CASCADE, related_name='employee_testedByID',
+        null=True,
         blank=True)
     issueDate = models.DateTimeField(default=timezone.now)
-    isAssignedToGroup = models.BooleanField(null=True)
-    comments = models.CharField(
-        max_length=500, 
-        null=True, 
-        blank=True)
+    # isAssignedToGroup = models.BooleanField(null=True)
     resolveByDate = models.DateTimeField(null=True, blank=True)
     testByDate = models.DateTimeField(null=True, blank=True)
-    treatedAsDeferred = models.BooleanField(default=False)
-    reproducible = models.BooleanField(null=True)
 
     def __str__(self):
         return f"[BugID: {self.id}]"

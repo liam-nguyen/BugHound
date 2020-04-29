@@ -116,7 +116,7 @@
       - 18
       - 19
 - model: issues.Program
-  pk: 10
+  pk: 11
   fields:
     name: COBOL Coder
     version: 1
@@ -128,7 +128,7 @@
       - 18
       - 19
 - model: issues.Program
-  pk: 10
+  pk: 12
   fields:
     name: COBOL Coder
     version: 2

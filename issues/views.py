@@ -16,9 +16,8 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import UpdateView, DeleteView, CreateView
 
 from .resources import FunctionalAreaResource, EmployeeResource, ProgramResource, IssueResource
-from .models import Issue, FunctionalArea, Program, Employee, Department
-from .forms import ProgramForm, EmployeeForm, LoginForm
-from .forms import AreaForm, IssueForm, IssueSearchForm
+from .models import Issue, FunctionalArea, Program, Employee, Department, Status
+from .forms import ProgramForm, EmployeeForm, LoginForm, AreaForm, IssueForm, IssueSearchForm
 from .helpers.decorators import at_least_level_1_employee_required, at_least_level_2_employee_required, at_least_level_3_employee_required, AtLeastLevel1RequiredMixin, AtLeastLevel2RequiredMixin, AtLeastLevel3RequiredMixin
 from .helpers.utils import getAllFields, XMLExport
 
@@ -153,7 +152,17 @@ class IssueUpdateView(AtLeastLevel2RequiredMixin, UpdateView):
     template_name = 'issues/pages/issues/issues_update.html'
     success_url = reverse_lazy('IssueListView')
     fields = '__all__'
+    # def post(self, request, *args, **kwargs):
+    #     form = self.get_form()
+    #     if (form.is_valid()):
+    #         cleaned_data = form.cleaned_data
+    #         print(cleaned_data['status'] == Status.objects.filter(name__contains="Open"))
+    #         print(dir(cleaned_data))
+    #         print(cleaned_data)
 
+    #         return self.form_valid(form)
+    #     else:
+    #         return self.form_invalid(form)
 
 class IssueDeleteView(AtLeastLevel2RequiredMixin, DeleteView):
     model = Issue

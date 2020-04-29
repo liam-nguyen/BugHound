@@ -2,28 +2,73 @@
 - model: issues.Issue
   pk: 1
   fields:
-    program: 1
+    program: 9
     bugtype: 1
     severity: 1
-    reportedBy: 1
+    reportedBy: 3
     status: 1
     priority: 4
     resolution: 1
-    summary: "Please fix this"
-    suggestedFix: "Look at the log"
-    comments: "Don't forget"
+    problem: "IDE File"
+    summary: "Print defaults to PDF – should be blank initially."
     reproducible: true
 - model: issues.Issue
   pk: 2
   fields:
-    program: 6
-    bugtype: 2
+    program: 7
+    bugtype: 1
     severity: 2
-    reportedBy: 1
-    status: 2
-    priority: 3
-    resolution: 2
-    summary: "Someone is getting fired if this is not fixed."
-    suggestedFix: "None"
-    comments: "Customer is angry"
-    reproducible: false
+    reportedBy: 7
+    status: 1
+    priority: 4
+    resolution: 1
+    problem: "Formulator missing capital Greek Sigma"
+    reproducible: true
+- model: issues.Issue
+  pk: 3
+  fields:
+    program: 6
+    bugtype: 1
+    severity: 1
+    reportedBy: 7
+    status: 1
+    priority: 4
+    resolution: 1
+    problem: "IDE should have a toolbar for compiling, linking, running"
+    reproducible: true
+- model: issues.Issue
+  pk: 4
+  fields:
+    program: 10
+    bugtype: 1
+    severity: 2
+    reportedBy: 6
+    status: 1
+    priority: 4
+    resolution: 1
+    problem: "La distance n'est pas en kilomètres!"
+    reproducible: true
+- model: issues.Issue
+  pk: 5
+  fields:
+    program: 2
+    bugtype: 6
+    severity: 2
+    reportedBy: 3
+    status: 1
+    priority: 4
+    resolution: 1
+    problem: "“add areas page” has no means to Cancel or quit after adding."
+    reproducible: true
+- model: issues.Issue
+  pk: 6
+  fields:
+    program: 9
+    bugtype: 6
+    severity: 3
+    reportedBy: 2
+    status: 1
+    priority: 4
+    resolution: 1
+    problem: "the math.p library is not found by the linker"
+    reproducible: true

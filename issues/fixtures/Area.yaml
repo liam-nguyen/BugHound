@@ -1,5 +1,9 @@
 # Area
 - model: issues.FunctionalArea
+  pk: 0
+  fields:
+    name: Unknown
+- model: issues.FunctionalArea
   pk: 1
   fields:
     name: Menu

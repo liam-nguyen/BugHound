@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.forms import ModelForm, widgets
 import datetime
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Layout, Fieldset, ButtonHolder, Submit
 
 from .models import Program, Department, BugType, Severity, FunctionalArea, Employee, Status, Priority, Resolution
 from .models import Issue
@@ -27,7 +29,7 @@ class IssueForm(ModelForm):
     class Meta:
         model = Issue
         fields = '__all__'
-
+        
 class AreaForm(ModelForm):
     class Meta:
         model = FunctionalArea
