@@ -33,7 +33,7 @@
       <td>{{ obj.status }}</td>
       <td>
         {% if obj.attachment %}
-        <a href="{{ obj.attachment.url }}">{{ obj.attachment.name }}
+        <a target="_blank" href="{{ obj.attachment.url }}">{{ obj.filename }}</a>
         {% endif %}
       </td>
       <td><a href="{% url 'IssueUpdateView' obj.id %}" class="btn btn-warning">Edit</a></td> 
