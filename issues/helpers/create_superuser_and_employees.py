@@ -94,6 +94,8 @@ def create_other_users(apps, schema_editor):
     for person in people:
         user = User.objects.create_user(
             username=person['username'], password=person['password'])
+        if person['level'] == 3:
+            user.is_staff = True
         employee = Employee(
             user=user, first_name=person['first_name'], 
             last_name=person['last_name'], level=person['level'])

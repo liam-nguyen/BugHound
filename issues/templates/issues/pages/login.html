@@ -1,46 +1,27 @@
 {% extends 'issues/base.html' %}
 {% load crispy_forms_tags %}
 
-<!-- {% comment %} <!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>BugHound</title>
-  <meta name="description" content="BugHound">
-  <meta name="author" content="SitePoint">
-</head>
-
-<body>
-  <h1>Welcome to BugHound</h1>
-  <p>Please log in to continue:</p>
-  <br>
-  <form method="POST">
-  {% csrf_token %}
-  {{ form }}
-  <br>
-  <input type=submit id=enter_button name="Enter">
-  </form>
-  <br>
-  <br>
-  <p>Team: Marco Curci, Liam Nguyen, and Dillon Brown</p>
-</body>
-</html> {% endcomment %} -->
-
 {% block content %}
-  {% if messages %}
-    <ul class="messages">
+  <h5 class="mb-3">Restricted Access. Please log in to view this page.</h5>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form|crispy}}
+        <button type="submit" class="btn btn-success">Login</button>
+        <a class="btn btn-primary" href="{% url "register_view" %}">Register here!</a>
+      </form>
+
+      <ul class="messages text-danger mt-4">
+        {% if messages %}
         {% for message in messages %}
         <li>
-            {{ message }}
+          {{ message }}
         </li>
         {% endfor %}
-    </ul>
-  {% endif %}
-    <form method="POST">
-      {% csrf_token %}
-      {{ form|crispy}}
-      <button type="submit" class="btn btn-success">Login</button>
-      <a class="btn btn-primary" href="{% url "register_view" %}">Register here!</a>
-    </form>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+  
+    
 
 {% endblock content %}

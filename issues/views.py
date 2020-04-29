@@ -51,7 +51,6 @@ def login_view(request):
         current_user = User.objects.get(username=request.user)
     except User.DoesNotExist as e:
         current_user = request.user.username
-
     context = {
         'form': form, 
         'user': current_user
@@ -180,7 +179,7 @@ class AreaListView(AtLeastLevel1RequiredMixin, ListView):
     model = FunctionalArea
     context_object_name = 'areas'
     ordering = ['name']
-    paginate_by = 5
+    paginate_by = 10
 
 class AreaUpdateView(AtLeastLevel3RequiredMixin, UpdateView):
     template_name = 'issues/pages/areas/areas_update.html'
@@ -214,19 +213,16 @@ class ProgramListView(AtLeastLevel1RequiredMixin, ListView):
     paginate_by = 10
     login_url = reverse_lazy('login_view')
 
-
 class ProgramUpdateView(AtLeastLevel3RequiredMixin, UpdateView):
     template_name = 'issues/pages/programs/programs_update.html'
     model = Program
     fields = '__all__'
     success_url = reverse_lazy('ProgramListView')
-    login_url = reverse_lazy('login_view')
 
 class ProgramDeleteView(AtLeastLevel3RequiredMixin, DeleteView):
     template_name = 'issues/pages/programs/programs_delete.html'
     model = Program
     success_url = reverse_lazy('ProgramListView')
-    login_url = reverse_lazy('login_view')
 
 
 ### Employees ###
@@ -278,7 +274,6 @@ def export(request):
                 'Program': ProgramResource,
                 'Employee': EmployeeResource
             }
-            
             file_format_mapping = {
                 'CSV': 'get_csv',
                 'JSON': 'get_json',
