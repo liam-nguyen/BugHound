@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.urls import reverse_lazy
 
-from .models import Employee
+from issues.models import Employee
 
 ##### For function-based view #####
 LOGIN_URL = 'login_view'

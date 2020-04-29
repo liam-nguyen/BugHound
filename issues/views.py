@@ -21,8 +21,8 @@ from .models import Issue, FunctionalArea, Program, Employee, Department
 from .forms import ProgramForm, EmployeeForm, LoginForm
 from .forms import AreaForm, IssueForm, IssueSearchForm
 
-from .decorators import at_least_level_1_employee_required, at_least_level_2_employee_required, at_least_level_3_employee_required
-from .decorators import AtLeastLevel1RequiredMixin, AtLeastLevel2RequiredMixin, AtLeastLevel3RequiredMixin
+from .helpers.decorators import at_least_level_1_employee_required, at_least_level_2_employee_required, at_least_level_3_employee_required
+from .helpers.decorators import AtLeastLevel1RequiredMixin, AtLeastLevel2RequiredMixin, AtLeastLevel3RequiredMixin
 
 from .helpers.utils import getAllFields, XMLExport
 
