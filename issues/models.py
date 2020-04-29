@@ -130,8 +130,9 @@ class Issue(models.Model):
     program = models.ForeignKey(Program, on_delete=models.CASCADE)
     bugtype = models.ForeignKey(BugType, on_delete=models.CASCADE)
     severity = models.ForeignKey(Severity, on_delete=models.CASCADE)
+    # functionalArea = models.ForeignKey(
+    #     FunctionalArea, on_delete=models.CASCADE)
     reportedBy = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name='employee_reportedByID')
-    # functionalArea = models.ForeignKey(FunctionalArea, on_delete=models.CASCADE)
     assignedTo = models.ForeignKey(
         Employee, 
         on_delete=models.CASCADE, related_name='employee_assignedToID',
@@ -152,6 +153,10 @@ class Issue(models.Model):
     summary = models.CharField(
         max_length=500, 
         null=True, 
+        blank=True)
+    problem = models.CharField(
+        max_length=500,
+        null=True,
         blank=True)
     suggestedFix = models.CharField(
         max_length=500, 
