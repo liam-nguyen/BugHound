@@ -140,11 +140,6 @@ class Group(models.Model):
 
 # Issue
 class Issue(models.Model):
-    name = models.CharField(
-        max_length=200,
-        null=False,
-        blank=False
-    )
     program = models.ForeignKey(Program, on_delete=models.CASCADE)
     bugtype = models.ForeignKey(BugType, on_delete=models.CASCADE)
     severity = models.ForeignKey(Severity, on_delete=models.CASCADE)
