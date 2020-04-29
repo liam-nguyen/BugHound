@@ -10,7 +10,8 @@ Bughound is a web-based bug recording and tracking software product
 
 - Using web browser, create, edit and update “bug” reports on multiple products
 - Store error report content in relational tables
-- Access error report content via SQL•Search for bugs on multiple fields
+- Access error report content via SQL
+- Search for bugs on multiple fields
 - Facilities to add, delete or update information on program, releases, functional areas, employee
 
 ## Requirements
@@ -23,38 +24,42 @@ Bughound is a web-based bug recording and tracking software product
 
 - Install [Anaconda](https://docs.anaconda.com/anaconda/install/)
 - Create a virtualenv:
+  - Add conda-forge as a source for dependency
 
 ```{.python}
-# This add conda-forge as a source for dependency
-
 conda config --add channels conda-forge
 conda config --set channel_priority flexible
 
-# This creates an environment from a yaml file
+```
+
+- Create environment from yaml file
+
+```{.python}
 conda create --name [environment name] --file requirements_conda.yml
 ```
 
-- To start virtualenv:
+- Start virtualenv:
 
 ```{.python}
 conda activate [environment name]
 ```
 
-- Run this shell script to get initial database
+- Run this shell script to get initial database with dummy data
 
 ```
-./RUN_ME_FIRST.sh
+./DEMO_PART_2.sh
 ```
 
-- To start server
+- To start server (in conda environment)
   - Navigate to project folder
   - Run
 
 ```{.python}
+
 python manage.py runserver
 ```
 
-- To exit from virtualenv
+- To exit from conda environment
 
 ```{.python}
 conda deactivate
