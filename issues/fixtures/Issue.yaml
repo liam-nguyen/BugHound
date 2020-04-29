@@ -10,8 +10,8 @@
     status: 1
     priority: 4
     resolution: 1
-    summary: 'Please fix this'
-    suggestedFix: 'Look at the log'
+    summary: "Please fix this"
+    suggestedFix: "Look at the log"
     comments: "Don't forget"
     reproducible: true
 - model: issues.Issue
@@ -20,12 +20,12 @@
     program: 6
     bugtype: 2
     severity: 2
-    reportedBy: 4
+    reportedBy: 1
     functionalArea: 3
     status: 2
     priority: 3
     resolution: 2
-    summary: 'Someone is getting fired if this is not fixed.'
-    suggestedFix: 'None'
-    comments: 'Customer is angry'
+    summary: "Someone is getting fired if this is not fixed."
+    suggestedFix: "None"
+    comments: "Customer is angry"
     reproducible: false

@@ -1,4 +1,4 @@
-from .models import Issue, FunctionalArea, Program, Employee, Department
+from issues.models import Issue, FunctionalArea, Program, Employee, Department
 from django.core import serializers
 
 def getAllFields(issue):

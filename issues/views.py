@@ -25,7 +25,7 @@ from .forms import AreaForm, IssueForm, IssueSearchForm
 from .decorators import at_least_level_1_employee_required, at_least_level_2_employee_required, at_least_level_3_employee_required
 from .decorators import AtLeastLevel1RequiredMixin, AtLeastLevel2RequiredMixin, AtLeastLevel3RequiredMixin
 
-from .helpers import getAllFields, XMLExport
+from .helpers.utils import getAllFields, XMLExport
 
 # def index(request):
 #     form = LoginForm()
@@ -82,7 +82,7 @@ def logout_view(request):
 #     logout(request)
 #     return HttpResponse('Logged Out!')
 
-@at_least_level_3_employee_required
+@staff_member_required
 def register_view(request):
     form = EmployeeForm()
     context = {'form': form}
