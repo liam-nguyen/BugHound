@@ -6,14 +6,12 @@ from django.utils import timezone
 import datetime
 from model_utils import Choices
 
-# Priority
 class Priority(models.Model):
     name = models.CharField(max_length=50, unique=True)
 
     def __str__(self):
         return self.name
 
-# Status
 class Status(models.Model):
     name = models.CharField(
         max_length=200, 
@@ -24,7 +22,6 @@ class Status(models.Model):
     def __str__(self):
         return self.name
 
-# IssueType
 class BugType(models.Model):
     name = models.CharField(
         max_length=200,
@@ -35,7 +32,6 @@ class BugType(models.Model):
     def __str__(self):
         return f'{self.id} - {self.name}'
 
-# Severity
 class Severity(models.Model):
     name = models.CharField(
         max_length=200,
@@ -46,7 +42,6 @@ class Severity(models.Model):
     def __str__(self):
         return str(self.name)
 
-# Resolution
 class Resolution(models.Model):
     name = models.CharField(
         max_length=200,
@@ -57,7 +52,6 @@ class Resolution(models.Model):
     def __str__(self):
         return self.name
 
-# AttachmentType
 class AttachmentType(models.Model):
     name = models.CharField(
         max_length=200,
@@ -68,7 +62,6 @@ class AttachmentType(models.Model):
     def __str__(self):
         return self.name
 
-# Attachment
 class Attachment(models.Model):
     typeID = models.ForeignKey(AttachmentType, on_delete=models.CASCADE)
     location = models.CharField(max_length=500)
@@ -76,7 +69,6 @@ class Attachment(models.Model):
     def __str__(self):
         return f"[Type: {self.typeID} + Location: {self.location}]"
 
-# FunctionalArea
 class FunctionalArea(models.Model):
     name = models.CharField(
         max_length=200,
@@ -87,7 +79,6 @@ class FunctionalArea(models.Model):
     def __str__(self):
         return self.name
 
-# Program
 class Program(models.Model):
     version = models.IntegerField(validators=[MinValueValidator(1)])
     release = models.IntegerField(validators=[MinValueValidator(1)])
@@ -103,7 +94,6 @@ class Program(models.Model):
     class Meta:
         unique_together = [['name', 'release', 'version']]
     
-# Department
 class Department(models.Model):
     name = models.CharField(
         max_length=200,
@@ -114,7 +104,6 @@ class Department(models.Model):
     def __str__(self):
         return self.name
 
-# Employee
 class Employee(models.Model):
     levelChoices = (
         (1, '1'),
@@ -138,7 +127,6 @@ class Group(models.Model):
     def __str__(self):
         return self.name
 
-# Issue
 class Issue(models.Model):
     program = models.ForeignKey(Program, on_delete=models.CASCADE)
     bugtype = models.ForeignKey(BugType, on_delete=models.CASCADE)
