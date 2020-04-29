@@ -2,10 +2,11 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.forms import ModelForm
-
 import datetime
+
 from .models import Program, Department, BugType, Severity, FunctionalArea, Employee, Status, Priority, Resolution
 from .models import Issue
+
 
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=100, required=True)

@@ -1,6 +1,5 @@
 from django.contrib import admin
 
-# Register your models here.\
 from .models import Issue, Status, BugType, Resolution, Priority
 from .models import  FunctionalArea, Severity,AttachmentType, Attachment
 from .models import Program, Department, Employee, Group

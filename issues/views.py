@@ -3,15 +3,14 @@ from django.http import HttpResponse, Http404, JsonResponse
 from django.template import loader
 from django.core.files import File
 from django.forms.models import model_to_dict
-from django.shortcuts import redirect
+from django.shortcuts import redirect, HttpResponseRedirect
+from django.urls import reverse_lazy
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib import messages
-from django.shortcuts import HttpResponseRedirect
-from django.urls import reverse_lazy
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import UpdateView, DeleteView, CreateView
@@ -20,12 +19,10 @@ from .resources import FunctionalAreaResource, EmployeeResource, ProgramResource
 from .models import Issue, FunctionalArea, Program, Employee, Department
 from .forms import ProgramForm, EmployeeForm, LoginForm
 from .forms import AreaForm, IssueForm, IssueSearchForm
-
-from .helpers.decorators import at_least_level_1_employee_required, at_least_level_2_employee_required, at_least_level_3_employee_required
-from .helpers.decorators import AtLeastLevel1RequiredMixin, AtLeastLevel2RequiredMixin, AtLeastLevel3RequiredMixin
-
+from .helpers.decorators import at_least_level_1_employee_required, at_least_level_2_employee_required, at_least_level_3_employee_required, AtLeastLevel1RequiredMixin, AtLeastLevel2RequiredMixin, AtLeastLevel3RequiredMixin
 from .helpers.utils import getAllFields, XMLExport
 
+## Home view ##
 def index(request):
     if request.user.is_authenticated:
         return redirect(reverse_lazy('IssueListView'))
@@ -130,7 +127,6 @@ class IssueListView(AtLeastLevel1RequiredMixin, ListView):
     template_name = 'issues/pages/issues/issues.html'
     model = Issue
     paginate_by = 10
-
 
 class IssueDetailView(AtLeastLevel1RequiredMixin, DetailView):
     template_name = 'issues/pages/issues/issues_detail.html'
@@ -253,7 +249,6 @@ def employee_view(request):
         'form' : form
         }
     return render(request, 'issues/pages/employees/employees.html', context)
-
 
 class EmployeeUpdateView(AtLeastLevel3RequiredMixin, UpdateView):
     model = Employee

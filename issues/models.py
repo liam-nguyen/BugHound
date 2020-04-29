@@ -2,9 +2,8 @@ from django.db import models
 from django.core.validators import MinValueValidator
 from django.contrib.auth.models import User, AbstractUser, AbstractBaseUser, BaseUserManager
 from django.utils import timezone
-
-import datetime
 from model_utils import Choices
+import datetime
 
 class Priority(models.Model):
     name = models.CharField(max_length=50, unique=True)
