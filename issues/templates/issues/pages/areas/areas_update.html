@@ -15,7 +15,8 @@
 <div>
     <form method="POST"> {% csrf_token %}
         {{ form|crispy }}
-        <button type="submit" class="btn btn btn-info">Update Area</button>
+        <a href="{% url 'AreaListView' %}" class="btn btn-outline-info mt-2">Back</a>
+        <a type="submit" class="btn btn btn-outline-info mt-2">Update Area</a>
     </form>
 </div>
 {% endblock content %}

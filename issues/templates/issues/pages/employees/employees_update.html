@@ -15,7 +15,9 @@
 <div>
     <form method="POST"> {% csrf_token %}
         {{ form|crispy }}
-        <button type="submit" class="btn btn btn-info">Update</button>
+        <a href="{% url 'employee_view' %}" class="btn btn-outline-info mt-2">Back</a>
+
+        <a type="submit" class="btn btn btn-outline-info mt-2">Update</a>
     </form>
 </div>
 {% endblock content %}

@@ -29,8 +29,9 @@
                     {{ form.areas|as_crispy_field }}
                     </div>
                 </div>
-                <button type="submit" class="btn btn btn-info mt-5">Update Program</button>
-                <a href="{% url 'ProgramDeleteView' program.id %}" class="btn btn-danger mt-5">Delete</a>
+                <a href="{% url 'ProgramListView' %}" class="btn btn-outline-info mt-5">Back</a>
+                <a type="submit" class="btn btn-outline-info mt-5">Update Program</a>
+                <a href="{% url 'ProgramDeleteView' program.id %}" class="btn btn-outline-danger mt-5">Delete</a>
             </form>
         </div>
     
