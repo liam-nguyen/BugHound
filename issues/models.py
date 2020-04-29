@@ -4,6 +4,7 @@ from django.contrib.auth.models import User, AbstractUser, AbstractBaseUser, Bas
 from django.utils import timezone
 from model_utils import Choices
 import datetime
+import os
 
 class Priority(models.Model):
     name = models.CharField(max_length=50, unique=True)
@@ -175,5 +176,9 @@ class Issue(models.Model):
 
     def __str__(self):
         return f"[BugID: {self.id}]"
+
+    @property
+    def filename(self):
+        return os.path.basename(self.attachment.name)
 
 

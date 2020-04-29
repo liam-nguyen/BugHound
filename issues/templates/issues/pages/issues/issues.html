@@ -21,6 +21,7 @@
       <th>Program</th>
       <th>Summary</th>
       <th>Status</th>
+      <th>File</th>
       <th></th>
       <th></th>
     </tr>
@@ -30,6 +31,11 @@
       <td>{{ obj.program }}</td>
       <td>{{ obj.summary }}</td>
       <td>{{ obj.status }}</td>
+      <td>
+        {% if obj.attachment %}
+        <a target="_blank" href="{{ obj.attachment.url }}">{{ obj.filename }}</a>
+        {% endif %}
+      </td>
       <td><a href="{% url 'IssueUpdateView' obj.id %}" class="btn btn-warning">Edit</a></td> 
       <td><a href="{% url 'IssueDeleteView' obj.id %}" class="btn btn-danger">Delete</a></td> 
     </tr>
