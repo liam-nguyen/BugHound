@@ -99,3 +99,15 @@
   pk: 25
   fields:
     name: Datbase
+- model: issues.FunctionalArea
+  pk: 26
+  fields:
+    name: Ada95 Parser
+- model: issues.FunctionalArea
+  pk: 27
+  fields:
+    name: Ada95 Lexer
+- model: issues.FunctionalArea
+  pk: 28
+  fields:
+    name: Ada95 IDE

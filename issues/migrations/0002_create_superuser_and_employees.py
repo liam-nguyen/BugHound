@@ -16,52 +16,52 @@ def create_superuser(apps, schema_editor):
 
 people = [
     {
-        'username': 'timmy!',
-        'password': 'timmy',
-        'first_name': 'Timmy',
+        'username': 'smithbob',
+        'password': 'bob',
+        'first_name': 'Bob',
         'last_name': '',
         'level': 3
     },
     {
-        'username': 'jorge',
-        'password': 'jorge',
-        'first_name': 'Jorge',
+        'username': 'jonessue',
+        'password': 'sue',
+        'first_name': 'Sue',
         'last_name': '',
         'level': 2
     },
     {
-        'username': 'smith',
-        'password': 'jorge',
-        'first_name': 'Hannah',
+        'username': 'smithhabib',
+        'password': 'habib',
+        'first_name': 'Habib',
         'last_name': '',
         'level': 2
     },
     {
-        'username': 'johanng',
-        'password': 'johanng',
-        'first_name': 'Johann',
-        'last_name': 'Gomblepuddy',
-        'level': 1
-    },
-    {
-        'username': 'leroisoleil',
-        'password': 'leroisoleil',
-        'first_name': 'Louis',
-        'last_name': 'XIV',
-        'last_name': '',
-        'level': 2
-    },
-    {
-        'username': 'jonesbrenda',
-        'password': 'jonesbrenda',
-        'first_name': 'Brenda',
+        'username': 'jonesyoshi',
+        'password': 'yoshi',
+        'first_name': 'Yoshi',
         'last_name': '',
         'level': 1
     },
     {
-        'username': 'smithp',
-        'password': 'smithp',
-        'first_name': 'Prakish',
+        'username': 'smithfrancois',
+        'password': 'francois',
+        'first_name': 'Francois',
+        'last_name': '',
+        'last_name': '',
+        'level': 2
+    },
+    {
+        'username': 'jonesbecky',
+        'password': 'bekcy',
+        'first_name': 'Becky',
+        'last_name': '',
+        'level': 1
+    },
+    {
+        'username': 'smithfelix',
+        'password': 'felix',
+        'first_name': 'Felix',
         'last_name': '',
         'level': 2
     },

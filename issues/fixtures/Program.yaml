@@ -93,3 +93,49 @@
       - 1
       - 24
       - 25
+- model: issues.Program
+  pk: 9
+  fields:
+    name: Ada95 Coder
+    version: 1
+    release: 1
+    areas:
+      - 26
+      - 27
+      - 28
+- model: issues.Program
+  pk: 10
+  fields:
+    name: COBOL Coder
+    version: 1
+    release: 1
+    areas:
+      - 15
+      - 16
+      - 17
+      - 18
+      - 19
+- model: issues.Program
+  pk: 10
+  fields:
+    name: COBOL Coder
+    version: 1
+    release: 2
+    areas:
+      - 15
+      - 16
+      - 17
+      - 18
+      - 19
+- model: issues.Program
+  pk: 10
+  fields:
+    name: COBOL Coder
+    version: 2
+    release: 1
+    areas:
+      - 15
+      - 16
+      - 17
+      - 18
+      - 19

@@ -3,11 +3,6 @@
 
 #!/bin/bash
 
-echo BE AWARE: This will remove entire database and recreate the database with dummy data.
-read -p "Are you sure? (Y/y) " -n 1 -r
-
-if [[ $REPLY =~ ^[Yy]$ ]]
-then
     PYTHON_REF=$(which python | grep "/python")
 
     # Remove database
@@ -24,7 +19,7 @@ then
     $PYTHON_REF manage.py makemigrations 
     
     # Create migrations for super users and employees
-    cat issues/helpers/create_superuser_and_employees.py >> issues/migrations/0002_create_superuser.py
+    cat issues/helpers/create_superuser_and_employees.py >> issues/migrations/0002_create_superuser_and_employees.py
 
     $PYTHON_REF manage.py migrate
 
@@ -33,6 +28,4 @@ then
     printf "**********************************\n\n\nPlease use:\n\nUsername: \n\nMarco: marco\nLiam: liam\nDillion: dillion \n\nPassword: same as your username.\n\nIf you have problem, use root for both...\n\nTo Register for Employees\n**********************************"
 
     $PYTHON_REF manage.py runserver
-fi
-
 

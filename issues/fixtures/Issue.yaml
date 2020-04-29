@@ -6,7 +6,6 @@
     bugtype: 1
     severity: 1
     reportedBy: 1
-    functionalArea: 1
     status: 1
     priority: 4
     resolution: 1
@@ -21,7 +20,6 @@
     bugtype: 2
     severity: 2
     reportedBy: 1
-    functionalArea: 3
     status: 2
     priority: 3
     resolution: 2

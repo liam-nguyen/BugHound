@@ -109,10 +109,10 @@ class Employee(models.Model):
         (2, '2'),
         (3, '3'),
     )
-
     user = models.OneToOneField(User, on_delete=models.CASCADE, unique=True)
-    first_name = models.CharField(max_length=200)
-    last_name = models.CharField(max_length=200)
+    first_name = models.CharField(
+        max_length=200, unique=False, null=True, blank=True)
+    last_name = models.CharField(max_length=200, unique=False, null=True, blank=True)
     level = models.IntegerField(choices=levelChoices, default=1)
     department = models.ForeignKey(Department, on_delete=models.CASCADE, null=True, blank=True)
 
@@ -131,7 +131,7 @@ class Issue(models.Model):
     bugtype = models.ForeignKey(BugType, on_delete=models.CASCADE)
     severity = models.ForeignKey(Severity, on_delete=models.CASCADE)
     reportedBy = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name='employee_reportedByID')
-    functionalArea = models.ForeignKey(FunctionalArea, on_delete=models.CASCADE)
+    # functionalArea = models.ForeignKey(FunctionalArea, on_delete=models.CASCADE)
     assignedTo = models.ForeignKey(
         Employee, 
         on_delete=models.CASCADE, related_name='employee_assignedToID',

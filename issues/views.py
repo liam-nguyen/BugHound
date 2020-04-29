@@ -58,7 +58,7 @@ def logout_view(request):
     logout(request)
     return render(request, 'issues/pages/logout.html')
 
-@staff_member_required
+@at_least_level_3_employee_required
 def register_view(request):
     form = EmployeeForm()
     context = {'form': form}
@@ -170,18 +170,20 @@ def area_create(request):
     context = {'form': form}
     return render(request, 'issues/pages/areas/areas_create.html', context)
 
-class AreaListView(AtLeastLevel1RequiredMixin, ListView):
+class AreaListView(AtLeastLevel2RequiredMixin, ListView):
     template_name = 'issues/pages/areas/areas.html'
     model = FunctionalArea
     context_object_name = 'areas'
     ordering = ['name']
     paginate_by = 10
 
-class AreaUpdateView(AtLeastLevel3RequiredMixin, UpdateView):
+
+class AreaUpdateView(AtLeastLevel2RequiredMixin, UpdateView):
     template_name = 'issues/pages/areas/areas_update.html'
     model = FunctionalArea
     fields = ['name']
     success_url = reverse_lazy('AreaListView')
+
 
 class AreaDeleteView(AtLeastLevel3RequiredMixin, DeleteView):
     template_name = 'issues/pages/areas/areas_delete.html'
@@ -201,7 +203,8 @@ def program_create(request):
     context = {'form': form}
     return render(request, 'issues/pages/programs/programs_create.html', context)
 
-class ProgramListView(AtLeastLevel1RequiredMixin, ListView):
+
+class ProgramListView(AtLeastLevel2RequiredMixin, ListView):
     template_name = 'issues/pages/programs/programs.html'
     model = Program
     context_object_name = 'programs'
@@ -209,7 +212,8 @@ class ProgramListView(AtLeastLevel1RequiredMixin, ListView):
     paginate_by = 10
     login_url = reverse_lazy('login_view')
 
-class ProgramUpdateView(AtLeastLevel3RequiredMixin, UpdateView):
+
+class ProgramUpdateView(AtLeastLevel2RequiredMixin, UpdateView):
     template_name = 'issues/pages/programs/programs_update.html'
     model = Program
     fields = '__all__'
