@@ -216,7 +216,7 @@ class ProgramListView(AtLeastLevel2RequiredMixin, ListView):
 class ProgramUpdateView(AtLeastLevel2RequiredMixin, UpdateView):
     template_name = 'issues/pages/programs/programs_update.html'
     model = Program
-    fields = '__all__'
+    form_class = ProgramForm
     success_url = reverse_lazy('ProgramListView')
 
 class ProgramDeleteView(AtLeastLevel3RequiredMixin, DeleteView):

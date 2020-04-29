@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-from django.forms import ModelForm
+from django.forms import ModelForm, widgets
 import datetime
 
 from .models import Program, Department, BugType, Severity, FunctionalArea, Employee, Status, Priority, Resolution
@@ -36,7 +36,13 @@ class AreaForm(ModelForm):
 class ProgramForm(ModelForm):
     class Meta: 
         model = Program
-        fields = '__all__'
+        fields = ['name', 'version', 'release', 'areas']
+    
+    def __init__(self, *args, **kwargs):
+       super(ProgramForm, self).__init__(*args, **kwargs)
+       print(self)
+       self.fields['areas'].widget = widgets.CheckboxSelectMultiple()
+       self.fields["areas"].queryset = FunctionalArea.objects.all()
 
 class EmployeeForm(ModelForm):
     username = forms.CharField(max_length=200)
