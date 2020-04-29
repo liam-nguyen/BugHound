@@ -19,6 +19,7 @@ Bughound is a web-based bug recording and tracking software product
 ---
 
 - [Django 3](https://docs.djangoproject.com/en/3.0/intro/install/)
+- [Pipenv](https://github.com/pypa/pipenv) or [Anaconda](https://docs.anaconda.com/anaconda/install/)
 
 ### To use django in virtualenv
 
