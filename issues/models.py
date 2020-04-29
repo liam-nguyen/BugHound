@@ -133,11 +133,6 @@ class Employee(models.Model):
 
 # Group
 class Group(models.Model):
-    name = models.CharField(
-        max_length=200,
-        unique=True,
-        null=False,
-        blank=False)
     members = models.ManyToManyField(Employee)
 
     def __str__(self):

@@ -1,7 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse, Http404, JsonResponse
 from django.template import loader
-from django.core import serializers
 from django.core.files import File
 from django.forms.models import model_to_dict
 from django.shortcuts import redirect
@@ -23,7 +22,10 @@ from .forms import ProgramForm, EmployeeForm, LoginForm
 from .forms import AreaForm, IssueForm, IssueSearchForm
 # from .serializers import IssueSerializer
 
+from .decorators import at_least_level_1_employee_required, at_least_level_2_employee_required, at_least_level_3_employee_required
+from .decorators import AtLeastLevel1RequiredMixin, AtLeastLevel2RequiredMixin, AtLeastLevel3RequiredMixin
 
+from .helpers import getAllFields, XMLExport
 
 # def index(request):
 #     form = LoginForm()
@@ -39,7 +41,6 @@ from .forms import AreaForm, IssueForm, IssueSearchForm
 #             return render(request, 'issue_pages/index.html', context)
 #     return render(request, 'issue_pages/login.html', context)
 #     # return render(request, 'issue_pages/index.html')
-
 
 def index(request):
     if request.user.is_authenticated:
@@ -81,6 +82,7 @@ def logout_view(request):
 #     logout(request)
 #     return HttpResponse('Logged Out!')
 
+@at_least_level_3_employee_required
 def register_view(request):
     form = EmployeeForm()
     context = {'form': form}
@@ -89,7 +91,6 @@ def register_view(request):
         form = EmployeeForm(request.POST)
         if form.is_valid():
             data = form.cleaned_data
-            print(data)
             try:
                 newUser = User.objects.create_user(username=data['username'],
                                                    password=data['password'])
@@ -166,7 +167,7 @@ def register_view(request):
 #     print("AddIssue - Form", form)
 #     return render(request, 'issue_pages/addIssue.html', context)
 
-@login_required
+@at_least_level_1_employee_required
 def issue_search_view(request):
     issues = Issue.objects.all()
     form = IssueSearchForm()
@@ -204,18 +205,6 @@ def issue_search_view(request):
     # return render(request, 'issue_pages/issues.html', context)
     return render(request, 'issues/pages/issues/issues_search.html', context)
 
-def getAllFields(issue):
-    fields = {
-        'status' : 'name', 
-        'program' : 'name', 
-    }
-
-    issue_dict = dict()
-    for field in fields:
-        issue_dict['id'] = issue.id
-        issue_dict[field] = getattr(getattr(issue, field), fields[field])
-    return issue_dict
-
 
 # def editIssue(request, issueID):
 #     issue = Issue.objects.get(pk=issueID)
@@ -225,12 +214,13 @@ def getAllFields(issue):
 #     }
 #     return render(request, 'issue_pages/issue-edit', context)
 
-class IssueListView(LoginRequiredMixin, ListView):
+class IssueListView(AtLeastLevel1RequiredMixin, ListView):
     template_name = 'issues/pages/issues/issues.html'
     model = Issue
     paginate_by = 5
 
-class IssueDetailView(LoginRequiredMixin, DetailView):
+
+class IssueDetailView(AtLeastLevel1RequiredMixin, DetailView):
     template_name = 'issues/pages/issues/issues_detail.html'
     model = Issue
 
@@ -240,21 +230,20 @@ class IssueDetailView(LoginRequiredMixin, DetailView):
         context['fields'] = fields
         return context
 
-
-class IssueCreateView(LoginRequiredMixin, CreateView):
+class IssueCreateView(AtLeastLevel1RequiredMixin, CreateView):
     model = Issue
     fields = '__all__'
     template_name = 'issues/pages/issues/issues_create.html'
     success_url = reverse_lazy('IssueListView')
 
-class IssueUpdateView(LoginRequiredMixin, UpdateView):
+class IssueUpdateView(AtLeastLevel2RequiredMixin, UpdateView):
     model = Issue
     template_name = 'issues/pages/issues/issues_update.html'
     success_url = reverse_lazy('IssueListView')
     fields = '__all__'
 
 
-class IssueDeleteView(LoginRequiredMixin, DeleteView):
+class IssueDeleteView(AtLeastLevel2RequiredMixin, DeleteView):
     model = Issue
     template_name = 'issues/pages/issues/issues_delete.html'
     success_url = reverse_lazy('IssueListView')
@@ -270,7 +259,7 @@ class IssueDeleteView(LoginRequiredMixin, DeleteView):
 
 
 ########## Areas #############
-@login_required
+@at_least_level_3_employee_required
 def area_create(request):
     if request.method == "POST":
         form = AreaForm(request.POST)
@@ -282,23 +271,20 @@ def area_create(request):
     context = {'form': form}
     return render(request, 'issues/pages/areas/areas_create.html', context)
 
-
-class AreaListView(LoginRequiredMixin, ListView):
+class AreaListView(AtLeastLevel1RequiredMixin, ListView):
     template_name = 'issues/pages/areas/areas.html'
     model = FunctionalArea
     context_object_name = 'areas'
     ordering = ['name']
     paginate_by = 5
 
-
-class AreaUpdateView(LoginRequiredMixin, UpdateView):
+class AreaUpdateView(AtLeastLevel3RequiredMixin, UpdateView):
     template_name = 'issues/pages/areas/areas_update.html'
     model = FunctionalArea
     fields = ['name']
     success_url = reverse_lazy('AreaListView')
 
-
-class AreaDeleteView(LoginRequiredMixin, DeleteView):
+class AreaDeleteView(AtLeastLevel3RequiredMixin, DeleteView):
     template_name = 'issues/pages/areas/areas_delete.html'
     model = FunctionalArea
     success_url = reverse_lazy('AreaListView')
@@ -340,7 +326,7 @@ class AreaDeleteView(LoginRequiredMixin, DeleteView):
 #     return render(request, AreaListView.as_view(), context)
 
 ########## Programs #############
-@login_required
+@at_least_level_3_employee_required
 def program_create(request):
     if request.method == "POST":
         form = ProgramForm(request.POST)
@@ -352,21 +338,22 @@ def program_create(request):
     context = {'form': form}
     return render(request, 'issues/pages/programs/programs_create.html', context)
 
-class ProgramListView(LoginRequiredMixin, ListView):
+class ProgramListView(AtLeastLevel1RequiredMixin, ListView):
     template_name = 'issues/pages/programs/programs.html'
     model = Program
     context_object_name = 'programs'
     ordering = ['name']
     paginate_by = 5
 
-class ProgramUpdateView(LoginRequiredMixin, UpdateView):
+
+class ProgramUpdateView(AtLeastLevel3RequiredMixin, UpdateView):
     template_name = 'issues/pages/programs/programs_update.html'
     model = Program
     fields = '__all__'
     success_url = reverse_lazy('ProgramListView')
 
 
-class ProgramDeleteView(LoginRequiredMixin, DeleteView):
+class ProgramDeleteView(AtLeastLevel3RequiredMixin, DeleteView):
     template_name = 'issues/pages/programs/programs_delete.html'
     model = Program
     success_url = reverse_lazy('ProgramListView')
@@ -415,8 +402,7 @@ class ProgramDeleteView(LoginRequiredMixin, DeleteView):
 
 
 ### Employees ###
-@login_required
-@staff_member_required
+@at_least_level_3_employee_required
 def employee_view(request):
     employees = Employee.objects.all()
     if request.method == 'POST':
@@ -445,7 +431,7 @@ def employee_view(request):
     return render(request, 'issues/pages/employees/employees.html', context)
 
 
-class EmployeeUpdateView(LoginRequiredMixin, UpdateView):
+class EmployeeUpdateView(AtLeastLevel3RequiredMixin, UpdateView):
     model = Employee
     template_name = 'issues/pages/employees/employees_update.html'
     success_url = reverse_lazy('employee_view')
@@ -490,7 +476,7 @@ class EmployeeUpdateView(LoginRequiredMixin, UpdateView):
 #     return render(request, 'issues/pages/database.html')
 
 ########## Export #############
-@login_required
+@at_least_level_1_employee_required
 def export(request):
     if request.method == 'POST':
         file_format = request.POST['file-format']
@@ -550,13 +536,3 @@ def export(request):
     
     return render(request, 'issues/pages/export.html')
 
-def XMLExport(resource_name):
-    mapping = {
-        'Issue': Issue,
-        'Area': FunctionalArea,
-        'Program': Program,
-        'Employee': Employee
-    }
-
-    model = mapping[resource_name]
-    return serializers.serialize('xml', model.objects.all())
