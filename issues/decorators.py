@@ -1,6 +1,6 @@
 from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.contrib.auth.decorators import user_passes_test
-from django.contrib.auth.mixins import UserPassesTestMixin, AccessMixin
+from django.contrib.auth.mixins import UserPassesTestMixin
 from django.urls import reverse_lazy
 
 from .models import Employee
@@ -41,22 +41,16 @@ def at_least_level_3_employee_required(view_func=None, redirect_field_name=REDIR
     return actual_decorator
 
 ##### For Class-based View #####
-class AtLeastLevel1RequiredMixin(AccessMixin):
-    def dispatch(self, request, *args, **kwargs):
-        if not request.user.is_authenticated or not request.user.employee.level >= 1:
-            return self.handle_no_permission()
-        return super().dispatch(request, *args, **kwargs)
+class AtLeastLevel1RequiredMixin(UserPassesTestMixin):
+    def test_func(self):
+        return self.request.user.is_authenticated and self.request.user.employee.level >= 1
 
 
-class AtLeastLevel2RequiredMixin(AccessMixin):
-    def dispatch(self, request, *args, **kwargs):
-        if not request.user.is_authenticated or not request.user.employee.level >= 2:
-            return self.handle_no_permission()
-        return super().dispatch(request, *args, **kwargs)
+class AtLeastLevel2RequiredMixin(UserPassesTestMixin):
+    def test_func(self):
+        return self.request.user.is_authenticated and self.request.user.employee.level >= 2
 
 
-class AtLeastLevel3RequiredMixin(AccessMixin):
-    def dispatch(self, request, *args, **kwargs):
-        if not request.user.is_authenticated or not request.user.employee.level >= 3:
-            return self.handle_no_permission()
-        return super().dispatch(request, *args, **kwargs)
+class AtLeastLevel3RequiredMixin(UserPassesTestMixin):
+    def test_func(self):
+        return self.request.user.is_authenticated and self.request.user.employee.level >= 2
