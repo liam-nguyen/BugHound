@@ -2,7 +2,6 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-  <h5 class="mb-3">Restricted Access. Please log in to view this page.</h5>
     <form method="POST">
         {% csrf_token %}
         {{ form|crispy}}

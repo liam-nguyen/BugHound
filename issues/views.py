@@ -55,7 +55,8 @@ def login_view(request):
 
 def logout_view(request):
     logout(request)
-    return render(request, 'issues/pages/logout.html')
+    return redirect(reverse_lazy('login_view'))
+    # return render(request, 'issues/pages/logout.html')
 
 @at_least_level_3_employee_required
 def register_view(request):
