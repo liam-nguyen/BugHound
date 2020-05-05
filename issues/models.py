@@ -52,22 +52,22 @@ class Resolution(models.Model):
     def __str__(self):
         return self.name
 
-class AttachmentType(models.Model):
-    name = models.CharField(
-        max_length=200,
-        unique=True,
-        null=False,
-        blank=False)
+# class AttachmentType(models.Model):
+#     name = models.CharField(
+#         max_length=200,
+#         unique=True,
+#         null=False,
+#         blank=False)
 
-    def __str__(self):
-        return self.name
+#     def __str__(self):
+#         return self.name
 
-class Attachment(models.Model):
-    typeID = models.ForeignKey(AttachmentType, on_delete=models.CASCADE)
-    location = models.CharField(max_length=500)
+# class Attachment(models.Model):
+#     typeID = models.ForeignKey(AttachmentType, on_delete=models.CASCADE)
+#     location = models.CharField(max_length=500)
     
-    def __str__(self):
-        return f"[Type: {self.typeID} + Location: {self.location}]"
+#     def __str__(self):
+#         return f"[Type: {self.typeID} + Location: {self.location}]"
 
 class FunctionalArea(models.Model):
     name = models.CharField(
@@ -137,10 +137,6 @@ class Issue(models.Model):
         Status, on_delete=models.CASCADE, default="OPEN")
     priority = models.ForeignKey(Priority, on_delete=models.CASCADE)
     resolution = models.ForeignKey(Resolution, on_delete=models.CASCADE, default="PENDING")
-    attachment = models.FileField(
-        upload_to='issue_images/',
-        null=True,
-        blank=True)
     summary = models.CharField(
         max_length=500,
         null=True,
@@ -174,6 +170,27 @@ class Issue(models.Model):
     # isAssignedToGroup = models.BooleanField(null=True)
     resolveByDate = models.DateTimeField(null=True, blank=True)
     testByDate = models.DateTimeField(null=True, blank=True)
+    attachment = models.FileField(
+        upload_to='issue_images/',
+        null=True,
+        blank=True)
+    attachment2 = models.FileField(
+        upload_to='issue_images/',
+        null=True,
+        blank=True)
+    attachment3 = models.FileField(
+        upload_to='issue_images/',
+        null=True,
+        blank=True)
+    attachment4 = models.FileField(
+        upload_to='issue_images/',
+        null=True,
+        blank=True)
+    attachment5 = models.FileField(
+        upload_to='issue_images/',
+        null=True,
+        blank=True)
+        
 
     def __str__(self):
         return f"[BugID: {self.id}]"
@@ -182,4 +199,23 @@ class Issue(models.Model):
     def filename(self):
         return os.path.basename(self.attachment.name)
 
+    @property
+    def filename2(self):
+        return os.path.basename(self.attachment2.name)
 
+    @property
+    def filename3(self):
+        return os.path.basename(self.attachment3.name)
+
+    @property
+    def filename4(self):
+        return os.path.basename(self.attachment4.name)
+
+    @property
+    def filename5(self):
+        return os.path.basename(self.attachment5.name)
+
+
+# class Attachment(models.Model):
+#     issue = models.ForeignKey(Issue, on_delete=models.CASCADE)
+#     file = models.FileField(upload_to='issue_images/', null=True, blank=True, default=1)
