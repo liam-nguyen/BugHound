@@ -27,7 +27,7 @@
       <th>Suggestion</th>
       <th>Status</th>
       <th>Reported By</th>
-      <th>File</th>
+      <th>File(s)</th>
     </tr>
     {% for obj in object_list %}
     <tr>
@@ -39,8 +39,25 @@
       <td>{{ obj.reportedBy }}</td>
       <td>
         {% if obj.attachment %}
-        <a target="_blank" href="{{ obj.attachment.url }}">{{ obj.filename }}</a>
+        <a href="{% url 'IssueAttachmentView' obj.id %}">Attachments</a>
+         <!-- <a target="_blank" href="{{ obj.attachment.url }}">{{ obj.filename }}</a> -->
         {% endif %}
+        
+        {% if obj.attachment2 %}
+        <a target="_blank" href="{{ obj.attachment2.url }}">{{ obj.filename2 }}</a> 
+        {% endif %}
+
+        {% if obj3.attachment %}
+        <a target="_blank" href="{{ obj.attachment3.url }}">{{ obj.filename3 }}</a>
+        {% endif %}
+
+        {% if obj4.attachment %}
+        <a target="_blank" href="{{ obj.attachment4.url }}">{{ obj.filename4 }}</a>
+        {% endif %}
+
+        {% if obj.attachmen5t %}
+        <a target="_blank" href="{{ obj.attachment5.url }}">{{ obj.filename5 }}</a>
+        {% endif %} 
       </td>
     </tr>
     {% endfor %}
