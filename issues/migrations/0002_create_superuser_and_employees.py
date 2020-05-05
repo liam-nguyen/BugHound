@@ -77,7 +77,7 @@ people = [
         'password': 'marco',
         'first_name': 'Marco',
         'last_name': 'Curci',
-        'level': 2
+        'level': 3
     },
     {
         'username': 'dillion',
