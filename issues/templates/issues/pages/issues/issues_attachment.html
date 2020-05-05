@@ -1,0 +1,79 @@
+{% extends "issues/base.html" %}
+{% load crispy_forms_tags %}
+{% load issues_extras %}
+
+{% block content %}
+  <div class="row justify-content-between my-4">
+    <div class="col-4">
+        <h3>Issue Detail</h3>
+    </div>
+    <div class="col-4">
+      <!-- <div class="float-right">
+        <a href="{% url 'IssueAttachmentView' object.id %}" class="btn btn-warning">Edit</a>
+      </div> -->
+    </div>
+  </div>
+  <table class="table table-striped">
+
+
+        {% for attachment in fields %}
+        <tr>
+            <td>{{ attachment }} </td>
+            <td>
+                {% if attachment %}
+                <a target="_blank" href="{{ object.attachment.url }}">{{ object|get_attr:attachment }}</a>
+                {% endif %}
+            </td>
+        </tr> 
+      {% endfor %} 
+		<!-- {% for field in fields %}
+			<tr>
+				<th>{{field}}</th>
+				<td>{{ object|get_attr:field }}</td>
+			</tr>
+		{% endfor %} -->
+    
+  </table >
+  
+  {% if is_paginated %}
+  <nav aria-label="Page navigation example">
+    <ul class="pagination">
+      {% if page_obj.has_previous %}
+        <li class="page-item">
+          <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">&laquo;
+          </a>
+        </li>
+      {% else %}
+        <li class="page-item disabled">
+          <a class="page-link" aria-label="Previous">&laquo;
+          </a>
+        </li>
+      {% endif %}
+      {% for i in paginator.page_range %}
+        {% if page_obj.number == i %}
+          <li class="page-item active">
+            <a class="page-link" aria-label="Previous">{{ i }}</a>
+          </li>
+        {% else %}
+          <li class="page-item" ><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+        {% endif %}
+      {% endfor %}
+      {% if page_obj.has_next %}
+        <li class="page-item">
+          <a class="page-link" href="?page={{ page_obj.has_next }}" aria-label="Next">&raquo;
+          </a>
+        </li>
+      {% else %}
+        <li class="page-item disabled">
+          <a class="page-link" aria-label="Next">&raquo;
+          </a>
+        </li>
+      {% endif %}
+    </ul>
+  </nav>
+  {% endif %}
+<!--   
+  <div class="float-right">
+        <a href="{% url 'IssueDeleteView' object.id %}" class="btn btn-danger">Delete</a>
+  </div> -->
+{% endblock %}
