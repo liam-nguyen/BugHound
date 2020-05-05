@@ -195,25 +195,25 @@ class Issue(models.Model):
     def __str__(self):
         return f"[BugID: {self.id}]"
 
-    @property
-    def filename(self):
-        return os.path.basename(self.attachment.name)
+    # @property
+    # def attachment(self):
+    #     return os.path.basename(self.attachment.name)
 
-    @property
-    def filename2(self):
-        return os.path.basename(self.attachment2.name)
+    # @property
+    # def attachment2(self):
+    #     return os.path.basename(self.attachment2.name)
 
-    @property
-    def filename3(self):
-        return os.path.basename(self.attachment3.name)
+    # @property
+    # def attachment3(self):
+    #     return os.path.basename(self.attachment3.name)
 
-    @property
-    def filename4(self):
-        return os.path.basename(self.attachment4.name)
+    # @property
+    # def attachment4(self):
+    #     return os.path.basename(self.attachment4.name)
 
-    @property
-    def filename5(self):
-        return os.path.basename(self.attachment5.name)
+    # @property
+    # def attachment5(self):
+    #     return os.path.basename(self.attachment5.name)
 
 
 # class Attachment(models.Model):

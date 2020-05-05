@@ -138,19 +138,25 @@ class IssueDetailView(AtLeastLevel1RequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(IssueDetailView, self).get_context_data(**kwargs)
-        fields = [field.name for field in Issue._meta.get_fields()]
+        fields = [field.name for field in Issue._meta.get_fields() ]
         context['fields'] = fields
         return context
 
 class IssueAttachmentView(AtLeastLevel1RequiredMixin, DetailView):
-    template_nae = "issues/pages/issues/issues_attachment.html"
+    template_name = "issues/pages/issues/issues_attachment.html"
     model = Issue
     fields = ['attachment', 'attachment2', 'attachment3', 'attachment4', 'attachment5']
+
+    def get_context_data(self, **kwargs):
+        context = super(IssueAttachmentView, self).get_context_data(**kwargs)
+        fields = [field.name for field in Issue._meta.get_fields() if "attachment" in field.name]
+        context['fields'] = fields
+        return context
 
 class IssueCreateView(AtLeastLevel1RequiredMixin, CreateView):
     model = Issue
     fields = '__all__'
-    form_class = IssueForm
+    # form_class = IssueForm
     template_name = 'issues/pages/issues/issues_create.html'
     success_url = reverse_lazy('IssueListView')
 
