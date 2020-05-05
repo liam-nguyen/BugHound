@@ -143,14 +143,14 @@ class IssueDetailView(AtLeastLevel1RequiredMixin, DetailView):
         return context
 
 class IssueAttachmentView(AtLeastLevel1RequiredMixin, DetailView):
-    template_nae = "issues/pages/issues/issues_attachment.html"
+    template_name = "issues/pages/issues/issues_attachment.html"
     model = Issue
     fields = ['attachment', 'attachment2', 'attachment3', 'attachment4', 'attachment5']
 
 class IssueCreateView(AtLeastLevel1RequiredMixin, CreateView):
     model = Issue
     fields = '__all__'
-    form_class = IssueForm
+    # form_class = IssueForm
     template_name = 'issues/pages/issues/issues_create.html'
     success_url = reverse_lazy('IssueListView')
 
