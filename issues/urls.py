@@ -1,7 +1,7 @@
 from django.urls import path
 from .views import AreaListView, area_create, AreaUpdateView, AreaDeleteView
 from .views import ProgramListView, program_create, ProgramUpdateView, ProgramDeleteView
-from .views import issue_search_view, IssueListView, IssueDetailView, IssueCreateView, IssueUpdateView, IssueDeleteView
+from .views import issue_search_view, IssueListView, IssueDetailView, IssueCreateView, IssueUpdateView, IssueDeleteView, IssueAttachmentView
 from .views import login_view, logout_view, index, register_view, export, employee_view
 from .views import EmployeeUpdateView
 from .views import export
@@ -24,6 +24,7 @@ urlpatterns = [
     path('issues/delete/<int:pk>',
          IssueDeleteView.as_view(), name='IssueDeleteView'),
     path('issues/search', issue_search_view, name="issue_search_view"),
+    path("issues/attachments/<int:pk>", IssueAttachmentView.as_view(), name="IssueAttachmentView"),
 
     # Area
     path('areas/create', area_create, name='area_create'),

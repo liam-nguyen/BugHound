@@ -9,6 +9,9 @@ from crispy_forms.layout import Layout, Fieldset, ButtonHolder, Submit
 from .models import Program, Department, BugType, Severity, FunctionalArea, Employee, Status, Priority, Resolution
 from .models import Issue
 
+# from multiupload.fields import MultiFileField, MultiMediaField, MultiImageField
+
+
 
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=100, required=True)
@@ -29,6 +32,15 @@ class IssueForm(ModelForm):
     class Meta:
         model = Issue
         fields = '__all__'
+
+    # files = MultiFileField(min_num=1, max_num=5, max_file_size=1024*1024*5)
+
+    # # def save(self, commit=True):
+    #     instance = super(IssueForm, self).save(commit)
+    #     for each in self.cleaned_data['files']:
+    #         Attachment.objects.create(file=each, message=instance)
+
+    #     return instance
         
 class AreaForm(ModelForm):
     class Meta:
