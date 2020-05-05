@@ -18,7 +18,7 @@
     program: 7
     bugtype: 1
     severity: 2
-    reportedBy: 7
+    reportedBy: 8
     status: 1
     priority: 4
     resolution: 1
@@ -66,9 +66,22 @@
     program: 9
     bugtype: 6
     severity: 3
-    reportedBy: 2
+    reportedBy: 4
     status: 1
     priority: 4
     resolution: 1
     problem: "the math.p library is not found by the linker"
+    reproducible: true
+- model: issues.Issue
+  pk: 7
+  fields:
+    program: 9
+    bugtype: 6
+    severity: 1
+    reportedBy: 4
+    status: 1
+    priority: 5
+    resolution: 1
+    problem: "Lines 32 and 33 in the output report are not on separate lines"
+    summary: "The last two lines of output are concatenated on a single line"
     reproducible: true
